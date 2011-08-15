@@ -1,0 +1,88 @@
+<?php 
+
+	/**
+	 * jQuery autocomplete procedure
+	 * 
+	 */
+
+	global $CONFIG;
+
+	if(isloggedin()){
+		$q = get_input("q");
+		$limit = (int) get_input("limit", 50);
+		$group_guid = (int) get_input("group_guid");
+		
+		$result = "";
+		
+		if(!empty($q)){
+			if(substr($q, 0, 1) == "@"){
+				$username = substr($q, 1);
+				
+				$options = array(
+					"type" => "user",
+					"limit" => $limit,
+					"joins" => array("JOIN " . $CONFIG->dbprefix . "users_entity ue ON e.guid = ue.guid"),
+					"wheres" => array("(ue.username LIKE '%" . sanitise_string($username) . "%' OR ue.name LIKE '%" . sanitise_string($username) . "%')"),
+					"site_guids" => false,
+					"order_by" => "ue.name ASC"
+				);
+				
+				if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
+					$options["relationship"] = "member";
+					$options["relationship_guid"] = $group->getGUID();
+					$options["inverse_relationship"] = true;
+				} else {
+					$options["joins"][] = "JOIN " . $CONFIG->dbprefix . "entity_relationships r1 ON r1.guid_one = e.guid";
+					$options["joins"][] = "JOIN " . $CONFIG->dbprefix . "entity_relationships r2 ON r2.guid_two = e.guid";
+					
+					$options["wheres"][] = "(
+						(r1.relationship = 'friend' AND r1.guid_two = " . get_loggedin_userid() . ") 
+						OR 
+						(r2.relationship = 'friend' AND r2.guid_one = " . get_loggedin_userid() . ")
+					)";
+				}
+				
+				if($users = elgg_get_entities_from_relationship($options)){
+					foreach($users as $user){
+						$result .= "user|" . $user->username . "|" . $user->name . "|" . $user->getIcon("tiny") . "\n";
+					}
+				}
+			} elseif(substr($q, 0, 1) == "#") {
+				$tag = substr($q, 1);
+				
+				$tags_id = get_metastring_id("tags");
+				$thewire_id = get_subtype_id("object", "thewire");
+				
+				$query = "SELECT DISTINCT *";
+				$query .= " FROM (SELECT ms1.string as value";
+				$query .= " FROM " . $CONFIG->dbprefix . "entities e";
+				$query .= " JOIN " . $CONFIG->dbprefix . "metadata m ON e.guid = m.entity_guid";
+				$query .= " JOIN " . $CONFIG->dbprefix . "metastrings ms1 ON m.value_id = ms1.id";
+				$query .= " WHERE (e.type = 'object' AND e.subtype = " . $thewire_id . ")";
+				$query .= " AND (e.owner_guid = " . get_loggedin_userid() . ")";
+				$query .= " AND (m.name_id = " . $tags_id .")";
+				$query .= " AND (ms1.string LIKE '%" . sanitise_string($tag) . "%')";
+				$query .= " AND " . get_access_sql_suffix("e");
+				$query .= " AND " . get_access_sql_suffix("m");
+				$query .= " ORDER BY m.time_created DESC) a";
+				$query .= " LIMIT 0, " . $limit;
+				
+				if($rows = get_data($query)){
+					$metadata = array();
+					foreach($rows as $row){
+						if(!empty($row->value) || ($row->value == 0)){
+							$metadata[] = $row->value;
+						}
+					}
+					
+					natcasesort($metadata);
+					foreach($metadata as $md){
+						$result .= "hashtag|" . $md . "\n";
+					}
+				}
+			}
+		}
+		
+		echo $result;
+	}
+	
