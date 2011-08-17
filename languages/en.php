@@ -49,6 +49,13 @@ To view your mentions on The Wire click here:
 		'widgets:thewire_post:title' => "Update the Wire",
 		'widgets:thewire_post:description' => "Update your status on the wire from this widget",
 	
+		// the wire (default widget)
+		'widgets:thewire:owner' => "Whos Wire post to show",
+		'widgets:thewire:owner:mine' => "Mine",
+		'widgets:thewire:owner:friends' => "My friends",
+		'widgets:thewire:owner:all' => "All",
+		'widgets:thewire:filter' => "Filter Wire posts (optional)",
+		
 		// object view
 		"thewire_tools:object:in_group" => "in the group %s",
 		"thewire_tools:show_conversation" => "Show conversation",
