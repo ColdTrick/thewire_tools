@@ -44,6 +44,7 @@ To view your mentions on The Wire click here:
 		'widgets:index_thewire:title' => "The Wire",
 		'widgets:index_thewire:description' => "Show the latest Wire posts on your community",
 		'widgets:index_thewire:wire_count' => "How many posts to show",
+		'widgets:index_thewire:filter' => "Filter Wire posts (optional)",
 		
 		// the wire post
 		'widgets:thewire_post:title' => "Update the Wire",

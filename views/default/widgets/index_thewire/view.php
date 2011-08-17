@@ -8,7 +8,9 @@
 	
 	// get widget settings
 	$count = (int) $widget->wire_count;
-	if(empty($count) || !is_int($count)){
+	$filter = $widget->filter;
+	
+	if($count < 1){
 		$count = 8;
 	}
 
@@ -21,10 +23,20 @@
 		"view_type_toggle" => false
 	);
 	
-	if($wires = elgg_list_entities($options)){
-		echo $wires;
+	if(!empty($filter)){
+		$filters = string_to_tag_array($filter);
+		array_walk($filters, "sanitise_string");
+		
+		$options["joins"] = array("JOIN " . $vars["config"]->dbprefix . "objects_entity oe ON oe.guid = e.guid");
+		$options["wheres"] = array("(oe.description LIKE '%" . implode("%' OR oe.description LIKE '%", $filters) . "%')");
+	}
+	
+	if($content = elgg_list_entities($options)){
+		echo $content;
 	} else {
-		echo elgg_view("page_elements/contentwrapper", array("body" => elgg_echo("thewire_tools:no_result")));
+		echo "<div class='widget_more_wrapper'>";
+		echo elgg_echo("thewire_tools:no_result");
+		echo "<div>";
 	}
 
 	// reset context
