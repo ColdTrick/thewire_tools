@@ -13,6 +13,6 @@
 	echo "</div>";
 	
 	echo "<div>";
-	echo elgg_echo("widgets:thewire_groups:filter");
+	echo elgg_echo("widgets:thewire:filter");
 	echo "&nbsp;" . elgg_view("input/text", array("internalname" => "params[filter]", "value" => $widget->filter));
 	echo "</div>";

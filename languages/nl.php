@@ -1,5 +1,11 @@
 <?php
 $language = array (
+  'widgets:thewire_groups:count' => 'Hoeveel Wire berichten tonen',
+  'widgets:thewire:owner' => 'Van wie moeten de Wire berichten worden getoond',
+  'widgets:thewire:owner:mine' => 'Mijn',
+  'widgets:thewire:owner:friends' => 'Mijn vrienden',
+  'widgets:thewire:owner:all' => 'Alle',
+  'widgets:thewire:filter' => 'Filter Wire berichten (optioneel)',
   'thewire_tools' => 'The Wire uitbreidingen',
   'thewire_tools:no_result' => 'Geen Wire berichten gevonden',
   'thewire_tool:login_required' => 'Je moet zijn aangemeld om deze functionaliteit te kunnen gebruiken',
@@ -21,7 +27,6 @@ Om je vermeldingen op The Wire te bekijken klik op onderstaande link:
   'thewire_tools:search:no_query' => 'Om op The Wire te zoeken, geef je zoekterm hierboven op',
   'widgets:thewire_groups:title' => 'Groeps wire berichten',
   'widgets:thewire_groups:description' => 'Toon The Wire berichten in de groep',
-  'widgets:thewire_groups:settings:count' => 'Hoeveel Wire berichten weergeven',
   'widgets:index_thewire:title' => 'The Wire',
   'widgets:index_thewire:description' => 'Toon de laatste Wire berichten van je community',
   'widgets:index_thewire:wire_count' => 'Hoeveel Wire berichten weergeven',

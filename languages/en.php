@@ -39,13 +39,11 @@ To view your mentions on The Wire click here:
 		'widgets:thewire_groups:title' => "Group wire posts",
 		'widgets:thewire_groups:description' => "Show the wire posts in the group",
 		'widgets:thewire_groups:count' => "How many wire posts to show",
-		'widgets:thewire_groups:filter' => "Filter Wire posts (optional)",
-	
+		
 		// index_thewire
 		'widgets:index_thewire:title' => "The Wire",
 		'widgets:index_thewire:description' => "Show the latest Wire posts on your community",
 		'widgets:index_thewire:wire_count' => "How many posts to show",
-		'widgets:index_thewire:filter' => "Filter Wire posts (optional)",
 		
 		// the wire post
 		'widgets:thewire_post:title' => "Update the Wire",
@@ -62,8 +60,6 @@ To view your mentions on The Wire click here:
 		"thewire_tools:object:in_group" => "in the group %s",
 		"thewire_tools:show_conversation" => "Show conversation",
 	
-		
-
 	);
 
 	add_translation("en", $english);
