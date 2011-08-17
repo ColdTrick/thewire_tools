@@ -4,7 +4,11 @@
 	$group = $widget->getOwnerEntity();
 	
 	$count = (int) $widget->wire_count;
-	if(empty($count)){
+	$filter = $widget->filter;
+	
+	$error = false;
+	
+	if($count < 1){
 		$count = 5;
 	}
 	
@@ -17,8 +21,20 @@
 		"full_view" => false
 	);
 	
+	if(!empty($filter)){
+		$filters = string_to_tag_array($filter);
+		array_walk($filters, "sanitise_string");
+	
+		$options["joins"] = array("JOIN " . $vars["config"]->dbprefix . "objects_entity oe ON oe.guid = e.guid");
+		$options["wheres"] = array("(oe.description LIKE '%" . implode("%' OR oe.description LIKE '%", $filters) . "%')");
+	}
+	
 	if(!($list = elgg_list_entities($options))){
-		$list = elgg_view("page_elements/contentwrapper", array("body" => elgg_echo("thewire_tools:no_result")));
+		$error = true;
+		
+		$list = "<div class='widget_more_wrapper'>";
+		$list .= elgg_echo("thewire_tools:no_result");
+		$list .= "<div>";
 	}
 
 	if($group->isMember()) {
@@ -62,7 +78,9 @@
 	
 	echo $list;
 	
-	echo "<div class='widget_more_wrapper'>";
-	echo elgg_view("output/url", array("href" => $vars["url"] . "pg/thewire/group/" . $widget->container_guid, "text" => elgg_echo("thewire:moreposts")));
-	echo "</div>";
+	if(empty($error)){
+		echo "<div class='widget_more_wrapper'>";
+		echo elgg_view("output/url", array("href" => $vars["url"] . "pg/thewire/group/" . $widget->container_guid, "text" => elgg_echo("thewire:moreposts")));
+		echo "</div>";
+	}
 	

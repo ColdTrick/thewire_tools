@@ -26,7 +26,7 @@
 			if(get_plugin_setting("enable_group", "thewire_tools") == "yes"){
 				$THEWIRE_TOOLS_ENABLE_GROUP = true;
 				// add widget (for Widget Manager only)
-				add_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), "groups");
+				add_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), "groups", true);
 				
 				if(is_callable("add_widget_title_link")){
 					add_widget_title_link("thewire_groups", "[BASEURL]pg/thewire/groups/[GUID]");

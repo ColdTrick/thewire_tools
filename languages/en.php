@@ -38,7 +38,8 @@ To view your mentions on The Wire click here:
 		// thewire_groups
 		'widgets:thewire_groups:title' => "Group wire posts",
 		'widgets:thewire_groups:description' => "Show the wire posts in the group",
-		'widgets:thewire_groups:settings:count' => "How many wire posts to show",
+		'widgets:thewire_groups:count' => "How many wire posts to show",
+		'widgets:thewire_groups:filter' => "Filter Wire posts (optional)",
 	
 		// index_thewire
 		'widgets:index_thewire:title' => "The Wire",
