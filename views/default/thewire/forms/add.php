@@ -142,7 +142,7 @@
 			}
 		?>
 		<input type="hidden" name="method" value="site" />
-		<input type="submit" value="<?php echo elgg_echo('save'); ?>" />
+		<input type="submit" value="<?php echo elgg_echo('send'); ?>" />
 	</form>
 </div>
 <?php 
