@@ -55,6 +55,7 @@
 
 <?php 
 	if (!$autocomplete_js_loaded) {
+		$autocomplete_js_loaded = true;
 ?>
 	<script type="text/javascript" src="<?php echo $vars["url"]; ?>vendors/jquery/jquery.autocomplete.min.js"></script>
 <?php } ?>

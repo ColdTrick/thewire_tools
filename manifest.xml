@@ -31,6 +31,9 @@ Features
 ==============================
 Version history
 ==============================
+x.x:
+	- fixed: potential multiple loading of autocomplete js
+
 1.1 (2011-08-17):
 	- added: filtering to index, group and default wire widget
 	- changed: add form submit button
