@@ -34,11 +34,14 @@
 				} else {
 					$options["joins"][] = "JOIN " . $CONFIG->dbprefix . "entity_relationships r1 ON r1.guid_one = e.guid";
 					$options["joins"][] = "JOIN " . $CONFIG->dbprefix . "entity_relationships r2 ON r2.guid_two = e.guid";
+					$options["joins"][] = "JOIN " . $CONFIG->dbprefix . "entity_relationships r3 ON r3.guid_one = e.guid";
 					
 					$options["wheres"][] = "(
-						(r1.relationship = 'friend' AND r1.guid_two = " . get_loggedin_userid() . ") 
+						((r1.relationship = 'friend' AND r1.guid_two = " . get_loggedin_userid() . ") 
 						OR 
-						(r2.relationship = 'friend' AND r2.guid_one = " . get_loggedin_userid() . ")
+						(r2.relationship = 'friend' AND r2.guid_one = " . get_loggedin_userid() . "))
+						AND
+						(r3.relationship = 'member_of_site' AND r3.guid_two = " . $CONFIG->site_guid . ")
 					)";
 				}
 				
