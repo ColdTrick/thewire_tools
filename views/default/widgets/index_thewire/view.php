@@ -36,7 +36,7 @@
 	} else {
 		echo "<div class='widget_more_wrapper'>";
 		echo elgg_echo("thewire_tools:no_result");
-		echo "<div>";
+		echo "</div>";
 	}
 
 	// reset context
