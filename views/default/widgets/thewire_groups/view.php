@@ -41,7 +41,7 @@
 		?>
 		<div class="contentWrapper">
 			<a href="javascript:void(0);" onclick="$(this).next().toggle();"><?php echo elgg_echo("thewire:newpost"); ?></a>
-			<?php echo elgg_view("thewire/forms/add", array("access_id" => $group->group_acl)); ?>
+			<?php echo elgg_view("thewire/forms/add", array("access_id" => $group->group_acl, "widget" => true)); ?>
 		</div>
 		<style type="text/css">
 			#widget<?php echo $widget->getGUID();?> .post_to_wire {

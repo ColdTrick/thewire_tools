@@ -92,4 +92,8 @@
 	display: none;
 }
 
+.thewire_tools_widget_access {
+	max-width: 200px;
+}
+
 /* end the wire widget actions fix */

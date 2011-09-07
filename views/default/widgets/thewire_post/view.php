@@ -1,7 +1,7 @@
 <?php 
 
 	if(isloggedin()){
-		echo elgg_view("thewire/forms/add");
+		echo elgg_view("thewire/forms/add", array("widget" => true));
 	} else {
 		echo elgg_view("page_elements/contentwrapper", array("body" => elgg_echo("thewire_tool:login_required")));
 	}

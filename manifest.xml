@@ -35,6 +35,7 @@ x.x:
 	- fixed: potential multiple loading of autocomplete js
 	- fixed: user autocomplete showed friends of all sites instead of this site (only in multi site setup)
 	- fixed: coding error in widgets views
+	- fixed: access pulldown layout error in widgets
 
 1.1 (2011-08-17):
 	- added: filtering to index, group and default wire widget

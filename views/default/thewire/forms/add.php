@@ -17,6 +17,11 @@
 		$msg = ''; 
 	}
 	
+	$widget_context = $vars["widget"];
+	if($widget_context !== true){
+		$widget_context = false;
+	}
+	
 	$page_owner = page_owner_entity();
 	$user = get_loggedin_user();
 	
@@ -119,8 +124,13 @@
 			
 			// set container guid
 			if(!empty($access_options)){
+				$access_class = "input-access";
+				if($widget_context){
+					$access_class .= " thewire_tools_widget_access";
+				}
+				
 				$display .= "<div class='thewire_tools_container_wrapper'>";
-				$display .= elgg_view("input/access", array("internalname" => "access_id", "options" => $access_options, "value" => $access_id));
+				$display .= elgg_view("input/access", array("internalname" => "access_id", "options" => $access_options, "value" => $access_id, "class" => $access_class));
 				$display .= "</div>";
 			} else {
 				$display .= elgg_view("input/hidden", array("internalname" => "access_id", "value" => $access_id));
