@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest>
 	<field key="author" value="ColdTrick IT Solutions" />
-	<field key="version" value="1.1" />
+	<field key="version" value="1.1.1" />
 	<field key="description" value="Provides additional options for The Wire" />
 	<field key="website" value="http://www.coldtrick.com/" />
 	<field key="copyright" value="(C) ColdTrick 2011" />
@@ -31,7 +31,7 @@ Features
 ==============================
 Version history
 ==============================
-x.x:
+1.1.1 (2011-09-16):
 	- fixed: potential multiple loading of autocomplete js
 	- fixed: user autocomplete showed friends of all sites instead of this site (only in multi site setup)
 	- fixed: coding error in widgets views
