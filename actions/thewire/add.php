@@ -21,6 +21,8 @@
 	$conversation = (int) get_input("conversation", 0);
 	$forward_url = get_input("forward_url", REFERER);
 	
+	$error = false;
+	
 	// make access_id
 	if($THEWIRE_TOOLS_ENABLE_GROUP){
 		$access_id = (int) get_input("access_id");
@@ -44,22 +46,30 @@
 		);
 		
 		if($groups = elgg_get_entities_from_metadata($group_options)){
-			$container_guid = $groups[0]->getGUID();
+			$group = $groups[0];
+			
+			if($group->thewire_enable == "no"){
+				// not allowed to post in this group
+				$error = true;
+				register_error(elgg_echo("thewire_tools:groups:error:not_enabled"));
+			} else {
+				$container_guid = $group->getGUID();
+			}
 		}
 	}
 	
-	// Make sure the body isn't blank
-	if (!empty($body)) {
-		if (thewire_tools_save_post($body, $access_id, $parent, $method, $container_guid, $reply_guid, $conversation)) {
-			system_message(elgg_echo("thewire:posted"));
+	if(!$error){
+		// Make sure the body isn't blank
+		if (!empty($body)) {
+			if (thewire_tools_save_post($body, $access_id, $parent, $method, $container_guid, $reply_guid, $conversation)) {
+				system_message(elgg_echo("thewire:posted"));
+			} else {
+				register_error(elgg_echo("thewire:error"));
+			}
 		} else {
-			register_error(elgg_echo("thewire:error"));
+			register_error(elgg_echo("thewire:blank"));
 		}
-	} else {
-		register_error(elgg_echo("thewire:blank"));
 	}
 	
 	// Forward
 	forward($forward_url);
-
-?>

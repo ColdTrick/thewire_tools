@@ -39,6 +39,9 @@ ToDo
 ==============================
 Version history
 ==============================
+x.x:
+	- added: group tool option to disable The Wire on a group
+
 1.1.1 (2011-09-16):
 	- fixed: potential multiple loading of autocomplete js
 	- fixed: user autocomplete showed friends of all sites instead of this site (only in multi site setup)

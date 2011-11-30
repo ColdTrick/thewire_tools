@@ -28,6 +28,8 @@ To view your mentions on The Wire click here:
 		
 		// group wire
 		'thewire_tools:group:title' => "Group wire posts",
+		'thewire_tools:groups:tool_option' => "Enable The Wire for this group",
+		'thewire_tools:groups:error:not_enabled' => "The Wire has been disabled for this group",
 		
 		// search
 		'thewire_tools:search:title' => "Search The Wire for: '%s'",

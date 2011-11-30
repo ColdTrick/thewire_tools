@@ -14,6 +14,12 @@
 	);
 	
 	if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
+		// check if The Wire is enabled
+		if($group->thewire_enable == "no"){
+			register_error(elgg_echo("thewire_tools:groups:error:not_enabled"));
+			forward(REFERER);
+		}
+		
 		// set page owner
 		set_page_owner($group->getGUID());
 		set_context("groups");
@@ -41,7 +47,7 @@
 		}
 		
 		if($entities_only){
-			echo $result;	
+			echo $result;
 		} else {
 		    // build page elements
 			$title_text = elgg_echo("thewire_tools:group:title");

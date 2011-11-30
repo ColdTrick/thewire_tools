@@ -31,6 +31,9 @@
 				if(is_callable("add_widget_title_link")){
 					add_widget_title_link("thewire_groups", "[BASEURL]pg/thewire/groups/[GUID]");
 				}
+				
+				// add group tool option
+				add_group_tool_option("thewire", elgg_echo("thewire_tools:groups:tool_option"), true);
 			}
 			
 			// adds wire post form to the wire widget
@@ -58,9 +61,14 @@
 			$context = get_context();
 				
 			if(!empty($user) && ($page_owner instanceof ElggGroup) && ($context == "groups")){
-				if($THEWIRE_TOOLS_ENABLE_GROUP){
+				if($THEWIRE_TOOLS_ENABLE_GROUP && ($page_owner->thewire_enable != "no")){
 					add_submenu_item(elgg_echo("thewire_tools:menu:group"), $CONFIG->wwwroot . "pg/thewire/group/" . $page_owner->getGUID());
 				}
+			}
+			
+			// cleanup group widget
+			if(($page_owner instanceof ElggGroup) && ($page_owner->thewire_enable == "no")){
+				remove_widget_type("thewire_groups");
 			}
 			
 			if(!empty($user) && ($context == "thewire")){

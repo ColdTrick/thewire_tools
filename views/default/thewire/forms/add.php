@@ -31,12 +31,32 @@
 		} else {
 			$access_id = get_default_access($user);
 			
+			// get access array for this user
 			$access_options = get_write_access_array($user->getGUID());
+			// unset private access, useless on wire posts
 			if(isset($access_options[ACCESS_PRIVATE])){
 				unset($access_options[ACCESS_PRIVATE]);
 			}
+			// unset friends access
 			if(isset($access_options[ACCESS_FRIENDS])){
 				unset($access_options[ACCESS_FRIENDS]);
+			}
+			
+			// check if some groups have disabled the wire
+			$options = array(
+				"type" => "group",
+				"limit" => false,
+				"relationship" => "member",
+				"relationship_guid" => $user->getGUID(),
+				"metadata_name_value_pairs" => array("thewire_enable" => "no")
+			);
+			
+			if($groups = elgg_get_entities_from_relationship($options)){
+				foreach($groups as $group){
+					if(array_key_exists($group->group_acl, $access_options)){
+						unset($access_options[$group->group_acl]);
+					}
+				}
 			}
 		}
 	} else {

@@ -1,5 +1,7 @@
 <?php
 $language = array (
+  'thewire_tools:groups:tool_option' => 'Schakel The Wire voor deze groep in',
+  'thewire_tools:groups:error:not_enabled' => 'The Wire is voor deze groep uitgeschakeld',
   'widgets:thewire_groups:count' => 'Hoeveel Wire berichten tonen',
   'widgets:thewire:owner' => 'Van wie moeten de Wire berichten worden getoond',
   'widgets:thewire:owner:mine' => 'Mijn',
