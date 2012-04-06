@@ -1,9 +1,14 @@
 = Version history =
+
+2.0 ():
+
+- changed: updated for Elgg 1.8
+
 1.2 (2011-12-05):
 
 - added: group tool option to disable The Wire on a group
 - changed: moved changelog to CHANGES.txt in preparation for Elgg 1.8
-- chnaged: moved features and todo to README.txt in preparation for Elgg 1.8
+- changed: moved features and todo to README.txt in preparation for Elgg 1.8
 
 1.1.1 (2011-09-16):
 

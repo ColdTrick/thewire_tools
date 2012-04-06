@@ -6,22 +6,17 @@
 	 * @package ElggTheWire
 	 */
 
-	// Make sure we're logged in (send us to the front page if not)
-	gatekeeper();
-
 	// Get input data
 	$guid = (int) get_input('thewirepost');
 		
 	// Make sure we actually have permission to edit
-	$thewire = get_entity($guid);
-	if ($thewire->getSubtype() == "thewire" && $thewire->canEdit()) {
+	if (($thewire = get_entity($guid)) && elgg_instanceof($thewire, "object","thewire") && $thewire->canEdit()) {
 
 		// Get owning user
-		$owner = get_entity($thewire->getOwner());
+		$owner = $thewire->getOwnerEntity();
 	
 		// Delete it!
-		$rowsaffected = $thewire->delete();
-		if ($rowsaffected > 0) {
+		if ($thewire->delete()) {
 			// Success message
 			system_message(elgg_echo("thewire:deleted"));
 		} else {

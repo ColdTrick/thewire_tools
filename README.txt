@@ -1,11 +1,9 @@
 = The Wire Tools =
+
 Extend the functionality of The Wire
 
-== Contents ==
-1. Features
-2. ToDo
+= Features =
 
-== 1. Features ==
 - Wire posts in groups (optional)
 - Notification on mention (user tool setting, default off)
 - Conversations
@@ -21,7 +19,8 @@ Extend the functionality of The Wire
 - Post to the wire widget (index / dashboard) (no entity listing)
 - Extend thewire widget with a post form
 
-== 2. ToDo ==
+= ToDo =
+
 - url shortning
 - post thewire on 'enter' in message
 - share on the wire

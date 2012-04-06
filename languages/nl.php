@@ -38,4 +38,3 @@ Om je vermeldingen op The Wire te bekijken klik op onderstaande link:
   'thewire_tools:show_conversation' => 'Toon conversaties',
 );
 add_translation("nl", $language);
-?>

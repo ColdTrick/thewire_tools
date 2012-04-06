@@ -1,7 +1,5 @@
 <?php 
 
-	global $CONFIG;
-	
 	$query = get_input("query", get_input("q"));
 	
 	$entities_only = (int) get_input("entities_only", 0);
@@ -15,7 +13,7 @@
 	);
 	
 	if(!empty($query)){
-		$options["joins"] = array("JOIN " . $CONFIG->dbprefix . "objects_entity oe ON e.guid = oe.guid");
+		$options["joins"] = array("JOIN " . elgg_get_config("dbprefix") . "objects_entity oe ON e.guid = oe.guid");
 		
 		if($where_options = explode(" ", $query)){
 			$wheres = array();
@@ -43,24 +41,19 @@
 		}
 		
 		// set title
-		$title_text = sprintf(elgg_echo("thewire_tools:search:title"), $query);
+		$title_text = elgg_echo("thewire_tools:search:title", array($query));
 	} else {
 		$title_text = elgg_echo("thewire_tools:search:title:no_query");
-		$result = elgg_view("page_elements/contentwrapper", array("body" => elgg_echo("thewire_tools:search:no_query")));
+		$result = elgg_echo("thewire_tools:search:no_query");
 	}
 	
 	if($entities_only){
 		echo $result;	
 	} else {
-		$title = elgg_view_title($title_text);
-	
 		$search = elgg_view("thewire_tools/forms/search", array("query" => $query));
 		
-		// build page
-		$page_data = $title . $search . $result;
-		
-	    $body = elgg_view_layout("two_column_left_sidebar", '', $page_data);
+	    $body = elgg_view_layout("one_sidebar", array("title" => $title_text,"content" => $search . $result));
 		
 		// Display page
-		page_draw($title_text,$body);
+		echo elgg_view_page($title_text,$body);
 	}

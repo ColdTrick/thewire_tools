@@ -1,8 +1,8 @@
 <?php 
 
-	$guid = (int) get_input("guid", 0);
+	$guid = sanitise_int(get_input("guid", 0), false);
 
-	if(($wire = get_entity($guid)) && ($wire->getSubtype() == "thewire")){
+	if(($wire = get_entity($guid)) && elgg_instanceof($wire, "object", "thewire")){
 		
 		if(!empty($wire->conversation)){
 			$options = array(
@@ -28,16 +28,15 @@
 		
 		if(!empty($entities)){
 			// set context to conversation mode
-			$context = get_context();
-			set_context("thewire_tools_conversation");
+			elgg_set_context("thewire_tools_conversation");
 			
 			echo elgg_view_entity_list($entities, count($entities), 0, count($entities), false, false, false);
 			
 			// restore context
-			set_context($context);
+			elgg_pop_context($context);
 		} else {
-			echo elgg_view("page_elements/contentwrapper", array("body" => elgg_echo("notfound")));
+			echo elgg_echo("notfound");
 		}
 	} else {
-		echo elgg_view("page_elements/contentwrapper", array("body" => elgg_echo("notfound")));
+		echo elgg_echo("notfound");
 	}

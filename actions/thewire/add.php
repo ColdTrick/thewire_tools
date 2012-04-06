@@ -7,11 +7,8 @@
 	 */
 
 	global $THEWIRE_TOOLS_ENABLE_GROUP;
-
-	// Make sure we're logged in (send us to the front page if not)
-	gatekeeper();
 	
-	$user = get_loggedin_user();
+	$user = elgg_get_logged_in_user_entity();
 	
 	// Get input data
 	$body = get_input("note");

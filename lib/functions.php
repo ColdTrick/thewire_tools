@@ -48,7 +48,7 @@
 	}
 
 	function thewire_tools_save_post($post, $access_id, $parent = 0, $method = "site", $container_guid = 0, $reply_guid = 0, $conversation = 0){
-		$user_guid = get_loggedin_userid();
+		$user_guid = elgg_get_logged_in_user_guid();
 	
 		if(empty($container_guid)){
 			$container_guid = $user_guid;
@@ -94,7 +94,7 @@
 					'message' => $thewire->description
 			);
 	
-			trigger_plugin_hook('tweet', 'twitter_service', $params);
+			elgg_trigger_plugin_hook('tweet', 'twitter_service', $params);
 		}
 	
 		return $save;

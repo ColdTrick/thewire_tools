@@ -8,77 +8,69 @@
 	function thewire_tools_init(){
 		global $THEWIRE_TOOLS_ENABLE_GROUP;
 		
-		if(is_plugin_enabled("thewire")){
-			// extend CSS
-			elgg_extend_view("css", "thewire_tools/css");
-			elgg_extend_view("js/initialise_elgg", "thewire_tools/js");
-				
-			// overrule thewire add action
-			register_action("thewire/add", false, dirname(__FILE__) . "/actions/thewire/add.php");
-			register_action("thewire/delete", false, dirname(__FILE__) . "/actions/thewire/delete.php");
-				
-			// extend thewire pagehandler
-			thewire_tools_extend_page_handler("thewire", "thewire_tools_page_handler");
-				
-			// overrule url handler
-			register_entity_url_handler("thewire_tools_url_handler", "object", "thewire");
-				
-			if(get_plugin_setting("enable_group", "thewire_tools") == "yes"){
-				$THEWIRE_TOOLS_ENABLE_GROUP = true;
-				// add widget (for Widget Manager only)
-				add_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), "groups", true);
-				
-				if(is_callable("add_widget_title_link")){
-					add_widget_title_link("thewire_groups", "[BASEURL]pg/thewire/groups/[GUID]");
-				}
-				
-				// add group tool option
-				add_group_tool_option("thewire", elgg_echo("thewire_tools:groups:tool_option"), true);
+		// extend CSS
+		elgg_extend_view("css/elgg", "thewire_tools/css");
+		elgg_extend_view("js/elgg", "thewire_tools/js");
+			
+		// overrule thewire add action
+		elgg_register_action("thewire/add", dirname(__FILE__) . "/actions/thewire/add.php");
+		elgg_register_action("thewire/delete", dirname(__FILE__) . "/actions/thewire/delete.php");
+			
+		// extend thewire pagehandler
+		thewire_tools_extend_page_handler("thewire", "thewire_tools_page_handler");
+			
+		// overrule url handler
+		elgg_register_entity_url_handler("thewire_tools_url_handler", "object", "thewire");
+			
+		if(elgg_get_plugin_setting("enable_group", "thewire_tools") == "yes"){
+			$THEWIRE_TOOLS_ENABLE_GROUP = true;
+			// add widget (for Widget Manager only)
+			elgg_register_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), "groups", true);
+			
+			if(is_callable("widget_manager_add_widget_title_link")){
+				widget_manager_add_widget_title_link("thewire_groups", "[BASEURL]pg/thewire/groups/[GUID]");
 			}
 			
-			// adds wire post form to the wire widget
-			if(isloggedin() && (get_plugin_setting("extend_widgets", "thewire_tools") != "no")){
-				elgg_extend_view("widgets/thewire/view", "thewire_tools/thewire_post", 400);
-				elgg_extend_view("widgets/index_thewire/view", "thewire_tools/thewire_post", 400);
-			}
-			
-			// add some extra widgets (for Widget Manager only)
-			add_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);
-			add_widget_type("thewire_post", elgg_echo("widgets:thewire_post:title"), elgg_echo("widgets:thewire_post:description"), "index,dashboard", false);
-			if(is_callable("add_widget_title_link")){
-				add_widget_title_link("index_thewire", "[BASEURL]pg/thewire/all/");
-				add_widget_title_link("thewire_post", "[BASEURL]pg/thewire/all/");
-			}
+			// add group tool option
+			add_group_tool_option("thewire", elgg_echo("thewire_tools:groups:tool_option"), true);
+		}
+		
+		// adds wire post form to the wire widget
+		if(elgg_is_logged_in() && (elgg_get_plugin_setting("extend_widgets", "thewire_tools") != "no")){
+			elgg_extend_view("widgets/thewire/view", "thewire_tools/thewire_post", 400);
+			elgg_extend_view("widgets/index_thewire/view", "thewire_tools/thewire_post", 400);
+		}
+		
+		// add some extra widgets (for Widget Manager only)
+		elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);
+		elgg_register_widget_type("thewire_post", elgg_echo("widgets:thewire_post:title"), elgg_echo("widgets:thewire_post:description"), "index,dashboard", false);
+		if(is_callable("widget_manager_add_widget_title_link")){
+			widget_manager_add_widget_title_link("index_thewire", "[BASEURL]thewire/all/");
+			widget_manager_add_widget_title_link("thewire_post", "[BASEURL]thewire/all/");
 		}
 	}
 	
 	function thewire_tools_pagesetup(){
-		global $CONFIG, $THEWIRE_TOOLS_ENABLE_GROUP;
-	
-		if(is_plugin_enabled("thewire")){
-			$page_owner = page_owner_entity();
-			$user = get_loggedin_user();
-			$context = get_context();
-				
-			if(!empty($user) && ($page_owner instanceof ElggGroup) && ($context == "groups")){
-				if($THEWIRE_TOOLS_ENABLE_GROUP && ($page_owner->thewire_enable != "no")){
-					add_submenu_item(elgg_echo("thewire_tools:menu:group"), $CONFIG->wwwroot . "pg/thewire/group/" . $page_owner->getGUID());
-				}
+		$page_owner = elgg_get_page_owner_entity();
+		$user = elgg_get_logged_in_user_entity();
+
+		if(!empty($user) && ($page_owner instanceof ElggGroup) && elgg_in_context("groups")){
+			if((elgg_get_plugin_setting("enable_group", "thewire_tools") == "yes") && ($page_owner->thewire_enable != "no")){
+				add_submenu_item(elgg_echo("thewire_tools:menu:group"), "thewire/group/" . $page_owner->getGUID());
 			}
-			
-			// cleanup group widget
-			if(($page_owner instanceof ElggGroup) && ($page_owner->thewire_enable == "no")){
-				remove_widget_type("thewire_groups");
-			}
-			
-			if(!empty($user) && ($context == "thewire")){
-				add_submenu_item(elgg_echo("thewire_tools:menu:mentions"), $CONFIG->wwwroot . "pg/thewire/search/@" . $user->username);
-			}
-			
-			if($context == "thewire"){
-				add_submenu_item(elgg_echo("search"), $CONFIG->wwwroot . "pg/thewire/search/");
-			}
-				
+		}
+		
+		// cleanup group widget
+		if(($page_owner instanceof ElggGroup) && ($page_owner->thewire_enable == "no")){
+			elgg_unregister_widget_type("thewire_groups");
+		}
+		
+		if(!empty($user) && elgg_in_context("thewire")){
+			add_submenu_item(elgg_echo("thewire_tools:menu:mentions"), "thewire/search/@" . $user->username);
+		}
+		
+		if(elgg_in_context("thewire")){
+			add_submenu_item(elgg_echo("search"), "thewire/search/");
 		}
 	}
 	
@@ -143,24 +135,23 @@
 				return thewire_tools_fallback_page_handler($page, $handler);
 			break;
 		}
+		return true;
 	}
 	
 	function thewire_tools_url_handler($entity){
-		global $CONFIG;
-		
 		if($entity->getContainerEntity() instanceof ElggGroup){
-			$entity_url = $CONFIG->url . "pg/thewire/group/" . $entity->getContainer();
+			$entity_url = elgg_get_site_url(). "thewire/group/" . $entity->getContainer();
 		} else {
-			$entity_url = $CONFIG->url . "pg/thewire/owner/" . $entity->getOwnerEntity()->username;
+			$entity_url = elgg_get_site_url() . "thewire/owner/" . $entity->getOwnerEntity()->username;
 		}
 		
 		return $entity_url;
 	}
 
 	// register default Elgg events
-	register_elgg_event_handler("init", "system", "thewire_tools_init");
-	register_elgg_event_handler("pagesetup", "system", "thewire_tools_pagesetup");
+	elgg_register_event_handler("init", "system", "thewire_tools_init");
+	elgg_register_event_handler("pagesetup", "system", "thewire_tools_pagesetup");
 
 	// register events
-	register_elgg_event_handler("create", "object", "thewire_tools_create_object_event_handler");
+	elgg_register_event_handler("create", "object", "thewire_tools_create_object_event_handler");
 	
