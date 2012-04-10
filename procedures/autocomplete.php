@@ -8,9 +8,9 @@
 	if(elgg_is_logged_in()){
 		$q = get_input("q");
 		$limit = (int) get_input("limit", 50);
-		$group_guid = (int) get_input("group_guid");
+		$page_owner_guid = (int) get_input("page_owner_guid");
 		
-		$result = "";
+		$result = array();
 		
 		if(!empty($q)){
 			if(substr($q, 0, 1) == "@"){
@@ -25,7 +25,7 @@
 					"order_by" => "ue.name ASC"
 				);
 				
-				if(($group = get_entity($group_guid)) && ($group instanceof ElggGroup)){
+				if(($group = get_entity($page_owner_guid)) && ($group instanceof ElggGroup)){
 					$options["relationship"] = "member";
 					$options["relationship_guid"] = $group->getGUID();
 					$options["inverse_relationship"] = true;
@@ -45,7 +45,12 @@
 				
 				if($users = elgg_get_entities_from_relationship($options)){
 					foreach($users as $user){
-						$result .= "user|" . $user->username . "|" . $user->name . "|" . $user->getIcon("tiny") . "\n";
+						$result[] = array(
+							"type" => "user",
+							"username" => $user->username,
+							"name" => $user->name,
+							"icon" => $user->getIconURL("tiny")
+						);
 					}
 				}
 			} elseif(substr($q, 0, 1) == "#") {
@@ -78,12 +83,13 @@
 					
 					natcasesort($metadata);
 					foreach($metadata as $md){
-						$result .= "hashtag|" . $md . "\n";
+						$result[] = array("type" => "hashtag", "value" => $md);
 					}
 				}
 			}
 		}
-		
-		echo $result;
+		header("Content-Type: application/json");
+		echo json_encode(array_values($result));
+		exit();
 	}
 	

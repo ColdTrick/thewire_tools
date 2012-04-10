@@ -8,11 +8,11 @@
 	}
 	
 	echo "<div>";
-	echo elgg_echo("widgets:thewire_groups:count");
-	echo "&nbsp;" . elgg_view("input/pulldown", array("internalname" => "params[wire_count]", "options" => range(1, 10), "value" => $count));
+	echo elgg_echo("thewire:num");
+	echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[wire_count]", "options" => range(1, 10), "value" => $count));
 	echo "</div>";
 	
 	echo "<div>";
 	echo elgg_echo("widgets:thewire:filter");
-	echo "&nbsp;" . elgg_view("input/text", array("internalname" => "params[filter]", "value" => $widget->filter));
+	echo "&nbsp;" . elgg_view("input/text", array("name" => "params[filter]", "value" => $widget->filter));
 	echo "</div>";

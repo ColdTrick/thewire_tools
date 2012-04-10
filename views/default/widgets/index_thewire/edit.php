@@ -8,12 +8,16 @@
 	}
 
 ?>
-<div><?php echo elgg_echo("widgets:index_thewire:wire_count"); ?></div>
-<input type="text" name="params[wire_count]" value="<?php echo elgg_view("output/text", array("value" => $count)); ?>" size="4" maxlength="4" />
-
 <div>
 	<?php 
+		echo elgg_echo("thewire:num"); 
+		echo elgg_view("input/text", array("name" => "params[wire_count]", "value" => $count, "size" => 4, "maxlength" => 4));
+	?>
+</div>
+
+<div>
+	<?php
 		echo elgg_echo("widgets:thewire:filter");
-		echo "&nbsp;" . elgg_view("input/text", array("internalname" => "params[filter]", "value" => $widget->filter));
+		echo "&nbsp;" . elgg_view("input/text", array("name" => "params[filter]", "value" => $widget->filter));
 	?>
 </div>

@@ -18,6 +18,12 @@
 		<name>thewire</name>
 	</requires>
 	
+	<requires>
+		<type>priority</type>
+		<plugin>thewire</plugin>
+		<priority>after</priority>
+	</requires>
+	
  	<category>ColdTrick</category>
  	<category>Content</category>
 </plugin_manifest>

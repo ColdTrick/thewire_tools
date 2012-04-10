@@ -2,15 +2,16 @@
 
 	$query = get_input("query", get_input("q"));
 	
-	$entities_only = (int) get_input("entities_only", 0);
-	
 	$options = array(
 		'types' => 'object', 
 		'subtypes' => 'thewire',
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
-		'pagination' => FALSE
+		'pagination' => true
 	);
+	
+	elgg_push_breadcrumb(elgg_echo('thewire'), "thewire/all");
+	elgg_push_breadcrumb(elgg_echo("thewire_tools:search:title:no_query"));
 	
 	if(!empty($query)){
 		$options["joins"] = array("JOIN " . elgg_get_config("dbprefix") . "objects_entity oe ON e.guid = oe.guid");
@@ -26,20 +27,12 @@
 			}
 		}
 		
-		$entities_list = elgg_list_entities($options);
-		$result .= $entities_list;
-		
-		$options["count"] = TRUE;
-		$entities_count = elgg_get_entities($options);
-		
-		if(($entities_count - ($options['offset'] + $options['limit'])) > 0){
-			$result .= elgg_view("thewire_tools/pagination", array("options" => $options));
+		if($entities_list = elgg_list_entities($options)){
+			$result = $entities_list;
 		} else {
-			if($entities_count == 0){
-				$result .= elgg_view("page_elements/contentwrapper", array("body" => elgg_echo("notfound")));
-			}
+			$result = elgg_echo("notfound");
 		}
-		
+				
 		// set title
 		$title_text = elgg_echo("thewire_tools:search:title", array($query));
 	} else {
@@ -47,13 +40,8 @@
 		$result = elgg_echo("thewire_tools:search:no_query");
 	}
 	
-	if($entities_only){
-		echo $result;	
-	} else {
-		$search = elgg_view("thewire_tools/forms/search", array("query" => $query));
-		
-	    $body = elgg_view_layout("one_sidebar", array("title" => $title_text,"content" => $search . $result));
-		
-		// Display page
-		echo elgg_view_page($title_text,$body);
-	}
+	$form = elgg_view_form("thewire/search", array("id" => "thewire_tools_search_form", "action" => "thewire/search", "disable_security" => true, "method" => "GET") ,array("query" => $query));
+    $body = elgg_view_layout("one_sidebar", array("title" => $title_text,"content" => $form . $result));
+	
+	// Display page
+	echo elgg_view_page($title_text,$body);
