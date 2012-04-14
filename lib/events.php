@@ -18,7 +18,7 @@ function thewire_tools_create_object_event_handler($event, $type, $object){
 			foreach($usernames as $username){
 				$username = str_ireplace("@", "", $username);
 				
-				if(($user = get_user_by_username($username)) && ($user->getGUID() != $object->getOwner())){
+				if(($user = get_user_by_username($username)) && ($user->getGUID() != $object->getOwnerGUID())){
 					if(elgg_get_plugin_user_setting("notify_mention", $user->getGUID(), "thewire_tools") == "yes"){
 						$subject = elgg_echo("thewire_tools:notify:mention:subject");
 						$message = elgg_echo("thewire_tools:notify:mention:message", array(
