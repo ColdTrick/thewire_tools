@@ -22,6 +22,3 @@ Extend the functionality of The Wire
 - share on the wire
 - Ajax pagination (more button)
 - move autocomplete to an action
-
-- migrate conversation thread id to wire_thread // runonce
-- 

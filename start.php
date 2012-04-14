@@ -39,6 +39,8 @@
 		}
 		
 		elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_tools_register_entity_menu_items');
+		
+		run_function_once("thewire_tools_runonce");
 	}
 	
 	function thewire_tools_pagesetup(){
@@ -77,6 +79,18 @@
 		}
 		
 		return $entity_url;
+	}
+	
+	function thewire_tools_runonce(){
+		$conversation_id = add_metastring("conversation");
+		$wire_thread_id = add_metastring("wire_thread");
+		$subtype_id = get_subtype_id("object", "thewire");
+		
+		$query = "UPDATE " . elgg_get_config("dbprefix") . "metadata SET name_id = " . $wire_thread_id;
+		$query .= " WHERE name_id = " . $conversation_id . " AND entity_guid IN";
+		$query .= " (SELECT guid FROM " . elgg_get_config("dbprefix") . "entities WHERE type = 'object' AND subtype = " . $subtype_id . ")";
+
+		update_data($query);
 	}
 
 	// register default Elgg events

@@ -59,7 +59,6 @@ elgg.thewire_tools.init = function() {
 				autoFocus: true
 			}).data( "autocomplete" )._renderItem = function( ul, item ) {
 				var list_body = "";
-				console.log(item);
 				if(item.type == "user"){
 					list_body = "<img src='" + item.icon + "' /> " + item.name;
 				} else {
