@@ -77,6 +77,9 @@
 		return $entity_url;
 	}
 	
+	/**
+	 * Runonce to convert the pre Elgg 1.8 wire tools conversations to the new wire_threads
+	 */
 	function thewire_tools_runonce(){
 		$conversation_id = add_metastring("conversation");
 		$wire_thread_id = add_metastring("wire_thread");
