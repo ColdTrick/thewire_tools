@@ -149,3 +149,28 @@ function thewire_tools_forward_hook($hook_name, $entity_type, $return, $params){
 		return $_SERVER['HTTP_REFERER'];
 	}
 }
+
+/**
+ * returns the correct widget title
+ * 
+ * @param unknown_type $hook_name
+ * @param unknown_type $entity_type
+ * @param unknown_type $return
+ * @param unknown_type $params
+ */
+function thewire_tools_widget_title_url($hook_name, $entity_type, $return, $params){
+	$result = $return_value;
+	$widget = $params["entity"];
+	if(empty($result) && ($widget instanceof ElggWidget)){
+		switch($widget->handler) {
+			case "index_thewire":
+			case "thewire_post":
+				$result = "/thewire/all";
+				break;
+			case "thewire_groups":
+				$result = "/thewire/group/" . $widget->getOwnerGUID();
+				break;
+		}
+	}
+	return $result;
+}

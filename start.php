@@ -13,9 +13,6 @@
 		if(elgg_get_plugin_setting("enable_group", "thewire_tools") == "yes"){
 			// add widget (for Widget Manager only)
 			elgg_register_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), "groups", true);
-			if(is_callable("widget_manager_add_widget_title_link")){
-				widget_manager_add_widget_title_link("thewire_groups", "[BASEURL]thewire/group/[GUID]");
-			}
 			
 			// add group tool option
 			add_group_tool_option("thewire", elgg_echo("thewire_tools:groups:tool_option"), true);
@@ -33,10 +30,9 @@
 		// add some extra widgets (for Widget Manager only)
 		elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);
 		elgg_register_widget_type("thewire_post", elgg_echo("widgets:thewire_post:title"), elgg_echo("widgets:thewire_post:description"), "index,dashboard", false);
-		if(is_callable("widget_manager_add_widget_title_link")){
-			widget_manager_add_widget_title_link("index_thewire", "[BASEURL]thewire/all/");
-			widget_manager_add_widget_title_link("thewire_post", "[BASEURL]thewire/all/");
-		}
+		
+		// register hook for widget titles
+		elgg_register_plugin_hook_handler('widget_url', 'widget_manager', "thewire_tools_widget_title_url");
 		
 		elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_tools_register_entity_menu_items');
 		
