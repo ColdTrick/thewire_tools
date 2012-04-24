@@ -22,10 +22,8 @@
 		}
 		
 		// adds wire post form to the wire widget
-		if(elgg_is_logged_in() && (elgg_get_plugin_setting("extend_widgets", "thewire_tools") != "no")){
-			elgg_extend_view("widgets/thewire/content", "thewire_tools/thewire_post", 400);
-			elgg_extend_view("widgets/index_thewire/content", "thewire_tools/thewire_post", 400);
-		}
+		elgg_extend_view("widgets/thewire/content", "thewire_tools/thewire_post", 400);
+		elgg_extend_view("widgets/index_thewire/content", "thewire_tools/thewire_post", 400);
 		
 		// add some extra widgets (for Widget Manager only)
 		elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);
