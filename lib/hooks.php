@@ -163,6 +163,9 @@ function thewire_tools_widget_title_url($hook_name, $entity_type, $return, $para
 	$widget = $params["entity"];
 	if(empty($result) && ($widget instanceof ElggWidget)){
 		switch($widget->handler) {
+			case "thewire":
+				$result = "/thewire/owner/" . $widget->getOwnerEntity()->username;
+				break;
 			case "index_thewire":
 			case "thewire_post":
 				$result = "/thewire/all";
