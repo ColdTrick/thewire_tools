@@ -159,7 +159,7 @@ function thewire_tools_forward_hook($hook_name, $entity_type, $return, $params){
  * @param unknown_type $params
  */
 function thewire_tools_widget_title_url($hook_name, $entity_type, $return, $params){
-	$result = $return_value;
+	$result = $return;
 	$widget = $params["entity"];
 	if(empty($result) && ($widget instanceof ElggWidget)){
 		switch($widget->handler) {
