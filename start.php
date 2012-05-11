@@ -6,6 +6,7 @@
 	function thewire_tools_init(){
 		
 		elgg_extend_view("js/elgg", "thewire_tools/js/site");
+		elgg_extend_view("css/elgg", "thewire_tools/css/site");
 			
 		// overrule url handler
 		elgg_register_entity_url_handler("thewire_tools_url_handler", "object", "thewire");
@@ -24,6 +25,7 @@
 		// adds wire post form to the wire widget
 		elgg_extend_view("widgets/thewire/content", "thewire_tools/thewire_post", 400);
 		elgg_extend_view("widgets/index_thewire/content", "thewire_tools/thewire_post", 400);
+		elgg_extend_view("core/river/filter", "thewire_tools/activity_post", 400);
 		
 		// add some extra widgets (for Widget Manager only)
 		elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);

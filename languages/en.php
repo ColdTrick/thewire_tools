@@ -11,6 +11,7 @@
 		// settings
 		'thewire_tools:settings:enable_group' => "Enable the wire for groups",
 		'thewire_tools:settings:extend_widgets' => "Extend the wire widget with the option to post update directly from the widget",
+		'thewire_tools:settings:extend_activity' => "Extend the activity page with the wire form",
 	
 		// notification
 		// mention
