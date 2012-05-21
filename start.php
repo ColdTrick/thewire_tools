@@ -97,7 +97,7 @@
 	elgg_register_event_handler("pagesetup", "system", "thewire_tools_pagesetup");
 
 	// register events
-	elgg_register_event_handler("create", "object", "thewire_tools_create_object_event_handler");
+	elgg_register_event_handler("create", "object", "thewire_tools_create_object_event_handler", 100);
 	
 	// register hooks
 	elgg_register_plugin_hook_handler("route", "thewire", "thewire_tools_route_thewire");
