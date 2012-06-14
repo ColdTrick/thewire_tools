@@ -1,4 +1,7 @@
 = Version history =
+x.x:
+
+- fixed: problem with object notifications
 
 2.0 (2012-04-10):
 
