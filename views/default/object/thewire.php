@@ -47,9 +47,9 @@ if(($post->owner_guid != $post->container_guid) && (elgg_get_page_owner_guid() !
 	$subtitle .= " " . elgg_echo("river:ingroup", array($group_link));
 }
 // do not show the metadata and controls in widget view
-if (elgg_in_context('widgets')) {
-	$metadata = '';
-}
+// if (elgg_in_context('widgets')) {
+// 	$metadata = '';
+// }
 
 $params = array(
 	'entity' => $post,

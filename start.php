@@ -35,7 +35,7 @@
 		elgg_register_plugin_hook_handler('widget_url', 'widget_manager', "thewire_tools_widget_title_url");
 		
 		elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_tools_register_entity_menu_items');
-		
+		elgg_register_plugin_hook_handler('register', 'menu:river', 'thewire_tools_register_river_menu_items');
 		run_function_once("thewire_tools_runonce");
 	}
 	

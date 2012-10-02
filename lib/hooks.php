@@ -118,7 +118,7 @@ function thewire_tools_access_write_hook($hook_name, $entity_type, $return, $par
 }
 
 /**
- * removes thread link from thewire entity menu if there is no conversation
+ * Improves entity menu items for thewire objects
  * 
  * @param unknown_type $hook_name
  * @param unknown_type $entity_type
@@ -130,8 +130,10 @@ function thewire_tools_register_entity_menu_items($hook_name, $entity_type, $ret
 	
 	if($entity && elgg_instanceof($entity, "object", "thewire")){
 		if(is_array($return)){
+			
 			foreach($return as $index => $menu_item){
 				if($menu_item->getName() == "thread"){
+					//removes thread link from thewire entity menu if there is no conversation
 					if(!($entity->countEntitiesFromRelationship("parent") || $entity->countEntitiesFromRelationship("parent", true))){
 						unset($return[$index]);
 					}
@@ -139,6 +141,33 @@ function thewire_tools_register_entity_menu_items($hook_name, $entity_type, $ret
 			}
 		}
 		
+		return $return;
+	}
+}
+
+/**
+ * Add wire reply link to river wire entities
+ *
+ * @param unknown_type $hook_name
+ * @param unknown_type $entity_type
+ * @param unknown_type $return
+ * @param unknown_type $params
+ */
+function thewire_tools_register_river_menu_items($hook_name, $entity_type, $return, $params){
+	$entity = $params['item']->getObjectEntity();
+
+	if (elgg_is_logged_in() && !empty($entity) && elgg_instanceof($entity, "object", "thewire")) {
+		if(!is_array($return)){
+			$return = array();
+		}
+		$options = array(
+				'name' => 'reply',
+				'text' => elgg_echo('thewire:reply'),
+				'href' => "thewire/reply/$entity->guid",
+				'priority' => 150,
+		);
+		$return[] = ElggMenuItem::factory($options);
+
 		return $return;
 	}
 }
