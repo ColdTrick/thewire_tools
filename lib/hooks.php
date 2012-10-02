@@ -44,6 +44,14 @@ function thewire_tools_route_thewire($hook_name, $entity_type, $return, $params)
 				}
 				$include_file = "procedures/conversation.php";
 				break;
+			case "reply":
+			case "thread":
+				if(!empty($page[1]) && ($entity = get_entity($page[1]))){
+					if(elgg_instanceof($entity->getContainerEntity(), "group")){
+						elgg_set_page_owner_guid($entity->getContainerGUID());
+					}
+				}
+				break;
 			
 		}
 		if(!empty($include_file)){
