@@ -59,7 +59,7 @@ switch($owner){
 
 if(empty($error) && !empty($filter)){
 	$filters = string_to_tag_array($filter);
-	array_walk($filters, "sanitise_string");
+	$filters = array_map("sanitise_string", $filters);
 	
 	$options["joins"] = array("JOIN " . elgg_get_config("dbprefix") . "objects_entity oe ON oe.guid = e.guid");
 	$options["wheres"] = array("(oe.description LIKE '%" . implode("%' OR oe.description LIKE '%", $filters) . "%')");

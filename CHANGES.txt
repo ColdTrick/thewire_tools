@@ -2,6 +2,7 @@
 x.x:
 
 - fixed: problem with object notifications
+- fixed: possible SQL injection in widgets
 - changed: setting page_owner on reply and thread page in case of group
 
 2.0 (2012-04-10):
