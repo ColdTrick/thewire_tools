@@ -1,9 +1,16 @@
 = Version history =
-x.x:
 
+2.1 (2013-04-05):
+
+- added: plugin setting to extend the activity page with a wire post form
+- added: widget title url for default thewire widget
+- added: runonce for migration Elgg 1.7 -> 1.8
+- changed: thewire reply link now visible in river events
+- changed: entity menu for wire post will show up in widgets
+- changed: setting page_owner on reply and thread page in case of group
 - fixed: problem with object notifications
 - fixed: possible SQL injection in widgets
-- changed: setting page_owner on reply and thread page in case of group
+- fixed: not correctly presenting user setting
 
 2.0 (2012-04-10):
 
