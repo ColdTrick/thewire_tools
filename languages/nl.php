@@ -1,5 +1,6 @@
 <?php
 $language = array (
+  'thewire_tools:settings:extend_activity' => 'Voeg het The Wire formulier toe aan de activiteiten pagina',
   'thewire_tools:login_required' => 'Je moet zijn aangemeld om deze functionaliteit te kunnen gebruiken',
   'thewire_tools:groups:tool_option' => 'Schakel The Wire voor deze groep in',
   'thewire_tools:groups:error:not_enabled' => 'The Wire is voor deze groep uitgeschakeld',
@@ -13,7 +14,7 @@ $language = array (
   'thewire_tools:notify:mention:subject' => 'Je bent vermeld op The Wire',
   'thewire_tools:notify:mention:message' => 'Beste %s,
 
-%s heeft je vermeld in zijn/haar Wire bericht. 
+%s heeft je vermeld in zijn/haar Wire bericht.
 
 Om je vermeldingen op The Wire te bekijken klik op onderstaande link:
 %s',
