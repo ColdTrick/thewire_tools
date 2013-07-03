@@ -21,7 +21,7 @@ elgg.thewire_tools.init = function() {
 			})
 			.autocomplete({
 				source: function( request, response ) {
-					$.getJSON( "/thewire/autocomplete", {
+					$.getJSON( elgg.get_site_url() + "thewire/autocomplete", {
 						q: extractLast( request.term ),
 						page_owner_guid: elgg.get_page_owner_guid()
 					}, response );
@@ -30,7 +30,7 @@ elgg.thewire_tools.init = function() {
 					// custom minLength
 					var term = extractLast( this.value );
 					var firstChar = term.substring(0,1);
-		
+
 					if (( term.length > 1) && (firstChar == "@" || firstChar == "#")) {
 						return true;
 					}
@@ -50,7 +50,7 @@ elgg.thewire_tools.init = function() {
 					} else {
 						terms.push("#" + ui.item.value );
 					}
-					
+
 					// add placeholder to get the comma-and-space at the end
 					terms.push( "" );
 					this.value = terms.join( " " );
@@ -64,7 +64,7 @@ elgg.thewire_tools.init = function() {
 				} else {
 					list_body = item.value;
 				}
-			
+
 				return $( "<li></li>" )
 				.data( "item.autocomplete", item )
 				.append( "<a>" + list_body + "</a>" )
