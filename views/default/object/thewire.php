@@ -1,7 +1,7 @@
 <?php
 /**
  * View a wire post
- * 
+ *
  * @uses $vars['entity']
  */
 
@@ -46,16 +46,27 @@ if(($post->owner_guid != $post->container_guid) && (elgg_get_page_owner_guid() !
 	$group_link = elgg_view("output/url", array("href" => "thewire/group/" . $group->getGUID(), "text" => $group->name, "class" => "thewire_tools_object_link"));
 	$subtitle .= " " . elgg_echo("river:ingroup", array($group_link));
 }
-// do not show the metadata and controls in widget view
-// if (elgg_in_context('widgets')) {
-// 	$metadata = '';
-// }
+
+// show text different in widgets
+$text = $post->description;
+if (elgg_in_context("widgets")) {
+	$text = elgg_get_excerpt($text, 140);
+	
+	// show more link?
+	if (substr($text, -3) == "...") {
+		$text .= "&nbsp;" . elgg_view("output/url", array(
+			"text" => elgg_echo("more"),
+			"href" => $post->getURL(),
+			"is_trusted" => true
+		));
+	}
+}
 
 $params = array(
 	'entity' => $post,
 	'metadata' => $metadata,
 	'subtitle' => $subtitle,
-	'content' => thewire_filter($post->description),
+	'content' => thewire_filter($text),
 	'tags' => false,
 );
 $params = $params + $vars;
