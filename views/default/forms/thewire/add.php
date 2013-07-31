@@ -49,7 +49,15 @@ if(thewire_tools_groups_enabled()){
 			// in a group only allow sharing in the current group
 			echo elgg_view('input/hidden', array("name" => "access_id", "value" => $page_owner_entity->group_acl));
 		} else {
-			echo elgg_view('input/access', array("name" => "access_id"));
+			$params = array(
+				"name" => "access_id"
+			);
+			
+			if (elgg_in_context("widgets")) {
+				$params["class"] = "thewire-tools-widget-access";
+			}
+			
+			echo elgg_view('input/access', $params);
 		}
 	}
 }
