@@ -1,5 +1,9 @@
 = Version history =
 
+x.x:
+
+- added: plugin setting to change the max length of a wire post
+
 2.1 (2013-04-05):
 
 - added: plugin setting to extend the activity page with a wire post form

@@ -1,11 +1,16 @@
-<?php 
+<?php
 
-	$plugin = $vars["entity"];
+	$plugin = elgg_extract("entity", $vars);
 	
 	$noyes_options = array(
 		"no" => elgg_echo("option:no"),
 		"yes" => elgg_echo("option:yes")
 	);
+	
+	$wire_length = (int) $plugin->wire_length;
+	if ($wire_length < 1) {
+		$wire_length = 140;
+	}
 
 	// enable group support
 	echo "<div>";
@@ -23,4 +28,11 @@
 	echo "<div>";
 	echo elgg_echo("thewire_tools:settings:extend_activity");
 	echo "&nbsp;" . elgg_view("input/dropdown", array("name" => "params[extend_activity]", "value" => $plugin->extend_activity, "options_values" => $noyes_options));
+	echo "</div>";
+	
+	// Set max wire length
+	// @todo: can be removed in Elgg 1.9
+	echo "<div>";
+	echo elgg_echo("thewire_tools:settings:wire_length");
+	echo elgg_view("input/text", array("name" => "params[wire_length]", "value" => $wire_length));
 	echo "</div>";

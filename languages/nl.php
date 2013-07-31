@@ -1,5 +1,6 @@
 <?php
 $language = array (
+  'thewire_tools:settings:wire_length' => 'Configureer de maximale lengte van een Wire post',
   'thewire_tools:settings:extend_activity' => 'Voeg het The Wire formulier toe aan de activiteiten pagina',
   'thewire_tools:login_required' => 'Je moet zijn aangemeld om deze functionaliteit te kunnen gebruiken',
   'thewire_tools:groups:tool_option' => 'Schakel The Wire voor deze groep in',

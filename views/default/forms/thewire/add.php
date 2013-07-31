@@ -9,6 +9,8 @@ elgg_load_js('elgg.thewire');
 
 $post = elgg_extract('post', $vars);
 
+$wire_length = thewire_tools_get_wire_length();
+
 $text = elgg_echo('post');
 if ($post) {
 	$text = elgg_echo('thewire:reply');
@@ -28,7 +30,7 @@ echo elgg_view('input/plaintext', array(
 ));
 ?>
 <div id="thewire-characters-remaining">
-	<span>140</span> <?php echo elgg_echo('thewire:charleft'); ?>
+	<span><?php echo $wire_length; ?></span> <?php echo elgg_echo('thewire:charleft'); ?>
 </div>
 <div class="elgg-foot mts">
 <?php
@@ -38,7 +40,7 @@ echo elgg_view('input/submit', array(
 	'id' => 'thewire-submit-button',
 ));
 
-if(elgg_get_plugin_setting("enable_group", "thewire_tools") == "yes"){
+if(thewire_tools_groups_enabled()){
 	$page_owner_entity = elgg_get_page_owner_entity();
 	if($post){
 		echo elgg_view('input/hidden', array("name" => "access_id", "value" => $post->access_id));
@@ -48,7 +50,7 @@ if(elgg_get_plugin_setting("enable_group", "thewire_tools") == "yes"){
 			echo elgg_view('input/hidden', array("name" => "access_id", "value" => $page_owner_entity->group_acl));
 		} else {
 			echo elgg_view('input/access', array("name" => "access_id"));
-		}	
+		}
 	}
 }
 

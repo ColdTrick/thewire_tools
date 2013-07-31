@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 	$english = array(
 		'thewire_tools' => "The Wire Tools",
-		'thewire_tools:no_result' => "No wire posts were found",	
+		'thewire_tools:no_result' => "No wire posts were found",
 		'thewire_tools:login_required' => "You need to be logged in to use this feature",
 	
 		// menu
@@ -12,6 +12,7 @@
 		'thewire_tools:settings:enable_group' => "Enable the wire for groups",
 		'thewire_tools:settings:extend_widgets' => "Extend the wire widget with the option to post update directly from the widget",
 		'thewire_tools:settings:extend_activity' => "Extend the activity page with the wire form",
+		'thewire_tools:settings:wire_length' => "Set the max length of a Wire post",
 	
 		// notification
 		// mention
