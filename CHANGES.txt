@@ -3,6 +3,7 @@
 x.x:
 
 - added: plugin setting to change the max length of a wire post
+- changed: README.txt to README.md for better layout in GitHub
 
 2.1 (2013-04-05):
 
