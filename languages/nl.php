@@ -1,7 +1,12 @@
 <?php
 $language = array (
-  'thewire_tools:settings:wire_length' => 'Configureer de maximale lengte van een Wire post',
+  'thewire_tools:general_settings' => 'Algemene instellingen',
+  'thewire_tools:activity_settings' => 'Activiteit instellingen',
+  'thewire_tools:group_settings' => 'Groep-gerelateerde instellingen',
+  'thewire_tools:menu_settings' => 'Menu-items instellingen',
+  'thewire_tools:settings:enable_site_menu_item' => 'Inschakelen website menu-item voor The Wire',
   'thewire_tools:settings:extend_activity' => 'Voeg het The Wire formulier toe aan de activiteiten pagina',
+  'thewire_tools:settings:extend_group_activity' => "Verleng de groepsactiviteit pagina met de draad vorm",
   'thewire_tools:login_required' => 'Je moet zijn aangemeld om deze functionaliteit te kunnen gebruiken',
   'thewire_tools:groups:tool_option' => 'Schakel The Wire voor deze groep in',
   'thewire_tools:groups:error:not_enabled' => 'The Wire is voor deze groep uitgeschakeld',
@@ -11,7 +16,14 @@ $language = array (
   'thewire_tools:no_result' => 'Geen Wire berichten gevonden',
   'thewire_tools:menu:mentions' => 'Vermeldingen',
   'thewire_tools:settings:enable_group' => 'Schakel The Wire in voor groepen',
+  'thewire_tools:settings:enable_group_menu_item' => "Inschakelen groep menu-item voor The Wire",
   'thewire_tools:settings:extend_widgets' => 'Breidt The Wire widget uit met de optie om direct een bericht te kunnen plaatsen',
+  'thewire_tools:settings:textarea_label' => 'Textarea label',
+  'thewire_tools:settings:textarea_label_hint' => 'Label om naast textarea tonen in widget. U kunt een string handvat schrijven om het te krijgen van taalbestand. Laat leeg om standaard label te gebruiken',
+  'thewire_tools:settings:default_textarea_label' => 'Update uw status',
+  'thewire_tools:settings:group_textarea_label' => 'Groep textarea label',
+  'thewire_tools:settings:group_textarea_label_hint' => 'Label om naast textarea tonen in widget. U kunt een string handvat schrijven om het te krijgen van taalbestand. Laat leeg om standaard label te gebruiken',
+  'thewire_tools:settings:group_default_textarea_label' => 'Schrijf een publicatie',
   'thewire_tools:notify:mention:subject' => 'Je bent vermeld op The Wire',
   'thewire_tools:notify:mention:message' => 'Beste %s,
 

@@ -1,10 +1,9 @@
-<?php
+<?php 
 
 	require_once(dirname(__FILE__) . "/lib/events.php");
-	require_once(dirname(__FILE__) . "/lib/functions.php");
 	require_once(dirname(__FILE__) . "/lib/hooks.php");
 	
-	function thewire_tools_init() {
+	function thewire_tools_init(){
 		
 		elgg_extend_view("js/elgg", "thewire_tools/js/site");
 		elgg_extend_view("css/elgg", "thewire_tools/css/site");
@@ -12,7 +11,7 @@
 		// overrule url handler
 		elgg_register_entity_url_handler("thewire_tools_url_handler", "object", "thewire");
 			
-		if (thewire_tools_groups_enabled()) {
+		if(elgg_get_plugin_setting("enable_group", "thewire_tools") == "yes"){
 			// add widget (for Widget Manager only)
 			elgg_register_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), "groups", true);
 			
@@ -20,13 +19,16 @@
 			add_group_tool_option("thewire", elgg_echo("thewire_tools:groups:tool_option"), true);
 			
 			// add a menu item to the owner block
-			elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'thewire_tools_owner_block_menu');
+			if (elgg_get_plugin_setting('enable_group_menu_item','thewire_tools') == 'yes') {
+				elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'thewire_tools_owner_block_menu');
+			}
 		}
+		   
+		// add The Wire form to activity if set in settings
+        elgg_extend_view('page/layouts/content/header', 'thewire_tools/activity_post', 400);
 		
-		// adds wire post form to the wire widget
 		elgg_extend_view("widgets/thewire/content", "thewire_tools/thewire_post", 400);
-		elgg_extend_view("widgets/index_thewire/content", "thewire_tools/thewire_post", 400);
-		elgg_extend_view("core/river/filter", "thewire_tools/activity_post", 400);
+		elgg_extend_view("widgets/index_thewire/content", "thewire_tools/thewire_post", 400);		
 		
 		// add some extra widgets (for Widget Manager only)
 		elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);
@@ -38,42 +40,38 @@
 		elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_tools_register_entity_menu_items');
 		elgg_register_plugin_hook_handler('register', 'menu:river', 'thewire_tools_register_river_menu_items');
 		run_function_once("thewire_tools_runonce");
-		
-		// overrule default save action
-		elgg_unregister_action("thewire/add");
-		elgg_register_action("thewire/add", dirname(__FILE__) . "/actions/thewire/add.php");
 	}
 	
-	function thewire_tools_pagesetup() {
+	function thewire_tools_pagesetup(){
 		$page_owner = elgg_get_page_owner_entity();
 		
-		if (!empty($page_owner) && elgg_instanceof($page_owner, "group")) {
+		if(!empty($page_owner) && elgg_instanceof($page_owner, "group")){
 			// cleanup group widget
-			if ($page_owner->thewire_enable == "no") {
+			if($page_owner->thewire_enable == "no"){
 				elgg_unregister_widget_type("thewire_groups");
 			}
 		} else {
 			
-			if ($user = elgg_get_logged_in_user_entity()) {
+			if($user = elgg_get_logged_in_user_entity()){
 				elgg_register_menu_item("page", array(
-					"name" => "mentions",
-					"href" => "thewire/search/@" . $user->username,
-					"text" => elgg_echo("thewire_tools:menu:mentions"),
-					"context" => "thewire"
+									"name" => "mentions",
+									"href" => "thewire/search/@" . $user->username,
+									"text" => elgg_echo("thewire_tools:menu:mentions"),
+									"context" => "thewire"
 				));
 			}
 			
 			elgg_register_menu_item("page", array(
-				"name" => "search",
-				"href" => "thewire/search",
-				"text" => elgg_echo("search"),
-				"context" => "thewire"
+											"name" => "search",
+											"href" => "thewire/search",
+											"text" => elgg_echo("search"),
+											"context" => "thewire"
 			));
 		}
 	}
 		
-	function thewire_tools_url_handler($entity) {
-		if ($entity->getContainerEntity() instanceof ElggGroup) {
+	function thewire_tools_url_handler($entity){
+		if($entity->getContainerEntity() instanceof ElggGroup){
 			$entity_url = elgg_get_site_url(). "thewire/group/" . $entity->getContainer();
 		} else {
 			$entity_url = elgg_get_site_url() . "thewire/owner/" . $entity->getOwnerEntity()->username;
@@ -85,7 +83,7 @@
 	/**
 	 * Runonce to convert the pre Elgg 1.8 wire tools conversations to the new wire_threads
 	 */
-	function thewire_tools_runonce() {
+	function thewire_tools_runonce(){
 		$conversation_id = add_metastring("conversation");
 		$wire_thread_id = add_metastring("wire_thread");
 		$subtype_id = get_subtype_id("object", "thewire");
