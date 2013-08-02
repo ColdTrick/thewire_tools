@@ -1,18 +1,30 @@
-<?php
+<?php 
 
 	$english = array(
 		'thewire_tools' => "The Wire Tools",
-		'thewire_tools:no_result' => "No wire posts were found",
+		'thewire_tools:no_result' => "No wire posts were found",	
 		'thewire_tools:login_required' => "You need to be logged in to use this feature",
 	
 		// menu
 		'thewire_tools:menu:mentions' => "Mentions",
 	
 		// settings
+		'thewire_tools:general_settings' => 'General settings',
+		'thewire_tools:activity_settings' => 'Activity settings',
+		'thewire_tools:group_settings' => 'Group-related settings',
+		'thewire_tools:menu_settings' => 'Menu items settings',
+		'thewire_tools:settings:enable_site_menu_item' => 'Enable site menu item for The Wire',
 		'thewire_tools:settings:enable_group' => "Enable the wire for groups",
+		'thewire_tools:settings:enable_group_menu_item' => "Enable group menu item for The Wire",
 		'thewire_tools:settings:extend_widgets' => "Extend the wire widget with the option to post update directly from the widget",
 		'thewire_tools:settings:extend_activity' => "Extend the activity page with the wire form",
-		'thewire_tools:settings:wire_length' => "Set the max length of a Wire post",
+	    'thewire_tools:settings:extend_group_activity' => "Extend the group activity page with the wire form",
+		'thewire_tools:settings:textarea_label' => 'Textarea label',
+		'thewire_tools:settings:textarea_label_hint' => 'Label to show next to textarea in widget. You can write a string handle to get it from language file. Leave empty to use default label',
+		'thewire_tools:settings:default_textarea_label' => 'Update your status',
+		'thewire_tools:settings:group_textarea_label' => 'Group textarea label',
+		'thewire_tools:settings:group_textarea_label_hint' => 'Label to show next to textarea in widget. You can write a string handle to get it from language file. Leave empty to use default label',
+		'thewire_tools:settings:group_default_textarea_label' => 'Write a publication',
 	
 		// notification
 		// mention
@@ -52,8 +64,7 @@ To view your mentions on the wire click here:
 	
 		// the wire (default widget)
 		'widgets:thewire:owner' => "Whos wire post to show",
-		'widgets:thewire:filter' => "Filter wire posts (optional)",
-			
+		'widgets:thewire:filter' => "Filter wire posts (optional)",		
 	);
 
 	add_translation("en", $english);
