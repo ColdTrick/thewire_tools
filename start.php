@@ -27,6 +27,7 @@
 		elgg_extend_view("widgets/thewire/content", "thewire_tools/thewire_post", 400);
 		elgg_extend_view("widgets/index_thewire/content", "thewire_tools/thewire_post", 400);
 		elgg_extend_view("core/river/filter", "thewire_tools/activity_post", 400);
+		elgg_extend_view("page/layouts/content", "thewire_tools/group_activity", 400);
 		
 		// add some extra widgets (for Widget Manager only)
 		elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);
