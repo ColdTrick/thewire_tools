@@ -8,11 +8,13 @@
 		$page_owner = elgg_get_page_owner_entity();
 		$page = get_input("page");
 		
-		// check if we're on the activity page
-		if (strpos($page, "activity/" . $page_owner->getGUID()) === 0) {
-			// check the plugin setting
-			if (elgg_get_plugin_setting("extend_activity", "thewire_tools") == "yes") {
-				$vars["filter"] .= elgg_view_form("thewire/add");
+		if (!empty($page_owner) && elgg_instanceof($page_owner, "group")) {
+			// check if we're on the activity page
+			if (strpos($page, "activity/" . $page_owner->getGUID()) === 0) {
+				// check the plugin setting
+				if (elgg_get_plugin_setting("extend_activity", "thewire_tools") == "yes") {
+					$vars["filter"] .= elgg_view_form("thewire/add");
+				}
 			}
 		}
 	}
