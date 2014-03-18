@@ -101,8 +101,8 @@ function thewire_tools_owner_block_menu($hook_name, $entity_type, $return, $para
  *
  * @param string $hook_name   'access:collections:write'
  * @param string $entity_type 'all'
- * @param array  $return       the current access options
- * @param array  $params       supplied params
+ * @param array  $return      the current access options
+ * @param array  $params      supplied params
  *
  * @return array
  */
