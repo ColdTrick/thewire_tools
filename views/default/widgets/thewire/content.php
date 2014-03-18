@@ -13,14 +13,15 @@ if ($num_display < 1) {
 }
 
 $options = array(
-	"type" => "object", 
-	"subtype" => "thewire", 
-	"limit" => $num_display, 
-	"full_view" => false, 
+	"type" => "object",
+	"subtype" => "thewire",
+	"limit" => $num_display,
+	"full_view" => false,
 	"pagination" => false
 );
 
-switch($owner){
+$more_url = "";
+switch ($owner) {
 	case "friends":
 		// get users friends
 		$friends_options = array(
@@ -33,10 +34,11 @@ switch($owner){
 			"site_guids" => false
 		);
 		
-		if($friends = elgg_get_entities_from_relationship($friends_options)){
+		$friends = elgg_get_entities_from_relationship($friends_options);
+		if (!empty($friends)) {
 			$guids = array();
 			
-			foreach($friends as $friend){
+			foreach ($friends as $friend) {
 				$guids[] = $friend->getGUID();
 			}
 			
@@ -52,12 +54,12 @@ switch($owner){
 		break;
 	default:
 		$options["container_guid"] = $widget->getOwnerGUID();
-		$more_url ="thewire/owner/" . $widget->getOwnerEntity()->username;
-	break;
+		$more_url = "thewire/owner/" . $widget->getOwnerEntity()->username;
+		break;
 }
 
 
-if(empty($error) && !empty($filter)){
+if (empty($error) && !empty($filter)) {
 	$filters = string_to_tag_array($filter);
 	$filters = array_map("sanitise_string", $filters);
 	
@@ -65,7 +67,8 @@ if(empty($error) && !empty($filter)){
 	$options["wheres"] = array("(oe.description LIKE '%" . implode("%' OR oe.description LIKE '%", $filters) . "%')");
 }
 
-if (empty($error) && ($content = elgg_list_entities($options))) {
+$content = elgg_list_entities($options);
+if (empty($error) && !empty($content)) {
 	echo $content;
 	
 	echo "<span class=\"elgg-widget-more\">";

@@ -41,7 +41,7 @@ $metadata = elgg_view_menu('entity', array(
 $subtitle = "$author_text $date";
 
 // check if need to show group
-if(($post->owner_guid != $post->container_guid) && (elgg_get_page_owner_guid() != $post->container_guid)){
+if (($post->owner_guid != $post->container_guid) && (elgg_get_page_owner_guid() != $post->container_guid)) {
 	$group = get_entity($vars["entity"]->container_guid);
 	$group_link = elgg_view("output/url", array("href" => "thewire/group/" . $group->getGUID(), "text" => $group->name, "class" => "thewire_tools_object_link"));
 	$subtitle .= " " . elgg_echo("river:ingroup", array($group_link));

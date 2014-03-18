@@ -1,23 +1,18 @@
-<?php 
+<?php
 
-	$widget = $vars["entity"];
-	
-	$count = (int) $widget->wire_count;
-	if($count < 1){
-		$count = 8;
-	}
+$widget = $vars["entity"];
 
-?>
-<div>
-	<?php 
-		echo elgg_echo("thewire:num"); 
-		echo elgg_view("input/text", array("name" => "params[wire_count]", "value" => $count, "size" => 4, "maxlength" => 4));
-	?>
-</div>
+$count = (int) $widget->wire_count;
+if ($count < 1) {
+	$count = 8;
+}
 
-<div>
-	<?php
-		echo elgg_echo("widgets:thewire:filter");
-		echo "&nbsp;" . elgg_view("input/text", array("name" => "params[filter]", "value" => $widget->filter));
-	?>
-</div>
+echo "<div>";
+echo elgg_echo("thewire:num");
+echo elgg_view("input/text", array("name" => "params[wire_count]", "value" => $count, "size" => 4, "maxlength" => 4));
+echo "</div>";
+
+echo "<div>";
+echo elgg_echo("widgets:thewire:filter");
+echo elgg_view("input/text", array("name" => "params[filter]", "value" => $widget->filter, "class" => "mlm"));
+echo "</div>";
