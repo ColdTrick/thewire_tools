@@ -1,10 +1,11 @@
 = Version history =
 
-x.x:
+2.2 (2013-03-18):
 
 - added: plugin setting to change the max length of a wire post
 - added: wire add form to the group activity page #4
 - changed: README.txt to README.md for better layout in GitHub
+- Applied Elgg coding standards
 
 2.1 (2013-04-05):
 
