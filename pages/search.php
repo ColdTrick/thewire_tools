@@ -14,13 +14,13 @@ $options = array(
 elgg_push_breadcrumb(elgg_echo("thewire"), "thewire/all");
 elgg_push_breadcrumb(elgg_echo("thewire_tools:search:title:no_query"));
 
-if(!empty($query)){
+if (!empty($query)) {
 	$options["joins"] = array("JOIN " . elgg_get_config("dbprefix") . "objects_entity oe ON e.guid = oe.guid");
 	
 	$where_options = explode(" ", $query);
 	if (!empty($where_options)) {
 		$wheres = array();
-		foreach($where_options as $wo){
+		foreach ($where_options as $wo) {
 			$wheres[] = "oe.description LIKE '%" . sanitise_string($wo) . "%'";
 		}
 		
