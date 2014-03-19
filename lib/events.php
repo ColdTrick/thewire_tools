@@ -36,7 +36,7 @@ function thewire_tools_create_object_event_handler($event, $type, $object) {
 							elgg_get_site_url() . "thewire/search/@" . $user->username
 						));
 						
-						notify_user($user->getGUID(), $object->getOwner(), $subject, $message);
+						notify_user($user->getGUID(), $object->getOwnerGUID(), $subject, $message);
 					}
 				}
 			}

@@ -184,7 +184,7 @@ function thewire_tools_register_river_menu_items($hook_name, $entity_type, $retu
 		}
 		$options = array(
 			"name" => "reply",
-			"text" => elgg_echo("thewire:reply"),
+			"text" => elgg_echo("reply"),
 			"href" => "thewire/reply/" . $entity->getGUID(),
 			"priority" => 150,
 		);
@@ -246,4 +246,31 @@ function thewire_tools_widget_title_url($hook_name, $entity_type, $return, $para
 	}
 	
 	return $result;
+}
+
+/**
+ * returns the correct url for a wire object
+ *
+ * @param string $hook_name   'entity:url'
+ * @param string $entity_type 'object'
+ * @param string $return      the current entity url
+ * @param array  $params      supplied params
+ *
+ * @return string the url for the widget
+ */
+function thewire_tools_entity_url_handler($hook_name, $entity_type, $return, $params) {
+	
+	if (!empty($params) && is_array($params)) {
+		$entity = elgg_extract("entity", $params);
+		
+		if (!empty($entity) && elgg_instanceof($entity, "object", "thewire")) {
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+				$return = "thewire/group/" . $entity->getContainerGUID();
+			} else {
+				$return = "thewire/owner/" . $entity->getOwnerEntity()->username;
+			}
+		}
+	}
+	
+	return $return;
 }

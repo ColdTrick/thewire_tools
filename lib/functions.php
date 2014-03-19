@@ -33,8 +33,8 @@ function thewire_tools_get_wire_length() {
 	if (!isset($result)) {
 		$result = 140;
 		
-		$setting = (int) elgg_get_plugin_setting("wire_length", "thewire_tools");
-		if ($setting > 0) {
+		$setting = (int) elgg_get_plugin_setting("limit", "thewire");
+		if ($setting >= 0) {
 			$result = $setting;
 		}
 	}
@@ -99,8 +99,11 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 	$post->container_guid = $container_guid;
 	$post->access_id = $access_id;
 
-	// only xxx characters allowed (see plugin setting)
-	$text = elgg_substr($text, 0, thewire_tools_get_wire_length());
+	// only xxx characters allowed (see plugin setting of thewire, 0 is unlimited)
+	$max_length = thewire_tools_get_wire_length();
+	if ($max_length) {
+		$text = elgg_substr($text, 0, $max_length);
+	}
 
 	// no html tags allowed so we escape
 	$post->description = htmlspecialchars($text, ENT_NOQUOTES, "UTF-8");

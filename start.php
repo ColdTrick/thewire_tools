@@ -20,15 +20,12 @@ elgg_register_event_handler("pagesetup", "system", "thewire_tools_pagesetup");
  */
 function thewire_tools_init() {
 	
-	elgg_extend_view("js/elgg", "thewire_tools/js/site");
-	elgg_extend_view("css/elgg", "thewire_tools/css/site");
-		
-	// overrule url handler
-	elgg_register_entity_url_handler("thewire_tools_url_handler", "object", "thewire");
+	elgg_extend_view("js/elgg", "js/thewire_tools/site");
+	elgg_extend_view("css/elgg", "css/thewire_tools/site");
 		
 	if (thewire_tools_groups_enabled()) {
 		// add widget (for Widget Manager only)
-		elgg_register_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), "groups", true);
+		elgg_register_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), array("groups"), true);
 		
 		// add group tool option
 		add_group_tool_option("thewire", elgg_echo("thewire_tools:groups:tool_option"), true);
@@ -38,14 +35,12 @@ function thewire_tools_init() {
 	}
 	
 	// adds wire post form to the wire widget
-	elgg_extend_view("widgets/thewire/content", "thewire_tools/thewire_post", 400);
-	elgg_extend_view("widgets/index_thewire/content", "thewire_tools/thewire_post", 400);
 	elgg_extend_view("core/river/filter", "thewire_tools/activity_post", 400);
-	elgg_extend_view("page/layouts/content", "thewire_tools/group_activity", 400);
+	elgg_extend_view("page/layouts/elements/filter", "thewire_tools/group_activity", 400);
 	
 	// add some extra widgets (for Widget Manager only)
-	elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);
-	elgg_register_widget_type("thewire_post", elgg_echo("widgets:thewire_post:title"), elgg_echo("widgets:thewire_post:description"), "index,dashboard", false);
+	elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), array("index"), true);
+	elgg_register_widget_type("thewire_post", elgg_echo("widgets:thewire_post:title"), elgg_echo("widgets:thewire_post:description"), array("index", "dashboard"), false);
 	
 	// register events
 	elgg_register_event_handler("create", "object", "thewire_tools_create_object_event_handler", 100);
@@ -59,6 +54,8 @@ function thewire_tools_init() {
 	
 	elgg_register_plugin_hook_handler("register", "menu:entity", "thewire_tools_register_entity_menu_items");
 	elgg_register_plugin_hook_handler("register", "menu:river", "thewire_tools_register_river_menu_items");
+	
+	elgg_register_plugin_hook_handler("entity:url", "object", "thewire_tools_entity_url_handler");
 	
 	// upgrade function
 	run_function_once("thewire_tools_runonce");
@@ -99,23 +96,6 @@ function thewire_tools_pagesetup() {
 			"context" => "thewire"
 		));
 	}
-}
-
-/**
- * Custom URL handler for thewire objects
- *
- * @param ElggEntity $entity the entity to make the URL for
- *
- * @return string the URL
- */
-function thewire_tools_url_handler(ElggEntity $entity) {
-	if ($entity->getContainerEntity() instanceof ElggGroup) {
-		$entity_url = elgg_get_site_url() . "thewire/group/" . $entity->getContainer();
-	} else {
-		$entity_url = elgg_get_site_url() . "thewire/owner/" . $entity->getOwnerEntity()->username;
-	}
-	
-	return $entity_url;
 }
 
 /**
