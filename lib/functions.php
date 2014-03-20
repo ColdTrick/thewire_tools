@@ -45,15 +45,16 @@ function thewire_tools_get_wire_length() {
 /**
  * Save a wire post, overrules the default function because we need to support groups
  *
- * @param string $text        the text of the post
- * @param int    $userid      the owner of the post
- * @param int    $access_id   the access level of the post
- * @param int    $parent_guid is this a reply on another post
- * @param string $method      which method was used
+ * @param string $text         the text of the post
+ * @param int    $userid       the owner of the post
+ * @param int    $access_id    the access level of the post
+ * @param int    $parent_guid  is this a reply on another post
+ * @param string $method       which method was used
+ * @param int    $reshare_guid is the a (re)share of some content item
  *
  * @return bool|int the GUID of the new wire post or false
  */
-function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $method = "site") {
+function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $method = "site", $reshare_guid = 0) {
 	
 	// set correct container
 	$container_guid = $userid;
@@ -122,19 +123,25 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 
 	$guid = $post->save();
 
-	// set thread guid
-	if ($parent_guid) {
-		$post->addRelationship($parent_guid, "parent");
-		
-		// name conversation threads by guid of first post (works even if first post deleted)
-		$parent_post = get_entity($parent_guid);
-		$post->wire_thread = $parent_post->wire_thread;
-	} else {
-		// first post in this thread
-		$post->wire_thread = $guid;
-	}
-
 	if ($guid) {
+		// set thread guid
+		if ($parent_guid) {
+			$post->addRelationship($parent_guid, "parent");
+		
+			// name conversation threads by guid of first post (works even if first post deleted)
+			$parent_post = get_entity($parent_guid);
+			$post->wire_thread = $parent_post->wire_thread;
+		} else {
+			// first post in this thread
+			$post->wire_thread = $guid;
+		}
+		
+		// add reshare
+		if ($reshare_guid) {
+			$post->addRelationship($reshare_guid, "reshare");
+		}
+		
+		// add to river
 		add_to_river("river/object/thewire/create", "create", $post->getOwnerGUID(), $post->getGUID());
 
 		// let other plugins know we are setting a user status

@@ -2,13 +2,13 @@
 /**
  * View a wire post
  *
- * @uses $vars['entity']
+ * @uses $vars["entity"]
  */
 
-elgg_load_js('elgg.thewire');
+elgg_load_js("elgg.thewire");
 
-$full = elgg_extract('full_view', $vars, FALSE);
-$post = elgg_extract('entity', $vars, FALSE);
+$full = elgg_extract("full_view", $vars, FALSE);
+$post = elgg_extract("entity", $vars, FALSE);
 
 if (!$post) {
 	return true;
@@ -22,20 +22,20 @@ if (!$thread_id) {
 
 $owner = $post->getOwnerEntity();
 
-$owner_icon = elgg_view_entity_icon($owner, 'tiny');
-$owner_link = elgg_view('output/url', array(
-	'href' => "thewire/owner/$owner->username",
-	'text' => $owner->name,
-	'is_trusted' => true,
+$owner_icon = elgg_view_entity_icon($owner, "tiny");
+$owner_link = elgg_view("output/url", array(
+	"href" => "thewire/owner/$owner->username",
+	"text" => $owner->name,
+	"is_trusted" => true,
 ));
-$author_text = elgg_echo('byline', array($owner_link));
+$author_text = elgg_echo("byline", array($owner_link));
 $date = elgg_view_friendly_time($post->time_created);
 
-$metadata = elgg_view_menu('entity', array(
-	'entity' => $post,
-	'handler' => 'thewire',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
+$metadata = elgg_view_menu("entity", array(
+	"entity" => $post,
+	"handler" => "thewire",
+	"sort_by" => "priority",
+	"class" => "elgg-menu-hz",
 ));
 
 $subtitle = "$author_text $date";
@@ -54,27 +54,40 @@ if (elgg_in_context("widgets")) {
 	
 	// show more link?
 	if (substr($text, -3) == "...") {
-		$text .= "&nbsp;" . elgg_view("output/url", array(
+		$text .= elgg_view("output/url", array(
 			"text" => elgg_echo("more"),
 			"href" => $post->getURL(),
-			"is_trusted" => true
+			"is_trusted" => true,
+			"class" => "mlm"
 		));
 	}
 }
 
+$content = thewire_filter($text);
+
+// check for reshare entity
+if ($post instanceof ElggObject){
+	
+}
+$reshare = $post->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));
+if (!empty($reshare)) {
+	$content .= "<div class='elgg-divide-left pls'>";
+	$content .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare[0]));
+	$content .= "</div>";
+}
+
 $params = array(
-	'entity' => $post,
-	'metadata' => $metadata,
-	'subtitle' => $subtitle,
-	'content' => thewire_filter($text),
-	'tags' => false,
+	"entity" => $post,
+	"metadata" => $metadata,
+	"subtitle" => $subtitle,
+	"content" => $content,
+	"tags" => false,
 );
 $params = $params + $vars;
-$list_body = elgg_view('object/elements/summary', $params);
+$list_body = elgg_view("object/elements/summary", $params);
 
 echo elgg_view_image_block($owner_icon, $list_body);
 
 if ($post->reply) {
-	echo "<div class=\"thewire-parent hidden\" id=\"thewire-previous-{$post->guid}\">";
-	echo "</div>";
+	echo "<div class='thewire-parent hidden' id='thewire-previous-" . $post->getGUID() . "'></div>";
 }

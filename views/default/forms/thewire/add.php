@@ -9,6 +9,7 @@ elgg_load_js("elgg.thewire");
 
 $post = elgg_extract("post", $vars);
 $char_limit = thewire_tools_get_wire_length();
+$reshare = elgg_extract("reshare", $vars); // for reshare functionality
 
 $text = elgg_echo("post");
 if ($post) {
@@ -22,6 +23,27 @@ if ($post) {
 		"name" => "parent_guid",
 		"value" => $post->guid,
 	));
+}
+
+$reshare_input = "";
+$post_value = "";
+if (!empty($reshare)) {
+	$reshare_input = elgg_view("input/hidden", array(
+		"name" => "reshare_guid",
+		"value" => $reshare->getGUID()
+	));
+	
+	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
+	
+	$title = $reshare->title;
+	if (!empty($title)) {
+		$post_value = $title;
+	} else {
+		$desc = $reshare->description;
+		if (!empty($desc)) {
+			$post_value = elgg_get_excerpt($desc, 140);
+		}
+	}
 }
 
 $count_down = "<span>$char_limit</span> $chars_left";
@@ -38,6 +60,7 @@ $post_input = elgg_view("input/plaintext", array(
 	"class" => "mtm",
 	"id" => "thewire-textarea",
 	"rows" => $num_lines,
+	"value" => $post_value
 ));
 
 $submit_button = elgg_view("input/submit", array(
@@ -71,6 +94,7 @@ if (thewire_tools_groups_enabled()) {
 }
 
 echo <<<HTML
+	$reshare_input
 	$post_input
 <div id="thewire-characters-remaining">
 	$count_down

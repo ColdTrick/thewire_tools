@@ -146,18 +146,58 @@ function thewire_tools_access_write_hook($hook_name, $entity_type, $return, $par
  * @return ElggMenuItem[]
  */
 function thewire_tools_register_entity_menu_items($hook_name, $entity_type, $return, $params) {
-	$entity = elgg_extract("entity", $params, false);
 	
-	if ($entity && elgg_instanceof($entity, "object", "thewire")) {
-		if (is_array($return)) {
-			
-			foreach ($return as $index => $menu_item) {
-				if ($menu_item->getName() == "thread") {
-					//removes thread link from thewire entity menu if there is no conversation
-					if (!($entity->countEntitiesFromRelationship("parent") || $entity->countEntitiesFromRelationship("parent", true))) {
-						unset($return[$index]);
+	if (!empty($params) && is_array($params)) {
+		$entity = elgg_extract("entity", $params, false);
+		
+		if (!empty($entity) && is_array($return)) {
+			if(elgg_instanceof($entity, "object", "thewire")) {
+				
+				foreach ($return as $index => $menu_item) {
+					if ($menu_item->getName() == "thread") {
+						//removes thread link from thewire entity menu if there is no conversation
+						if (!($entity->countEntitiesFromRelationship("parent") || $entity->countEntitiesFromRelationship("parent", true))) {
+							unset($return[$index]);
+						}
 					}
 				}
+			}
+			
+			// add reshare options
+			if (elgg_instanceof($entity, "object")) {
+				elgg_load_js("lightbox");
+				elgg_load_css("lightbox");
+				
+				$postfix = "";
+				$reshare_guid = $entity->getGUID();
+				$reshare = $entity->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));
+				if (!empty($reshare)) {
+					// this is a wire post which is a reshare, so link to original object
+					$reshare_guid = $reshare[0]->getGUID();
+				} else {
+					// check is this item was shared on thewire
+					$count = $entity->getEntitiesFromRelationship(array(
+						"type" => "object",
+						"subtype" => "thewire",
+						"inverse_relationship" => true,
+						"count" => true
+					));
+					
+					if ($count) {
+						// show counter
+						$postfix = "<span class='float-alt'>" . $count . "</span>";
+					}
+				}
+				
+				$return[] = ElggMenuItem::factory(array(
+					"name" => "thewire_tools_reshare",
+					"text" => elgg_view_icon("share") . $postfix,
+					"title" => elgg_echo("thewire_tools:reshare"),
+					"href" => "ajax/view/thewire_tools/reshare?reshare_guid=" . $reshare_guid,
+					"link_class" => "elgg-lightbox",
+					"is_trusted" => true,
+					"priority" => 500
+				));
 			}
 		}
 	}

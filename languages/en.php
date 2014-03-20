@@ -36,7 +36,11 @@ To view your mentions on the wire click here:
 	'thewire_tools:search:title' => "Search the wire for: '%s'",
 	'thewire_tools:search:title:no_query' => "Search the wire",
 	'thewire_tools:search:no_query' => "To search in the wire, please enter your search text above",
-			
+	
+	// reshare
+	'thewire_tools:reshare' => "Share on The Wire",
+	'thewire_tools:reshare:source' => "Source",
+	
 	// widget
 	// thewire_groups
 	'widgets:thewire_groups:title' => "Group wire posts",

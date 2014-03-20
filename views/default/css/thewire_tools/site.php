@@ -15,3 +15,7 @@
 	display: block;
 	background-color: #EEE;
 }
+
+#thewire-tools-reshare-wrapper {
+	width: 600px;
+}

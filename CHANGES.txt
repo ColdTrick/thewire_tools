@@ -1,5 +1,10 @@
 = Version history =
 
+x.x:
+
+- added: option to share content on TheWire
+- changed: made compatible with Elgg 1.9
+
 2.2 (2013-03-18):
 
 - added: plugin setting to change the max length of a wire post
