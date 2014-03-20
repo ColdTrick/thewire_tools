@@ -151,7 +151,7 @@ function thewire_tools_register_entity_menu_items($hook_name, $entity_type, $ret
 		$entity = elgg_extract("entity", $params, false);
 		
 		if (!empty($entity) && is_array($return)) {
-			if(elgg_instanceof($entity, "object", "thewire")) {
+			if (elgg_instanceof($entity, "object", "thewire")) {
 				
 				foreach ($return as $index => $menu_item) {
 					if ($menu_item->getName() == "thread") {

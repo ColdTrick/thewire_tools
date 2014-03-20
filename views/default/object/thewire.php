@@ -66,9 +66,6 @@ if (elgg_in_context("widgets")) {
 $content = thewire_filter($text);
 
 // check for reshare entity
-if ($post instanceof ElggObject){
-	
-}
 $reshare = $post->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));
 if (!empty($reshare)) {
 	$content .= "<div class='elgg-divide-left pls'>";
