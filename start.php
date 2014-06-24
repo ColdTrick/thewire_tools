@@ -58,8 +58,6 @@ function thewire_tools_init() {
 	elgg_register_plugin_hook_handler("register", "menu:entity", "thewire_tools_register_entity_menu_items");
 	elgg_register_plugin_hook_handler("register", "menu:river", "thewire_tools_register_river_menu_items");
 	
-	elgg_register_plugin_hook_handler("entity:url", "object", "thewire_tools_entity_url_handler");
-	
 	// upgrade function
 	run_function_once("thewire_tools_runonce");
 	
