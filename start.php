@@ -54,6 +54,7 @@ function thewire_tools_init() {
 	elgg_register_plugin_hook_handler("forward", "all", "thewire_tools_forward_hook");
 	
 	elgg_register_plugin_hook_handler("widget_url", "widget_manager", "thewire_tools_widget_title_url");
+	elgg_register_plugin_hook_handler("group_tool_widgets", "widget_manager", "thewire_tools_tool_widgets_handler");
 	
 	elgg_register_plugin_hook_handler("register", "menu:entity", "thewire_tools_register_entity_menu_items");
 	elgg_register_plugin_hook_handler("register", "menu:river", "thewire_tools_register_river_menu_items");

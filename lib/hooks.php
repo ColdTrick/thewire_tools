@@ -287,3 +287,43 @@ function thewire_tools_widget_title_url($hook_name, $entity_type, $return, $para
 	
 	return $result;
 }
+
+/**
+ * Add or remove widgets based on the group tool option
+ *
+ * @param string $hook_name   'group_tool_widgets'
+ * @param string $entity_type 'widget_manager'
+ * @param array  $return      current enable/disable widget handlers
+ * @param array  $params      supplied params
+ *
+ * @return array
+ */
+function thewire_tools_tool_widgets_handler($hook_name, $entity_type, $return, $params) {
+	
+	if (!empty($params) && is_array($params)) {
+		$entity = elgg_extract("entity", $params);
+	
+		if (!empty($entity) && elgg_instanceof($entity, "group")) {
+			if (!is_array($return)) {
+				$return = array();
+			}
+				
+			if (!isset($return["enable"])) {
+				$return["enable"] = array();
+			}
+			if (!isset($return["disable"])) {
+				$return["disable"] = array();
+			}
+				
+			// check different group tools for which we supply widgets
+			if ($entity->thewire_enable == "yes") {
+				$return["enable"][] = "thewire_groups";
+			} else {
+				$return["disable"][] = "thewire_groups";
+			}
+			
+		}
+	}
+	
+	return $return;
+}

@@ -3,6 +3,7 @@
 x.x:
 
 - added: option to share content on TheWire
+- added: support for widget_manager group tool based widgets
 - changed: made compatible with Elgg 1.9
 
 2.2 (2013-03-18):
