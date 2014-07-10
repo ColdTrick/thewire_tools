@@ -165,6 +165,8 @@ function thewire_tools_register_entity_menu_items($hook_name, $entity_type, $ret
 			
 			// add reshare options
 			if (elgg_instanceof($entity, "object")) {
+				elgg_load_js("elgg.thewire");
+				
 				elgg_load_js("lightbox");
 				elgg_load_css("lightbox");
 				
