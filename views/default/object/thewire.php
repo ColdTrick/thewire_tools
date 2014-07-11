@@ -63,7 +63,7 @@ if (elgg_in_context("widgets")) {
 	}
 }
 
-$content = thewire_filter($text);
+$content = thewire_tools_filter($text);
 
 // check for reshare entity
 $reshare = $post->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));

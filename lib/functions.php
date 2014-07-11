@@ -157,3 +157,89 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 	
 	return $guid;
 }
+
+/**
+ * Replace urls, hash tags, and @'s by links
+ *
+ * @see thewire_filter()
+ *
+ * @param string $text The text of a post
+ *
+ * @return string
+ */
+function thewire_tools_filter($text) {
+	static $mention_display;
+	$site_url = elgg_get_site_url();
+
+	if (!isset($mention_display)) {
+		$mention_display = "username";
+		if (elgg_get_plugin_setting("mention_display", "thewire_tools") == "displayname") {
+			$mention_display = "displayname";
+		}
+	}
+	
+	$text = ' ' . $text;
+
+	// email addresses
+	$text = preg_replace(
+			'/(^|[^\w])([\w\-\.]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})/i',
+			'$1<a href="mailto:$2@$3">$2@$3</a>',
+			$text);
+
+	// links
+	$text = parse_urls($text);
+
+	// usernames
+	if ($mention_display == "displayname") {
+		$matches = array();
+		$match_count = preg_match_all(
+			'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
+			$text,
+			$matches,
+			PREG_SET_ORDER
+		);
+		
+		if ($match_count > 0) {
+			$proccessed_usernames = array();
+			
+			foreach ($matches as $set) {
+				$replaces = 0;
+				
+				if (in_array($set[2], $proccessed_usernames)) {
+					continue;
+				}
+				
+				$user = get_user_by_username($set[2]);
+				if (empty($user)) {
+					continue;
+				}
+				
+				$replace = " " . elgg_view("output/url", array(
+					"text" => "@" . $user->name,
+					"href" => "thewire/owner/" . $user->username,
+					"is_trusted" => true
+				));
+				
+				$text = str_ireplace($set[0], $replace, $text, $replaces);
+				if ($replaces > 0) {
+					$proccessed_usernames[] = $set[2];
+				}
+			}
+		}
+	} else {
+		$text = preg_replace(
+				'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
+				'$1<a href="' . $site_url . 'thewire/owner/$2">@$2</a>',
+				$text);
+	}
+
+	// hashtags
+	$text = preg_replace(
+			'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
+			'$1<a href="' . $site_url . 'thewire/tag/$2">#$2</a>',
+			$text);
+
+	$text = trim($text);
+
+	return $text;
+}

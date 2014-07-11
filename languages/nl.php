@@ -1,5 +1,15 @@
 <?php
+/**
+ * This file was created by Translation Editor v2.0
+ * On 2014-07-11 11:26
+ */
+
 $language = array (
+  'thewire_tools:settings:mention_display' => 'Hoe moeten vermeldingen worden weergegeven in een Wire post',
+  'thewire_tools:settings:mention_display:username' => '@gebruikersnaam',
+  'thewire_tools:settings:mention_display:displayname' => '@weegavenaam',
+  'thewire_tools:reshare' => 'Deel op The Wire',
+  'thewire_tools:reshare:source' => 'Bron',
   'thewire_tools:settings:wire_length' => 'Configureer de maximale lengte van een Wire post',
   'thewire_tools:settings:extend_activity' => 'Voeg het The Wire formulier toe aan de activiteiten pagina',
   'thewire_tools:login_required' => 'Je moet zijn aangemeld om deze functionaliteit te kunnen gebruiken',

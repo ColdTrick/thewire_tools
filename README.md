@@ -16,12 +16,11 @@ Features
 - Group widget (for use with Widget Manager plugin)
 - Post to the wire widget (index / dashboard) (no entity listing)
 - Optional Extend thewire widgets with a post form
+- Share on the wire
 
 ToDo
 ----
 
 - url shortning
 - post thewire on 'enter' in message
-- share on the wire
 - Ajax pagination (more button)
-- move autocomplete to an action

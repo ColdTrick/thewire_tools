@@ -9,10 +9,13 @@ $english = array(
 	'thewire_tools:menu:mentions' => "Mentions",
 
 	// settings
-	'thewire_tools:settings:enable_group' => "Enable the wire for groups",
-	'thewire_tools:settings:extend_widgets' => "Extend the wire widget with the option to post update directly from the widget",
+	'thewire_tools:settings:enable_group' => "Enable TheWire for groups",
+	'thewire_tools:settings:extend_widgets' => "Extend TheWire widget with the option to post update directly from the widget",
 	'thewire_tools:settings:extend_activity' => "Extend the activity page with the wire form",
 	'thewire_tools:settings:wire_length' => "Set the max length of a Wire post",
+	'thewire_tools:settings:mention_display' => "How to show mentions in a Wire post",
+	'thewire_tools:settings:mention_display:username' => "@username",
+	'thewire_tools:settings:mention_display:displayname' => "@displayname",
 
 	// notification
 	// mention

@@ -1,10 +1,12 @@
-= Version history =
+Version history
+===============
 
 x.x:
 
+- made compatible with Elgg 1.9
 - added: option to share content on TheWire
 - added: support for widget_manager group tool based widgets
-- changed: made compatible with Elgg 1.9
+- added: admin option how to show mentions in wire posts
 
 2.2 (2013-03-18):
 

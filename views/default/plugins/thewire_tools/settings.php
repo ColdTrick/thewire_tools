@@ -7,6 +7,11 @@ $noyes_options = array(
 	"yes" => elgg_echo("option:yes")
 );
 
+$display_options = array(
+	"username" => elgg_echo("thewire_tools:settings:mention_display:username"),
+	"displayname" => elgg_echo("thewire_tools:settings:mention_display:displayname"),
+);
+
 // enable group support
 echo "<div>";
 echo elgg_echo("thewire_tools:settings:enable_group");
@@ -23,4 +28,9 @@ echo "</div>";
 echo "<div>";
 echo elgg_echo("thewire_tools:settings:extend_activity");
 echo elgg_view("input/dropdown", array("name" => "params[extend_activity]", "value" => $plugin->extend_activity, "options_values" => $noyes_options, "class" => "mlm"));
+echo "</div>";
+
+echo "<div>";
+echo elgg_echo("thewire_tools:settings:mention_display");
+echo elgg_view("input/dropdown", array("name" => "params[mention_display]", "value" => $plugin->mention_display, "options_values" => $display_options, "class" => "mlm"));
 echo "</div>";
