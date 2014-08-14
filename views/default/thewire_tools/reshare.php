@@ -11,5 +11,11 @@ if (!empty($reshare) && !elgg_instanceof($reshare, "object")) {
 
 echo "<div id='thewire-tools-reshare-wrapper' class='ui-front'>";
 echo elgg_view_title(elgg_echo("thewire_tools:reshare"));
+
+elgg_push_context("thewire");
+
 echo elgg_view_form("thewire/add", array(), array("reshare" => $reshare));
+
+elgg_pop_context();
+
 echo "</div>";
