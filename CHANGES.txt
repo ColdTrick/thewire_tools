@@ -1,7 +1,7 @@
 Version history
 ===============
 
-x.x:
+3.0 (2014-09-25):
 
 - made compatible with Elgg 1.9
 - added: option to share content on TheWire
