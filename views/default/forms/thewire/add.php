@@ -69,6 +69,7 @@ $submit_button = elgg_view("input/submit", array(
 	"id" => "thewire-submit-button",
 ));
 
+$mentions = "";
 $access_input = "";
 if (thewire_tools_groups_enabled()) {
 
@@ -80,15 +81,16 @@ if (thewire_tools_groups_enabled()) {
 		if ($page_owner_entity instanceof ElggGroup) {
 			// in a group only allow sharing in the current group
 			$access_input = elgg_view("input/hidden", array("name" => "access_id", "value" => $page_owner_entity->group_acl));
+			$mentions = "<div class='elgg-subtext mbn'>" . elgg_echo("thewire_tools:groups:mentions") . "</div>";
 		} else {
 			$params = array(
 				"name" => "access_id"
 			);
-				
+			
 			if (elgg_in_context("widgets")) {
 				$params["class"] = "thewire-tools-widget-access";
 			}
-				
+			
 			$access_input = elgg_view("input/access", $params);
 		}
 	}
@@ -100,6 +102,7 @@ echo <<<HTML
 <div id="thewire-characters-remaining">
 	$count_down
 </div>
+$mentions
 <div class="elgg-foot mts">
 	$parent_input
 	$submit_button

@@ -1,6 +1,10 @@
 Version history
 ===============
 
+x.x:
+
+- changed: autocomplete for site no longer limited to friends
+
 3.0 (2014-09-25):
 
 - made compatible with Elgg 1.9
