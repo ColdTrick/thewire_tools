@@ -1,10 +1,11 @@
 <?php
 /**
  * This file was created by Translation Editor v2.0
- * On 2014-07-11 11:26
+ * On 2014-10-08 17:31
  */
 
-$language = array (
+return array (
+  'thewire_tools:groups:mentions' => 'Vermeldingen zijn beperkt tot groepsleden',
   'thewire_tools:settings:mention_display' => 'Hoe moeten vermeldingen worden weergegeven in een Wire post',
   'thewire_tools:settings:mention_display:username' => '@gebruikersnaam',
   'thewire_tools:settings:mention_display:displayname' => '@weegavenaam',
@@ -41,4 +42,3 @@ Om je vermeldingen op The Wire te bekijken klik op onderstaande link:
   'widgets:thewire_post:title' => 'Plaats op The Wire',
   'widgets:thewire_post:description' => 'Werk je status op The Wire bij via deze widget',
 );
-add_translation("nl", $language);
