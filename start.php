@@ -39,7 +39,7 @@ function thewire_tools_init() {
 	elgg_extend_view("page/layouts/elements/filter", "thewire_tools/group_activity", 400);
 	
 	// settings
-	elgg_extend_view("notifications/subscriptions/personal", "content_subscriptions/notifications/settings");
+	elgg_extend_view("notifications/subscriptions/personal", "thewire_tools/notifications/settings");
 	
 	// register ajax view
 	elgg_register_ajax_view("thewire_tools/reshare");
