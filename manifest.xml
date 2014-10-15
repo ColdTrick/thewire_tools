@@ -27,6 +27,12 @@
 		<priority>after</priority>
 	</requires>
 	
+	<suggests>
+		<type>plugin</type>
+		<name>notifications</name>
+		<version>1.9</version>
+	</suggests>
+	
  	<category>ColdTrick</category>
  	<category>content</category>
 </plugin_manifest>

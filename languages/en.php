@@ -16,7 +16,9 @@ $english = array(
 	'thewire_tools:settings:mention_display' => "How to show mentions in a Wire post",
 	'thewire_tools:settings:mention_display:username' => "@username",
 	'thewire_tools:settings:mention_display:displayname' => "@displayname",
-
+	
+	'thewire_tools:settings:description' => "Receive a notification when you are mentioned in a Wire post",
+	
 	// notification
 	// mention
 	'thewire_tools:notify:mention:subject' => "You've been mentioned on the wire",

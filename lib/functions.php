@@ -243,3 +243,53 @@ function thewire_tools_filter($text) {
 
 	return $text;
 }
+
+/**
+ * Get the subscription methods of the user
+ *
+ * @param int $user_guid the user_guid to check (default: current user)
+ *
+ * @return array
+ */
+function thewire_tools_get_notification_settings($user_guid = 0) {
+
+	$user_guid = sanitise_int($user_guid, false);
+	if (empty($user_guid)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+
+	if (empty($user_guid)) {
+		return array();
+	}
+
+	if (elgg_is_active_plugin("notifications")) {
+		$saved = elgg_get_plugin_user_setting("notification_settings_saved", $user_guid, "thewire_tools");
+		if (!empty($saved)) {
+			$settings = elgg_get_plugin_user_setting("notification_settings", $user_guid, "thewire_tools");
+				
+			if (!empty($settings)) {
+				return string_to_tag_array($settings);
+			}
+				
+			return array();
+		}
+	}
+
+	// default elgg settings
+	$settings = get_user_notification_settings($user_guid);
+
+	if (!empty($settings)) {
+		$settings = (array) $settings;
+		$res = array();
+
+		foreach ($settings as $method => $value) {
+			if (!empty($value)) {
+				$res[] = $method;
+			}
+		}
+
+		return $res;
+	}
+
+	return array();
+}

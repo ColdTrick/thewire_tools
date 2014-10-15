@@ -4,6 +4,7 @@ Version history
 x.x:
 
 - changed: autocomplete for site no longer limited to friends
+- changed: moved mention settings to notification page #7
 
 3.0 (2014-09-25):
 

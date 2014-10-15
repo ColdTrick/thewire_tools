@@ -329,3 +329,51 @@ function thewire_tools_tool_widgets_handler($hook_name, $entity_type, $return, $
 	
 	return $return;
 }
+
+/**
+ * Save the wire_tools preferences for the user
+ *
+ * @param string $hook         the name of the hook
+ * @param stirng $type         the type of the hook
+ * @param array  $return_value the current return value
+ * @param array  $params       supplied values
+ *
+ * @return void
+ */
+function thewire_tools_notifications_settings_save_hook($hook, $type, $return_value, $params) {
+
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
+	if (empty($NOTIFICATION_HANDLERS) || !is_array($NOTIFICATION_HANDLERS)) {
+		return;
+	}
+
+	$user_guid = (int) get_input("guid");
+	if (empty($user_guid)) {
+		return;
+	}
+
+	$user = get_user($user_guid);
+	if (empty($user) || !$user->canEdit()) {
+		return;
+	}
+
+	$methods = array();
+
+	foreach ($NOTIFICATION_HANDLERS as $method) {
+		$setting = get_input("thewire_tools_" . $method);
+
+		if (!empty($setting)) {
+			$methods[] = $method;
+		}
+	}
+
+	if (!empty($methods)) {
+		elgg_set_plugin_user_setting("notification_settings", implode(",", $methods), $user->getGUID(), "thewire_tools");
+	} else {
+		elgg_unset_plugin_user_setting("notification_settings", $user->getGUID(), "thewire_tools");
+	}
+
+	// set flag for correct fallback behaviour
+	elgg_set_plugin_user_setting("notification_settings_saved", "1", $user->getGUID(), "thewire_tools");
+
+}

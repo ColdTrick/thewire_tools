@@ -38,6 +38,9 @@ function thewire_tools_init() {
 	elgg_extend_view("core/river/filter", "thewire_tools/activity_post", 400);
 	elgg_extend_view("page/layouts/elements/filter", "thewire_tools/group_activity", 400);
 	
+	// settings
+	elgg_extend_view("notifications/subscriptions/personal", "content_subscriptions/notifications/settings");
+	
 	// register ajax view
 	elgg_register_ajax_view("thewire_tools/reshare");
 	
@@ -47,6 +50,7 @@ function thewire_tools_init() {
 	
 	// register events
 	elgg_register_event_handler("create", "object", "thewire_tools_create_object_event_handler", 100);
+	elgg_register_event_handler("upgrade", "system", "thewire_tools_upgrade_system_event_handler");
 	
 	// register hooks
 	elgg_register_plugin_hook_handler("route", "thewire", "thewire_tools_route_thewire");
@@ -59,12 +63,15 @@ function thewire_tools_init() {
 	elgg_register_plugin_hook_handler("register", "menu:entity", "thewire_tools_register_entity_menu_items");
 	elgg_register_plugin_hook_handler("register", "menu:river", "thewire_tools_register_river_menu_items");
 	
+	elgg_register_plugin_hook_handler("action", "notificationsettings/save", "thewire_tools_notifications_settings_save_hook");
+	
 	// upgrade function
 	run_function_once("thewire_tools_runonce");
 	
 	// overrule default save action
 	elgg_unregister_action("thewire/add");
 	elgg_register_action("thewire/add", dirname(__FILE__) . "/actions/thewire/add.php");
+	elgg_register_action("thewire_tools/mentions_upgrade", dirname(__FILE__) . "/actions/upgrades/mentions.php");
 }
 
 /**
