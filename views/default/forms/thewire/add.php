@@ -57,8 +57,7 @@ if ($char_limit == 0) {
 
 $post_input = elgg_view("input/plaintext", array(
 	"name" => "body",
-	"class" => "mtm",
-	"id" => "thewire-textarea",
+	"class" => "mtm thewire-textarea",
 	"rows" => $num_lines,
 	"value" => $post_value,
 	"data-max-length" => $char_limit,
@@ -66,7 +65,7 @@ $post_input = elgg_view("input/plaintext", array(
 
 $submit_button = elgg_view("input/submit", array(
 	"value" => $text,
-	"id" => "thewire-submit-button",
+	"class" => "elgg-button elgg-button-submit thewire-submit-button",
 ));
 
 $mentions = "";
@@ -99,7 +98,7 @@ if (thewire_tools_groups_enabled()) {
 echo <<<HTML
 	$reshare_input
 	$post_input
-<div id="thewire-characters-remaining">
+<div class="thewire-characters-remaining">
 	$count_down
 </div>
 $mentions

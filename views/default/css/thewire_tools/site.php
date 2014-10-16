@@ -19,3 +19,14 @@
 #thewire-tools-reshare-wrapper {
 	width: 600px;
 }
+
+.thewire-thread {
+	display: none;
+	margin-left: 5px;
+	padding-left: 5px;
+	border-left: 3px solid #ccc;
+}
+
+.thewire-thread .elgg-list > li:last-child {
+	border: none;
+}

@@ -20,6 +20,13 @@ if (!$thread_id) {
 	$post->wire_thread = $post->guid;
 }
 
+$show_thread = false;
+if (!elgg_in_context("thewire_tools_thread") && !elgg_in_context("thewire_thread")) {
+	if ($post->countEntitiesFromRelationship("parent") || $post->countEntitiesFromRelationship("parent", true)) {
+		$show_thread = true;
+	}
+}
+
 $owner = $post->getOwnerEntity();
 
 $owner_icon = elgg_view_entity_icon($owner, "tiny");
@@ -73,6 +80,14 @@ if (!empty($reshare)) {
 	$content .= "</div>";
 }
 
+if (elgg_is_logged_in() && !elgg_in_context("thewire_tools_thread")) {
+	$form_vars = array(
+		"id" => "thewire-tools-reply-" . $post->getGUID(),
+		"class" => "hidden"
+	);
+	$content .= elgg_view_form("thewire/add", $form_vars, array("post" => $post));
+}
+
 $params = array(
 	"entity" => $post,
 	"metadata" => $metadata,
@@ -85,6 +100,6 @@ $list_body = elgg_view("object/elements/summary", $params);
 
 echo elgg_view_image_block($owner_icon, $list_body);
 
-if ($post->reply) {
-	echo "<div class='thewire-parent hidden' id='thewire-previous-" . $post->getGUID() . "'></div>";
+if ($show_thread) {
+	echo "<div class='thewire-thread' id='thewire-thread-" . $post->getGUID() . "' data-thread='" . $post->wire_thread . "' data-guid='" . $post->getGUID() . "'></div>";
 }

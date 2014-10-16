@@ -43,6 +43,7 @@ function thewire_tools_init() {
 	
 	// register ajax view
 	elgg_register_ajax_view("thewire_tools/reshare");
+	elgg_register_ajax_view("thewire_tools/thread");
 	
 	// add some extra widgets (for Widget Manager only)
 	elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), array("index"), true);
