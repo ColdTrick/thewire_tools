@@ -209,6 +209,7 @@ function thewire_tools_register_entity_menu_items($hook_name, $entity_type, $ret
 			$count = $entity->getEntitiesFromRelationship(array(
 				"type" => "object",
 				"subtype" => "thewire",
+				"relationship" => "reshare",
 				"inverse_relationship" => true,
 				"count" => true
 			));
