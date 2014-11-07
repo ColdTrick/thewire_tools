@@ -109,27 +109,41 @@ function thewire_tools_owner_block_menu($hook_name, $entity_type, $return, $para
  */
 function thewire_tools_access_write_hook($hook_name, $entity_type, $return, $params) {
 	
-	$user = elgg_get_logged_in_user_entity();
-	if (elgg_in_context("thewire") && !empty($user)) {
-		if (is_array($return)) {
-			unset($return[ACCESS_PRIVATE]);
-			unset($return[ACCESS_FRIENDS]);
-			
-			$options = array(
-				"type" => "group",
-				"limit" => false,
-				"relationship" => "member",
-				"relationship_guid" => $user->getGUID()
-			);
-			
-			$groups = elgg_get_entities_from_relationship($options);
-			if (!empty($groups)) {
-				foreach ($groups as $group) {
-					if ($group->thewire_enable !== "no") {
-						$return[$group->group_acl] = $group->name;
-					}
-				}
-			}
+	if (!elgg_in_context("thewire_add")) {
+		return $return;
+	}
+	
+	if (empty($return) || !is_array($return)) {
+		return $return;
+	}
+	
+	if (empty($params) || !is_array($params)) {
+		return $return;
+	}
+	
+	$user_guid = (int) elgg_extract("user_id", $params, elgg_get_logged_in_user_guid());
+	if (empty($user_guid)) {
+		return $return;
+	}
+	
+	// remove unwanted access options
+	unset($return[ACCESS_PRIVATE]);
+	unset($return[ACCESS_FRIENDS]);
+	
+	// add groups (as this hook is only trigged when thewire_groups is enabled
+	$options = array(
+		"type" => "group",
+		"limit" => false,
+		"relationship" => "member",
+		"relationship_guid" => $user_guid,
+		"joins" => array("JOIN " . elgg_get_config("dbprefix") . "groups_entity ge ON e.guid = ge.guid"),
+		"order_by" => "ge.name ASC"
+	);
+	
+	$groups = new ElggBatch("elgg_get_entities_from_relationship", $options);
+	foreach ($groups as $group) {
+		if ($group->thewire_enable !== "no") {
+			$return[$group->group_acl] = $group->name;
 		}
 	}
 	
