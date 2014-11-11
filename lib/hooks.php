@@ -207,7 +207,7 @@ function thewire_tools_register_entity_menu_items($hook_name, $entity_type, $ret
 	
 	// add reshare options
 	$blocked_subtypes = array("comment", "discussion_reply");
-	if (elgg_instanceof($entity, "object") && !in_array($entity->getSubtype(), $blocked_subtypes)) {
+	if ((elgg_instanceof($entity, "object") || elgg_instanceof($entity, "group")) && !in_array($entity->getSubtype(), $blocked_subtypes)) {
 		elgg_load_js("elgg.thewire");
 		
 		elgg_load_js("lightbox");

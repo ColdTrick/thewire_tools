@@ -35,14 +35,12 @@ if (!empty($reshare)) {
 	
 	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
 	
-	$title = $reshare->title;
-	if (!empty($title)) {
-		$post_value = $title;
-	} else {
-		$desc = $reshare->description;
-		if (!empty($desc)) {
-			$post_value = elgg_get_excerpt($desc, 140);
-		}
+	if (!empty($reshare->title)) {
+		$post_value = $reshare->title;
+	} elseif (!empty($reshare->name)) {
+		$post_value = $reshare->name;
+	} elseif (!empty($reshare->description)) {
+		$post_value = elgg_get_excerpt($reshare->description, 140);
 	}
 }
 

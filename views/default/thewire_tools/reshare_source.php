@@ -5,7 +5,7 @@
 
 $entity = elgg_extract("entity", $vars);
 
-if (empty($entity) || !elgg_instanceof($entity, "object")) {
+if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($entity, "group"))) {
 	return true;
 }
 
@@ -22,6 +22,8 @@ if ($url === elgg_get_site_url()) {
 $text = "";
 if (!empty($entity->title)) {
 	$text = $entity->title;
+} elseif (!empty($entity->name)) {
+	$text = $entity->name;
 } elseif (!empty($entity->description)) {
 	$text = elgg_get_excerpt($entity->description, 140);
 } else {

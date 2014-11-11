@@ -5,7 +5,7 @@
 
 $reshare_guid = (int) get_input("reshare_guid");
 $reshare = get_entity($reshare_guid);
-if (!empty($reshare) && !elgg_instanceof($reshare, "object")) {
+if (!empty($reshare) && !(elgg_instanceof($reshare, "object") || elgg_instanceof($reshare, "group"))) {
 	unset($reshare);
 }
 

@@ -4,6 +4,7 @@ Version history
 x.x:
 
 - added: ajax loaded thread
+- added: support for group to be shared on thewire
 - fixed: no thread link if in thread #8
 - changed: autocomplete for site no longer limited to friends
 - changed: moved mention settings to notification page #7
