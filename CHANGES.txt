@@ -1,14 +1,15 @@
 Version history
 ===============
 
-x.x:
+3.1 (2014-11-17):
 
 - added: ajax loaded thread
 - added: support for group to be shared on thewire
 - fixed: no thread link if in thread #8
 - changed: autocomplete for site no longer limited to friends
 - changed: moved mention settings to notification page #7
-- removed: previous entity menu item 
+- changed: don't reshare comments and discussion replies
+- removed: previous entity menu item
 
 3.0 (2014-09-25):
 
