@@ -57,7 +57,9 @@ if (thewire_tools_groups_enabled()) {
 				$params["class"] = "thewire-tools-widget-access";
 			}
 			
+			elgg_push_context("thewire_add");
 			echo elgg_view("input/access", $params);
+			elgg_pop_context();
 		}
 	}
 }
