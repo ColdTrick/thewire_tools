@@ -28,6 +28,8 @@ if (!elgg_in_context("thewire_tools_thread") && !elgg_in_context("thewire_thread
 }
 
 $owner = $post->getOwnerEntity();
+$container = $post->getContainerEntity();
+$subtitle = array();
 
 $owner_icon = elgg_view_entity_icon($owner, "tiny");
 $owner_link = elgg_view("output/url", array(
@@ -35,8 +37,8 @@ $owner_link = elgg_view("output/url", array(
 	"text" => $owner->name,
 	"is_trusted" => true,
 ));
-$author_text = elgg_echo("byline", array($owner_link));
-$date = elgg_view_friendly_time($post->time_created);
+$subtitle[] = elgg_echo("byline", array($owner_link));
+$subtitle[] = elgg_view_friendly_time($post->time_created);
 
 $metadata = elgg_view_menu("entity", array(
 	"entity" => $post,
@@ -45,13 +47,15 @@ $metadata = elgg_view_menu("entity", array(
 	"class" => "elgg-menu-hz",
 ));
 
-$subtitle = "$author_text $date";
-
 // check if need to show group
-if (($post->owner_guid != $post->container_guid) && (elgg_get_page_owner_guid() != $post->container_guid)) {
-	$group = get_entity($vars["entity"]->container_guid);
-	$group_link = elgg_view("output/url", array("href" => "thewire/group/" . $group->getGUID(), "text" => $group->name, "class" => "thewire_tools_object_link"));
-	$subtitle .= " " . elgg_echo("river:ingroup", array($group_link));
+if (elgg_instanceof($container, "group") && ($container->getGUID() != elgg_get_page_owner_guid())) {
+	$group_link = elgg_view("output/url", array(
+		"href" => "thewire/group/" . $container->getGUID(),
+		"text" => $container->name,
+		"class" => "thewire_tools_object_link"
+	));
+	
+	$subtitle[] = elgg_echo("river:ingroup", array($group_link));
 }
 
 // show text different in widgets
@@ -91,7 +95,7 @@ if (elgg_is_logged_in() && !elgg_in_context("thewire_tools_thread")) {
 $params = array(
 	"entity" => $post,
 	"metadata" => $metadata,
-	"subtitle" => $subtitle,
+	"subtitle" => implode(" ", $subtitle),
 	"content" => $content,
 	"tags" => false,
 );
@@ -101,5 +105,10 @@ $list_body = elgg_view("object/elements/summary", $params);
 echo elgg_view_image_block($owner_icon, $list_body);
 
 if ($show_thread) {
-	echo "<div class='thewire-thread' id='thewire-thread-" . $post->getGUID() . "' data-thread='" . $post->wire_thread . "' data-guid='" . $post->getGUID() . "'></div>";
+	echo elgg_format_element("div", array(
+		"id" => "thewire-thread-" . $post->getGUID(),
+		"class" => "thewire-thread",
+		"data-thread" => $post->wire_thread,
+		"data-guid" => $post->getGUID()
+	));
 }

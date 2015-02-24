@@ -1,6 +1,10 @@
 Version history
 ===============
 
+x.x:
+
+- fixed: php warnings in object view
+
 3.1 (2014-11-17):
 
 - added: ajax loaded thread
