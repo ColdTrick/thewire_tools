@@ -1,5 +1,9 @@
 = Version history =
 
+x.x:
+
+- changed: prefer mentions plugin for @-mentions
+
 2.2 (2013-03-18):
 
 - added: plugin setting to change the max length of a wire post

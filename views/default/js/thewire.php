@@ -3,7 +3,7 @@
  * The wire's JavaScript
  */
 
-$wire_length = thewire_tools_get_wire_length()
+$wire_length = thewire_tools_get_wire_length();
 
 ?>
 //<script>
