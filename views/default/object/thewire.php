@@ -21,6 +21,8 @@ if (!$thread_id) {
 }
 
 $owner = $post->getOwnerEntity();
+$container = $post->getContainerEntity();
+$subtitle = array();
 
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = elgg_view('output/url', array(
@@ -28,8 +30,8 @@ $owner_link = elgg_view('output/url', array(
 	'text' => $owner->name,
 	'is_trusted' => true,
 ));
-$author_text = elgg_echo('byline', array($owner_link));
-$date = elgg_view_friendly_time($post->time_created);
+$subtitle[] = elgg_echo("byline", array($owner_link));
+$subtitle[] = elgg_view_friendly_time($post->time_created);
 
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $post,
@@ -38,13 +40,15 @@ $metadata = elgg_view_menu('entity', array(
 	'class' => 'elgg-menu-hz',
 ));
 
-$subtitle = "$author_text $date";
-
 // check if need to show group
-if (($post->owner_guid != $post->container_guid) && (elgg_get_page_owner_guid() != $post->container_guid)) {
-	$group = get_entity($vars["entity"]->container_guid);
-	$group_link = elgg_view("output/url", array("href" => "thewire/group/" . $group->getGUID(), "text" => $group->name, "class" => "thewire_tools_object_link"));
-	$subtitle .= " " . elgg_echo("river:ingroup", array($group_link));
+if (elgg_instanceof($container, "group") && ($container->getGUID() != elgg_get_page_owner_guid())) {
+	$group_link = elgg_view("output/url", array(
+		"href" => "thewire/group/" . $container->getGUID(),
+		"text" => $container->name,
+		"class" => "thewire_tools_object_link"
+	));
+	
+	$subtitle[] = elgg_echo("river:ingroup", array($group_link));
 }
 
 // show text different in widgets
@@ -65,7 +69,7 @@ if (elgg_in_context("widgets")) {
 $params = array(
 	'entity' => $post,
 	'metadata' => $metadata,
-	'subtitle' => $subtitle,
+	'subtitle' => implode(" ", $subtitle),
 	'content' => thewire_filter($text),
 	'tags' => false,
 );
