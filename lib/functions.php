@@ -142,8 +142,13 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 		}
 		
 		// add to river
-		add_to_river("river/object/thewire/create", "create", $post->getOwnerGUID(), $post->getGUID());
-
+		elgg_create_river_item(array(
+			'view' => 'river/object/thewire/create',
+			'action_type' => 'create',
+			'subject_guid' => $post->getOwnerGUID(),
+			'object_guid' => $post->getGUID(),
+		));
+		
 		// let other plugins know we are setting a user status
 		$params = array(
 			"entity" => $post,
