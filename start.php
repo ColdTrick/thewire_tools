@@ -114,8 +114,8 @@ function thewire_tools_pagesetup() {
  * @return void
  */
 function thewire_tools_runonce() {
-	$conversation_id = add_metastring("conversation");
-	$wire_thread_id = add_metastring("wire_thread");
+	$conversation_id = elgg_get_metastring_id("conversation");
+	$wire_thread_id = elgg_get_metastring_id("wire_thread");
 	$subtype_id = get_subtype_id("object", "thewire");
 	
 	$query = "UPDATE " . elgg_get_config("dbprefix") . "metadata SET name_id = " . $wire_thread_id;
