@@ -56,7 +56,6 @@ function thewire_tools_init() {
 	// register hooks
 	elgg_register_plugin_hook_handler("route", "thewire", "thewire_tools_route_thewire");
 	elgg_register_plugin_hook_handler("access:collections:write", "all", "thewire_tools_access_write_hook", 999);
-	elgg_register_plugin_hook_handler("forward", "all", "thewire_tools_forward_hook");
 	
 	elgg_register_plugin_hook_handler("entity:url", "object", "thewire_tools_widget_title_url");
 	elgg_register_plugin_hook_handler("group_tool_widgets", "widget_manager", "thewire_tools_tool_widgets_handler");

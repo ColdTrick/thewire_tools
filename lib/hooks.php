@@ -279,25 +279,6 @@ function thewire_tools_register_river_menu_items($hook_name, $entity_type, $retu
 }
 
 /**
- * Forwards thewire delete action back to referer
- *
- * @param string $hook_name   'forward'
- * @param string $entity_type 'all'
- * @param string $return      the current forward url
- * @param array  $params      supplied params
- *
- * @return string the forward url
- */
-function thewire_tools_forward_hook($hook_name, $entity_type, $return, $params) {
-	
-	if (get_input("action") == "thewire/delete") {
-		$return = $_SERVER["HTTP_REFERER"];
-	}
-	
-	return $return;
-}
-
-/**
  * returns the correct widget title
  *
  * @param string $hook_name   'widget_url'
