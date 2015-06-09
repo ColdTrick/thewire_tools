@@ -50,7 +50,7 @@ if (elgg_is_logged_in()) {
 		} elseif (substr($q, 0, 1) == "#") {
 			$tag = substr($q, 1);
 			
-			$tags_id = get_metastring_id("tags");
+			$tags_id = elgg_get_metastring_id("tags");
 			$thewire_id = get_subtype_id("object", "thewire");
 			
 			$query = "SELECT DISTINCT *";
