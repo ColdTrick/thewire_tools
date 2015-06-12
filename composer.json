@@ -8,6 +8,11 @@
 		"source": "https://github.com/ColdTrick/thewire_tools",
 		"issues": "https://github.com/ColdTrick/thewire_tools/issues"
 	},
+	"autoload": {
+		"psr-0": { 
+			"": "classes/" 
+		}
+	},
 	"require": {
 		"composer/installers": "^1.0.8"
 	},

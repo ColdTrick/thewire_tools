@@ -46,7 +46,9 @@ To view your mentions on the wire click here:
 	
 	// reshare
 	'thewire_tools:reshare' => "Share on The Wire",
+	'thewire_tools:reshare:count' => "See who shared this",
 	'thewire_tools:reshare:source' => "Source",
+	'thewire_tools:reshare:list' => "%s shared this %s",
 	
 	// widget
 	// thewire_groups

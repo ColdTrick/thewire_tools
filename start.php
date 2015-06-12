@@ -43,6 +43,7 @@ function thewire_tools_init() {
 	
 	// register ajax view
 	elgg_register_ajax_view("thewire_tools/reshare");
+	elgg_register_ajax_view("thewire_tools/reshare_list");
 	elgg_register_ajax_view("thewire_tools/thread");
 	
 	// add some extra widgets (for Widget Manager only)
@@ -61,6 +62,7 @@ function thewire_tools_init() {
 	elgg_register_plugin_hook_handler("group_tool_widgets", "widget_manager", "thewire_tools_tool_widgets_handler");
 	
 	elgg_register_plugin_hook_handler("register", "menu:entity", "thewire_tools_register_entity_menu_items");
+	elgg_register_plugin_hook_handler("register", "menu:entity", array('\ColdTrick\TheWireTools\EntityMenu', 'registerReshare'));
 	elgg_register_plugin_hook_handler("register", "menu:river", "thewire_tools_register_river_menu_items");
 	
 	elgg_register_plugin_hook_handler("action", "notificationsettings/save", "thewire_tools_notifications_settings_save_hook");

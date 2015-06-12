@@ -30,3 +30,11 @@
 .thewire-thread .elgg-list > li:last-child {
 	border: none;
 }
+
+.elgg-menu .elgg-menu-item-thewire-tools-reshare-count {
+	margin-left: 3px;
+}
+
+.thewire-tools-reshare-popup {
+	width: 350px;
+}

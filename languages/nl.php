@@ -1,10 +1,14 @@
 <?php
 /**
- * This file was created by Translation Editor v2.0
- * On 2014-10-08 17:31
+ * This file was created by Translation Editor v4.0
+ * On 2015-06-12 11:46
  */
 
 return array (
+  'admin:upgrades:thewire_tools_mentions' => 'TheWire Tools vermeldingen',
+  'thewire_tools:settings:description' => 'Ontvang een notificatie als je wordt vermeld in een Wire post',
+  'thewire_tools:reshare:count' => 'Wie heeft dit gedeeld',
+  'thewire_tools:reshare:list' => '%s deelde dit %s',
   'thewire_tools:groups:mentions' => 'Vermeldingen zijn beperkt tot groepsleden',
   'thewire_tools:settings:mention_display' => 'Hoe moeten vermeldingen worden weergegeven in een Wire post',
   'thewire_tools:settings:mention_display:username' => '@gebruikersnaam',

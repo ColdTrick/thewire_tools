@@ -205,47 +205,6 @@ function thewire_tools_register_entity_menu_items($hook_name, $entity_type, $ret
 		}
 	}
 	
-	// add reshare options
-	$blocked_subtypes = array("comment", "discussion_reply");
-	if ((elgg_instanceof($entity, "object") || elgg_instanceof($entity, "group")) && !in_array($entity->getSubtype(), $blocked_subtypes)) {
-		elgg_load_js("elgg.thewire");
-		
-		elgg_load_js("lightbox");
-		elgg_load_css("lightbox");
-		
-		$postfix = "";
-		$reshare_guid = $entity->getGUID();
-		$reshare = $entity->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));
-		if (!empty($reshare)) {
-			// this is a wire post which is a reshare, so link to original object
-			$reshare_guid = $reshare[0]->getGUID();
-		} else {
-			// check is this item was shared on thewire
-			$count = $entity->getEntitiesFromRelationship(array(
-				"type" => "object",
-				"subtype" => "thewire",
-				"relationship" => "reshare",
-				"inverse_relationship" => true,
-				"count" => true
-			));
-			
-			if ($count) {
-				// show counter
-				$postfix = "<span class='float-alt'>" . $count . "</span>";
-			}
-		}
-		
-		$return[] = ElggMenuItem::factory(array(
-			"name" => "thewire_tools_reshare",
-			"text" => elgg_view_icon("share") . $postfix,
-			"title" => elgg_echo("thewire_tools:reshare"),
-			"href" => "ajax/view/thewire_tools/reshare?reshare_guid=" . $reshare_guid,
-			"link_class" => "elgg-lightbox",
-			"is_trusted" => true,
-			"priority" => 500
-		));
-	}
-	
 	return $return;
 }
 
