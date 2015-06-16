@@ -37,11 +37,23 @@ class EntityMenu {
 		elgg_load_css('lightbox');
 	
 		$reshare_guid = $entity->getGUID();
-		$reshare = $entity->getEntitiesFromRelationship(array('relationship' => 'reshare', 'limit' => 1));
-		if (!empty($reshare)) {
-			// this is a wire post which is a reshare, so link to original object
-			$reshare_guid = $reshare[0]->getGUID();
-		} else {
+		$reshare = null;
+		
+		if (elgg_instanceof($entity, 'object', 'thewire')) {
+			$reshare = $entity->getEntitiesFromRelationship(array(
+				'relationship' => 'reshare',
+				'limit' => 1,
+				'callback' => function($row) {
+					return (int) $row->guid;
+				}
+			));
+			if ($reshare) {
+				// this is a wire post which is a reshare, so link to original object
+				$reshare_guid = $reshare[0];
+			}
+		}
+		
+		if (empty($reshare)) {
 			// check is this item was shared on thewire
 			$count = $entity->getEntitiesFromRelationship(array(
 				'type' => 'object',
