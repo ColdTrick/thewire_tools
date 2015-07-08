@@ -1,9 +1,13 @@
 Version history
 ===============
 
-x.x:
+4.0 (2015-07-08):
 
-- fixed: php warnings in object view
+- Elgg requirement set to 1.10
+- added: composer support
+- added: option to view who shared content on thewire
+- fixed: only check for double reshare if it is a wire post
+- fixed: potential sql query error
 
 3.1 (2014-11-17):
 
