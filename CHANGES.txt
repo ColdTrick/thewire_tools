@@ -1,9 +1,11 @@
 Version history
 ===============
 
-x.x:
+3.2 (2015-07-08):
 
+- added: composer support
 - fixed: php warnings in object view
+- fixed: deprecated notices
 
 3.1 (2014-11-17):
 
