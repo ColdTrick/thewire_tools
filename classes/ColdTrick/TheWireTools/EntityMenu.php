@@ -16,6 +16,10 @@ class EntityMenu {
 	 */
 	public static function registerReshare($hook, $type, $returnvalue, $params) {
 		
+		if (!elgg_is_logged_in()) {
+			return;
+		}
+		
 		if (empty($params) || !is_array($params)) {
 			return;
 		}
