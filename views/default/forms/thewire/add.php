@@ -42,6 +42,8 @@ if (!empty($reshare)) {
 	} elseif (!empty($reshare->description)) {
 		$post_value = elgg_get_excerpt($reshare->description, 140);
 	}
+	
+	$post_value = htmlspecialchars_decode($post_value, ENT_QUOTES);
 }
 
 $count_down = "<span>$char_limit</span> $chars_left";
