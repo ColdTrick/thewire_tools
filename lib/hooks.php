@@ -86,13 +86,22 @@ function thewire_tools_route_thewire($hook_name, $entity_type, $return, $params)
  * @return ElggMenuItem[]
  */
 function thewire_tools_owner_block_menu($hook_name, $entity_type, $return, $params) {
-	
 	$group = elgg_extract("entity", $params);
-	if (elgg_instanceof($group, "group") && $group->thewire_enable != "no") {
-		$url = "thewire/group/" . $group->getGUID();
-		$item = new ElggMenuItem("thewire", elgg_echo("thewire_tools:group:title"), $url);
-		$return[] = $item;
+	if (!elgg_instanceof($group, "group")) {
+		return;
 	}
+	
+	if ($group->thewire_enable == "no") {
+		return;
+	}
+
+	if (!$group->canEdit() && !$group->isMember()) {
+		return;
+	}
+	
+	$url = "thewire/group/" . $group->getGUID();
+	$item = new ElggMenuItem("thewire", elgg_echo("thewire_tools:group:title"), $url);
+	$return[] = $item;
 	
 	return $return;
 }
