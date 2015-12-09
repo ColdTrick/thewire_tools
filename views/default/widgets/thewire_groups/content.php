@@ -43,6 +43,10 @@ echo $list;
 
 if (empty($error)) {
 	echo "<span class=\"elgg-widget-more\">";
-	echo elgg_view("output/url", array("href" => "thewire/group/" . $widget->container_guid, "text" => elgg_echo("thewire:moreposts")));
+	echo elgg_view("output/url", array(
+		"href" => "thewire/group/" . $widget->container_guid,
+		"text" => elgg_echo("thewire:moreposts"),
+		'is_trusted' => true,
+	));
 	echo "</span>";
 }

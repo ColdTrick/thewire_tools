@@ -36,7 +36,13 @@ if (elgg_is_logged_in() && (elgg_get_plugin_setting("extend_widgets", "thewire_t
 $content = elgg_list_entities($options);
 if (!empty($content)) {
 	echo $content;
-	echo "<span class='elgg-widget-more'>" . elgg_view("output/url", array("href" => "thewire/all","text" => elgg_echo("thewire:moreposts"))) . "</span>";
+	echo "<span class='elgg-widget-more'>";
+	echo elgg_view("output/url", array(
+		"href" => "thewire/all",
+		"text" => elgg_echo("thewire:moreposts"),
+		'is_trusted' => true,
+	));
+	echo "</span>";
 } else {
 	echo elgg_echo("thewire_tools:no_result");
 }
