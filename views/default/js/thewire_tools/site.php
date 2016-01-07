@@ -6,8 +6,13 @@ elgg.thewire_tools.split = function (val) {
 	return val.split( / \s*/ );
 }
 
-elgg.thewire_tools.extract_last = function (term) {
-	return elgg.thewire_tools.split( term ).pop();
+elgg.thewire_tools.extract_last = function (term, el) {
+
+	var pos = el.selectionStart;
+
+	term = term.substring(0, pos);
+		
+	return elgg.thewire_tools.split(term).pop();
 }
 
 elgg.thewire_tools.init_autocomplete = function(elem) {
@@ -22,15 +27,15 @@ elgg.thewire_tools.init_autocomplete = function(elem) {
 	.autocomplete({
 		source: function(request, response) {
 			$.getJSON(elgg.get_site_url() + "thewire/autocomplete", {
-				q: elgg.thewire_tools.extract_last(request.term),
+				q: elgg.thewire_tools.extract_last(request.term, this.element[0]),
 				page_owner_guid: elgg.get_page_owner_guid()
 			}, response);
 		},
 		search: function() {
 			// custom minLength
-			var term = elgg.thewire_tools.extract_last(this.value);
+			var term = elgg.thewire_tools.extract_last(this.value, this);
 			var firstChar = term.substring(0, 1);
-
+			
 			if ((term.length > 1) && (firstChar == "@" || firstChar == "#")) {
 				return true;
 			}
@@ -41,19 +46,42 @@ elgg.thewire_tools.init_autocomplete = function(elem) {
 			return false;
 		},
 		select: function(event, ui) {
-			var terms = elgg.thewire_tools.split(this.value);
-			// remove the current input
-			terms.pop();
-			// add the selected item
-			if (ui.item.type == "user") {
-				terms.push("@" + ui.item.username );
-			} else {
-				terms.push("#" + ui.item.value );
+			var pos = this.selectionStart;
+			var begin_parts = elgg.thewire_tools.split(this.value.substring(0, pos));
+			
+			begin_parts.pop();
+			var begin_part = begin_parts.join(" ").trim();
+			var end_part = this.value.substring(pos).trim();
+			
+			var content = [];
+
+			if (begin_part !== "") {
+				content.push(begin_part);
 			}
 
-			// add placeholder to get the comma-and-space at the end
-			terms.push("");
-			this.value = terms.join(" ");
+			// add the selected item
+			var item_length = 0;
+			if (ui.item.type == "user") {
+				item_length = ui.item.username.length + 1;
+				content.push("@" + ui.item.username);
+			} else {
+				item_length = ui.item.value.length + 1;
+				content.push("#" + ui.item.value);
+			}
+
+			if (end_part !== "") {
+				content.push(end_part);
+			} else {
+				// add placeholder to get the comma-and-space at the end
+				content.push("");
+			}
+			
+			this.value = content.join(" ");
+
+			var endpos = begin_part.length + item_length + 1;
+			
+			this.selectionStart = endpos;
+			this.selectionEnd = endpos;
 			return false;
 		},
 		autoFocus: true,
