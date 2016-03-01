@@ -1,6 +1,16 @@
 Version history
 ===============
 
+4.0.1 (2016-03-01):
+
+- fixed: added trusted flags to the widget more links
+- fixed: autocomplete now works at any location in the text input
+- fixed: only check for double reshare if it is a wire post
+- fixed: only extend group activity with wire post form if applicable
+- fixed: only show groups sidebar menu if user is member of the group
+- fixed: reshare button visible for logged out users
+- fixed: wrong encoding when resharing quotes
+
 4.0 (2015-07-08):
 
 - Elgg requirement set to 1.10
