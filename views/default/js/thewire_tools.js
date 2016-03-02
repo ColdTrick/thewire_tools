@@ -2,7 +2,7 @@ elgg.provide('elgg.thewire_tools');
 
 elgg.thewire_tools.split = function (val) {
 	return val.split( / \s*/ );
-}
+};
 
 elgg.thewire_tools.extract_last = function (term, el) {
 
@@ -11,7 +11,7 @@ elgg.thewire_tools.extract_last = function (term, el) {
 	term = term.substring(0, pos);
 		
 	return elgg.thewire_tools.split(term).pop();
-}
+};
 
 elgg.thewire_tools.show_thread = function (event) {
 	var guid = $(this).attr("rel");
