@@ -1,9 +1,3 @@
-<?php
-/**
- * The wire's JavaScript
- */
-?>
-//<script>
 elgg.provide('elgg.thewire');
 
 elgg.thewire.init = function() {
@@ -14,12 +8,8 @@ elgg.thewire.init = function() {
 		}
 	};
 
-	$(".thewire-textarea").live({
-		input: callback,
-		onpropertychange: callback
-	});
-
-	$(".thewire-previous").live('click', elgg.thewire.viewPrevious);
+	$(document).on('input propertychange', ".thewire-textarea", callback);
+	$(document).on('click', ".thewire-previous", elgg.thewire.viewPrevious);
 };
 
 /**

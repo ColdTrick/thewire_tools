@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 	'thewire_tools' => "The Wire Tools",
 	'thewire_tools:no_result' => "No wire posts were found",
 	'thewire_tools:login_required' => "You need to be logged in to use this feature",
@@ -12,13 +12,10 @@ $english = array(
 	'thewire_tools:settings:enable_group' => "Enable TheWire for groups",
 	'thewire_tools:settings:extend_widgets' => "Extend TheWire widget with the option to post update directly from the widget",
 	'thewire_tools:settings:extend_activity' => "Extend the activity page with the wire form",
-	'thewire_tools:settings:wire_length' => "Set the max length of a Wire post",
 	'thewire_tools:settings:mention_display' => "How to show mentions in a Wire post",
 	'thewire_tools:settings:mention_display:username' => "@username",
 	'thewire_tools:settings:mention_display:displayname' => "@displayname",
-	
-	'thewire_tools:settings:description' => "Receive a notification when you are mentioned in a Wire post",
-	
+		
 	// notification
 	// mention
 	'thewire_tools:notify:mention:subject' => "You've been mentioned on the wire",
@@ -67,5 +64,3 @@ To view your mentions on the wire click here:
 	'widgets:thewire:filter' => "Filter wire posts (optional)",
 		
 );
-
-add_translation("en", $english);
