@@ -66,10 +66,7 @@ function thewire_tools_init() {
 	elgg_register_plugin_hook_handler("register", "menu:river", "thewire_tools_register_river_menu_items");
 	
 	elgg_register_plugin_hook_handler("action", "notificationsettings/save", "thewire_tools_notifications_settings_save_hook");
-	
-	// upgrade function
-	run_function_once("thewire_tools_runonce");
-	
+		
 	// overrule default save action
 	elgg_unregister_action("thewire/add");
 	elgg_register_action("thewire/add", dirname(__FILE__) . "/actions/thewire/add.php");
@@ -107,21 +104,4 @@ function thewire_tools_pagesetup() {
 			"context" => "thewire"
 		));
 	}
-}
-
-/**
- * Runonce to convert the pre Elgg 1.8 wire tools conversations to the new wire_threads
- *
- * @return void
- */
-function thewire_tools_runonce() {
-	$conversation_id = elgg_get_metastring_id("conversation");
-	$wire_thread_id = elgg_get_metastring_id("wire_thread");
-	$subtype_id = get_subtype_id("object", "thewire");
-	
-	$query = "UPDATE " . elgg_get_config("dbprefix") . "metadata SET name_id = " . $wire_thread_id;
-	$query .= " WHERE name_id = " . $conversation_id . " AND entity_guid IN";
-	$query .= " (SELECT guid FROM " . elgg_get_config("dbprefix") . "entities WHERE type = 'object' AND subtype = " . $subtype_id . ")";
-
-	update_data($query);
 }
