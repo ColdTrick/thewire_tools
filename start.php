@@ -70,7 +70,6 @@ function thewire_tools_init() {
 	// overrule default save action
 	elgg_unregister_action("thewire/add");
 	elgg_register_action("thewire/add", dirname(__FILE__) . "/actions/thewire/add.php");
-	elgg_register_action("thewire_tools/mentions_upgrade", dirname(__FILE__) . "/actions/upgrades/mentions.php");
 }
 
 /**
