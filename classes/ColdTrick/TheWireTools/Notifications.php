@@ -9,11 +9,11 @@ class Notifications {
 	 *
 	 * @param string     $event  'create'
 	 * @param string     $type   'object'
-	 * @param ElggObject $object the ElggObject created
+	 * @param \ElggObject $object the ElggObject created
 	 *
 	 * @return void
 	 */
-	public static function triggerMentionNotificationEvent($event, $type, ElggObject $object) {
+	public static function triggerMentionNotificationEvent($event, $type, \ElggObject $object) {
 		
 		if (!elgg_instanceof($object, 'object', 'thewire')) {
 			return;
