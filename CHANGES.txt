@@ -1,6 +1,13 @@
 Version history
 ===============
 
+5.0.1 (2016-04-14):
+
+- fixed: incorrect type hint check
+- fixed: removed the deprecated view_type_toggle list_entities var
+- fixed: use correct language key when reporting an error saving a post
+- fixed: using correct jquery function
+
 5.0 (2016-03-02):
 
 - changed: plugin now support Elgg 2.0
