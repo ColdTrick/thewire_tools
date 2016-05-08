@@ -1,6 +1,3 @@
-
-text/x-generic create.php ( PHP script text )
-
 <?php
 /**
  * File river view.
