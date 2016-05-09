@@ -17,11 +17,15 @@ class Router {
 	public static function thewire($hook_name, $entity_type, $return, $params) {
 		$page = elgg_extract('segments', $return);
 	
-		if (!is_array($page)) {
-			return;
+		if (!isset($page[0])) {
+			$page = ['all'];
 		}
 	
 		switch ($page[0]) {
+			case 'all':
+			case 'owner':
+				set_input('limit', get_input('limit', elgg_get_config('default_limit')));
+				return;
 			case 'group':
 				if (!empty($page[1])) {
 					set_input('group_guid', $page[1]); // @todo is this still needed or replace with page_owner in page
