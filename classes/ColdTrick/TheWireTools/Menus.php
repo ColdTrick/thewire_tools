@@ -21,13 +21,11 @@ class Menus {
 		}
 		
 		$entity = elgg_extract('entity', $params);
-		if (!elgg_instanceof($entity)) {
+		if (!($entity instanceof \ElggEntity)) {
 			return;
 		}
 		
-		// add reshare options
-		$blocked_subtypes = ['comment', 'discussion_reply'];
-		if (!(elgg_instanceof($entity, 'object') || elgg_instanceof($entity, 'group')) || in_array($entity->getSubtype(), $blocked_subtypes)) {
+		if (!self::canReshareEntity($entity)) {
 			return;
 		}
 		
@@ -89,6 +87,49 @@ class Menus {
 		]);
 		
 		return $returnvalue;
+	}
+	
+	/**
+	 * Check if resharing of this entity is allowed
+	 *
+	 * @param \ElggEntity $entity the entity to check
+	 *
+	 * @return bool
+	 */
+	protected static function canReshareEntity(\ElggEntity $entity) {
+		
+		if (!($entity instanceof \ElggEntity)) {
+			return false;
+		}
+		
+		// only allow objects and groups
+		if (!($entity instanceof \ElggObject) && !($entity instanceof \ElggGroup)) {
+			return false;
+		}
+		
+		// comments and discussion replies are never allowed
+		$blocked_subtypes = ['comment', 'discussion_reply'];
+		if (in_array($entity->getSubtype(), $blocked_subtypes)) {
+			return false;
+		}
+		
+		// by default allow searchable entities
+		$reshare_allowed = false;
+		if ($entity instanceof \ElggGroup) {
+			$reshare_allowed = true;
+		} else {
+			$searchable_entities = get_registered_entity_types($entity->getType());
+			if (!empty($searchable_entities)) {
+				$reshare_allowed = in_array($entity->getSubtype(), $searchable_entities);
+			}
+		}
+		
+		// trigger hook to allow others to change
+		$params = [
+			'entity' => $entity,
+			'user' => elgg_get_logged_in_user_entity(),
+		];
+		return (bool) elgg_trigger_plugin_hook('reshare', $entity->getType(), $params, $reshare_allowed);
 	}
 	
 	/**
