@@ -1,6 +1,11 @@
 Version history
 ===============
 
+5.1 (2016-05-26):
+
+- added: plugin hook to influence resharing options
+- changed: all and owner page now listen to default limit
+
 5.0.1 (2016-04-14):
 
 - fixed: incorrect type hint check
