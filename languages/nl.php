@@ -1,12 +1,15 @@
 <?php
 /**
- * This file was created by Translation Editor v4.0
- * On 2015-06-12 11:46
+ * This file was created by Translation Editor v5.1
+ * On 2016-06-29 16:42
  */
 
 return array (
-  'admin:upgrades:thewire_tools_mentions' => 'TheWire Tools vermeldingen',
-  'thewire_tools:settings:description' => 'Ontvang een notificatie als je wordt vermeld in een Wire post',
+  'thewire_tools:feature' => 'Aanraden',
+  'thewire_tools:unfeature' => 'Afraden',
+  'thewire_tools:sidebar:featured' => 'Aangeraden berichten',
+  'thewire_tools:action:toggle_feature:unfeatured' => 'Het bericht is niet langer aangereden',
+  'thewire_tools:action:toggle_feature:featured' => 'Het bericht is nu aangeraden',
   'thewire_tools:reshare:count' => 'Wie heeft dit gedeeld',
   'thewire_tools:reshare:list' => '%s deelde dit %s',
   'thewire_tools:groups:mentions' => 'Vermeldingen zijn beperkt tot groepsleden',

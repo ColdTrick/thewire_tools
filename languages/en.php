@@ -4,6 +4,8 @@ return array(
 	'thewire_tools' => "The Wire Tools",
 	'thewire_tools:no_result' => "No wire posts were found",
 	'thewire_tools:login_required' => "You need to be logged in to use this feature",
+	'thewire_tools:feature' => "Feature",
+	'thewire_tools:unfeature' => "Unfeature",
 	
 	// menu
 	'thewire_tools:menu:mentions' => "Mentions",
@@ -46,6 +48,9 @@ To view your mentions on the wire click here:
 	'thewire_tools:reshare:source' => "Source",
 	'thewire_tools:reshare:list' => "%s shared this %s",
 	
+	// featured
+	'thewire_tools:sidebar:featured' => "Featured posts",
+	
 	// widget
 	// thewire_groups
 	'widgets:thewire_groups:title' => "Group wire posts",
@@ -62,5 +67,8 @@ To view your mentions on the wire click here:
 	// the wire (default widget)
 	'widgets:thewire:owner' => "Whos wire post to show",
 	'widgets:thewire:filter' => "Filter wire posts (optional)",
-		
+	
+	// action
+	'thewire_tools:action:toggle_feature:unfeatured' => "The post is no longer featured",
+	'thewire_tools:action:toggle_feature:featured' => "The post was successfully featured",
 );

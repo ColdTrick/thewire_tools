@@ -255,4 +255,54 @@ class Menus {
 		
 		return $return;
 	}
+	
+	/**
+	 * Add feature menu items to the entity menu of a wire post
+	 *
+	 * @param string          $hook        the name of the hook
+	 * @param string          $type        the type of the hook
+	 * @param \ElggMenuItem[] $returnvalue current return value
+	 * @param array           $params      supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function entityRegisterFeature($hook, $type, $returnvalue, $params) {
+		
+		$entity = elgg_extract('entity', $params);
+		if (!($entity instanceof \ElggWire)) {
+			return;
+		}
+		
+		$container = $entity->getContainerEntity();
+		if ($container instanceof \ElggGroup) {
+			if (!$container->canEdit()) {
+				return;
+			}
+		} elseif (!elgg_is_admin_logged_in()) {
+			return;
+		}
+		
+		elgg_require_js('thewire_tools/entity_menu');
+		
+		$featured = !empty($entity->featured);
+		
+		$returnvalue[] = \ElggMenuItem::factory([
+			'name' => 'thewire_tools_feature',
+			'text' => elgg_echo('thewire_tools:feature'),
+			'href' => "action/thewire_tools/toggle_feature?guid={$entity->getGUID()}",
+			'is_action' => true,
+			'item_class' => $featured ? 'hidden' : '',
+			'priority' => 300,
+		]);
+		$returnvalue[] = \ElggMenuItem::factory([
+			'name' => 'thewire_tools_unfeature',
+			'text' => elgg_echo('thewire_tools:unfeature'),
+			'href' => "action/thewire_tools/toggle_feature?guid={$entity->getGUID()}",
+			'is_action' => true,
+			'item_class' => $featured ? '' : 'hidden',
+			'priority' => 301,
+		]);
+		
+		return $returnvalue;
+	}
 }

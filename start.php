@@ -36,6 +36,9 @@ function thewire_tools_init() {
 	// settings
 	elgg_extend_view('notifications/subscriptions/personal', 'thewire_tools/notifications/settings');
 	
+	// featured
+	elgg_extend_view('thewire/sidebar', 'thewire_tools/extends/thewire/sidebar', 400);
+	
 	// register ajax view
 	elgg_register_ajax_view('thewire_tools/reshare');
 	elgg_register_ajax_view('thewire_tools/reshare_list');
@@ -57,6 +60,7 @@ function thewire_tools_init() {
 	
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterImprove');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterReshare');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterFeature');
 	elgg_register_plugin_hook_handler('register', 'menu:river', '\ColdTrick\TheWireTools\Menus::riverRegisterReply');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '\ColdTrick\TheWireTools\Menus::ownerBlockRegister');
 	
@@ -65,6 +69,8 @@ function thewire_tools_init() {
 	// overrule default save action
 	elgg_unregister_action('thewire/add');
 	elgg_register_action('thewire/add', dirname(__FILE__) . '/actions/thewire/add.php');
+	
+	elgg_register_action('thewire_tools/toggle_feature', dirname(__FILE__) . '/actions/toggle_feature.php');
 }
 
 /**

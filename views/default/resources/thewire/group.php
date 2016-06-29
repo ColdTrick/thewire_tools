@@ -41,6 +41,7 @@ if ($group->isMember()) {
 $body = elgg_view_layout('one_sidebar', [
 	'title' => $title_text,
 	'content' => $add . $result,
+	'sidebar' => elgg_view('thewire/sidebar'),
 ]);
 
 // Display page
