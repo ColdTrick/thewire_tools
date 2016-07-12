@@ -2,8 +2,16 @@
 $item = elgg_extract('item', $vars);
 
 $object = $item->getObjectEntity();
-$excerpt = strip_tags($object->description);
+$excerpt = elgg_get_excerpt($object->description);
 $excerpt = thewire_tools_filter($excerpt);
+if (substr($excerpt, -3) === '...') {
+	// add read more link
+	$excerpt .= '&nbsp;' . elgg_view('output/url', [
+		'text' => strtolower(elgg_echo('more')),
+		'href' => $object->getURL(),
+		'is_trusted' => true,
+	]);
+}
 
 $subject = $item->getSubjectEntity();
 $subject_link = elgg_view('output/url', [
@@ -14,7 +22,7 @@ $subject_link = elgg_view('output/url', [
 ]);
 
 $object_link = elgg_view('output/url', [
-	'href' => "thewire/owner/$subject->username",
+	'href' => "thewire/owner/{$subject->username}",
 	'text' => elgg_echo('thewire:wire'),
 	'class' => 'elgg-river-object',
 	'is_trusted' => true,
@@ -30,7 +38,7 @@ if (!empty($reshare)) {
 
 echo elgg_view('river/elements/layout', [
 	'item' => $item,
-	'message' => $excerpt,
+	'message' => elgg_view('output/longtext', ['value' => $excerpt]),
 	'summary' => $summary,
 	'attachments' => $attachments,
 ]);

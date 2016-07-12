@@ -7,11 +7,15 @@
 
 elgg_load_js('elgg.thewire');
 
-$full = elgg_extract('full_view', $vars, false);
+$full = (bool) elgg_extract('full_view', $vars, false);
 $post = elgg_extract('entity', $vars, false);
 
 if (!$post) {
 	return true;
+}
+
+if (elgg_in_context('thewire_thread')) {
+	$full = true;
 }
 
 // make compatible with posts created with original Curverider plugin
@@ -33,7 +37,7 @@ $subtitle = [];
 
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
 $owner_link = elgg_view('output/url', [
-	'href' => "thewire/owner/$owner->username",
+	'href' => "thewire/owner/{$owner->username}",
 	'text' => $owner->name,
 	'is_trusted' => true,
 ]);
@@ -60,21 +64,53 @@ if (elgg_instanceof($container, 'group') && ($container->getGUID() != elgg_get_p
 
 // show text different in widgets
 $text = $post->description;
+$more_link = '';
+$more_content = '';
 if (elgg_in_context('widgets')) {
 	$text = elgg_get_excerpt($text, 140);
 	
 	// show more link?
 	if (substr($text, -3) == '...') {
-		$text .= elgg_view('output/url', [
+		$more_link = elgg_view('output/url', [
 			'text' => elgg_echo('more'),
 			'href' => $post->getURL(),
 			'is_trusted' => true,
-			'class' => 'mlm',
+			'class' => 'mls',
 		]);
 	}
+} elseif (!$full) {
+	$text = elgg_get_excerpt($text);
+	
+	// show more link?
+	if (substr($text, -3) == '...') {
+		$more_link = elgg_view('output/url', [
+			'text' => elgg_echo('more'),
+			'href' => "#thewire-full-view-{$post->getGUID()},#thewire-summary-view-{$post->getGUID()}",
+			'is_trusted' => true,
+			'rel' => 'toggle',
+			'class' => 'mls',
+			'data-toggle-selector' => "#thewire-full-view-{$post->getGUID()}, #thewire-summary-view-{$post->getGUID()}",
+		]);
+		$more_content = $post->description;
+	} else {
+		$text = $post->description;
+	}
 }
+elgg_push_context('input');
+$content = elgg_view('output/longtext', [
+	'value' => thewire_tools_filter($text) . $more_link,
+	'id' => "thewire-summary-view-{$post->getGUID()}",
+	'data-toggle-slide' => 0,
+]);
 
-$content = thewire_tools_filter($text);
+if (!empty($more_content)) {
+	$content .= elgg_view('output/longtext', [
+		'value' => thewire_tools_filter($more_content),
+		'id' => "thewire-full-view-{$post->getGUID()}",
+		'class' => 'hidden',
+	]);
+}
+elgg_pop_context();
 
 // check for reshare entity
 $reshare = $post->getEntitiesFromRelationship(['relationship' => 'reshare', 'limit' => 1]);
