@@ -292,7 +292,7 @@ class Menus {
 			'href' => "action/thewire_tools/toggle_feature?guid={$entity->getGUID()}",
 			'is_action' => true,
 			'item_class' => $featured ? 'hidden' : '',
-			'priority' => 300,
+			'priority' => 200,
 		]);
 		$returnvalue[] = \ElggMenuItem::factory([
 			'name' => 'thewire_tools_unfeature',
@@ -300,7 +300,7 @@ class Menus {
 			'href' => "action/thewire_tools/toggle_feature?guid={$entity->getGUID()}",
 			'is_action' => true,
 			'item_class' => $featured ? '' : 'hidden',
-			'priority' => 301,
+			'priority' => 201,
 		]);
 		
 		return $returnvalue;
