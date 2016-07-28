@@ -189,7 +189,11 @@ function thewire_tools_filter($text) {
 
 	// links
 	$text = parse_urls($text);
-
+	$click_url = 'thewire/owner/';
+	if (elgg_is_active_plugin('profile')) {
+		$click_url = 'profile/';
+	}
+	
 	// usernames
 	if ($mention_display == 'displayname') {
 		$matches = [];
@@ -217,7 +221,7 @@ function thewire_tools_filter($text) {
 				
 				$replace = ' ' . elgg_view('output/url', [
 					'text' => '@' . $user->name,
-					'href' => 'thewire/owner/' . $user->username,
+					'href' => $click_url . $user->username,
 					'is_trusted' => true,
 				]);
 				
@@ -230,7 +234,7 @@ function thewire_tools_filter($text) {
 	} else {
 		$text = preg_replace(
 				'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
-				'$1<a href="' . $site_url . 'thewire/owner/$2">@$2</a>',
+				'$1<a href="' . $site_url . $click_url . '$2">@$2</a>',
 				$text);
 	}
 
