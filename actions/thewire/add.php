@@ -24,12 +24,5 @@ if (!$guid) {
 	forward(REFERER);
 }
 
-// if reply, forward to thread display page
-if ($parent_guid) {
-	$parent = get_entity($parent_guid);
-	forward("thewire/thread/{$parent->wire_thread}");
-}
-
-
 system_message(elgg_echo('thewire:posted'));
 forward(REFERER);
