@@ -195,47 +195,45 @@ function thewire_tools_filter($text) {
 	}
 	
 	// usernames
-	if ($mention_display == 'displayname') {
-		$matches = [];
-		$match_count = preg_match_all(
-			'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
-			$text,
-			$matches,
-			PREG_SET_ORDER
-		);
+	$matches = [];
+	$match_count = preg_match_all(
+		'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
+		$text,
+		$matches,
+		PREG_SET_ORDER
+	);
+	
+	if ($match_count > 0) {
+		$proccessed_usernames = [];
 		
-		if ($match_count > 0) {
-			$proccessed_usernames = [];
+		foreach ($matches as $set) {
+			$replaces = 0;
 			
-			foreach ($matches as $set) {
-				$replaces = 0;
-				
-				if (in_array($set[2], $proccessed_usernames)) {
-					continue;
-				}
-				
-				$user = get_user_by_username($set[2]);
-				if (empty($user)) {
-					continue;
-				}
-				
-				$replace = ' ' . elgg_view('output/url', [
-					'text' => '@' . $user->name,
-					'href' => $click_url . $user->username,
-					'is_trusted' => true,
-				]);
-				
-				$text = str_ireplace($set[0], $replace, $text, $replaces);
-				if ($replaces > 0) {
-					$proccessed_usernames[] = $set[2];
-				}
+			if (in_array($set[2], $proccessed_usernames)) {
+				continue;
+			}
+			
+			$user = get_user_by_username($set[2]);
+			if (empty($user)) {
+				continue;
+			}
+			if ($mention_display == 'displayname') {
+				$user_text = $user->name;
+			} else {
+				$user_text = $user->username;
+			}
+			
+			$replace = ' ' . elgg_view('output/url', [
+				'text' => '@' . $user_text,
+				'href' => $click_url . $user->username,
+				'is_trusted' => true,
+			]);
+			
+			$text = str_ireplace($set[0], $replace, $text, $replaces);
+			if ($replaces > 0) {
+				$proccessed_usernames[] = $set[2];
 			}
 		}
-	} else {
-		$text = preg_replace(
-				'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
-				'$1<a href="' . $site_url . $click_url . '$2">@$2</a>',
-				$text);
 	}
 
 	// hashtags
