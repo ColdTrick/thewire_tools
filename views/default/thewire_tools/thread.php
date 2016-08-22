@@ -1,9 +1,9 @@
 <?php
 
-$thead_guid = (int) get_input('thread');
+$thread_guid = (int) get_input('thread');
 $guid = (int) get_input('guid');
 
-if (empty($thead_guid) || empty($guid)) {
+if (empty($thread_guid) || empty($guid)) {
 	return;
 }
 
@@ -11,9 +11,10 @@ elgg_push_context('thewire_tools_thread');
 echo elgg_list_entities_from_metadata([
 	'type' => 'object',
 	'subtype' => 'thewire',
+	'base_url' => 'thewire/thread/' . $thread_guid,
 	'metadata_name_value_pairs' => [
 		'name' => 'wire_thread',
-		'value' => $thead_guid,
+		'value' => $thread_guid,
 	],
 ]);
 elgg_pop_context();
