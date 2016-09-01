@@ -1,6 +1,15 @@
 Version history
 ===============
 
+5.2 (2016-09-01):
+
+- added: option to feature wire posts
+- changed: display of wire posts with longer content
+- changed: do not forward to thread when replying
+- changed: mention urls now point to user profile instead of thewire
+- fixed: always check for valid username replacements
+- fixed: pagination links to parent thread
+
 5.1 (2016-05-26):
 
 - added: plugin hook to influence resharing options
