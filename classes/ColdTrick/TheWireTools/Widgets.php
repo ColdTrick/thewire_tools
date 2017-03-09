@@ -4,7 +4,6 @@ namespace ColdTrick\TheWireTools;
 
 class Widgets {
 	
-	
 	/**
 	 * Add or remove widgets based on the group tool option
 	 *
@@ -18,8 +17,7 @@ class Widgets {
 	public static function groupToolBasedWidgets($hook_name, $entity_type, $return, $params) {
 	
 		$entity = elgg_extract('entity', $params);
-
-		if (!elgg_instanceof($entity, 'group')) {
+		if (!($entity instanceof \ElggGroup)) {
 			return;
 		}
 		
@@ -35,7 +33,7 @@ class Widgets {
 		}
 
 		// check different group tools for which we supply widgets
-		if ($entity->thewire_enable == 'yes') {
+		if ($entity->thewire_enable !== 'no') {
 			$return['enable'][] = 'thewire_groups';
 		} else {
 			$return['disable'][] = 'thewire_groups';
@@ -57,7 +55,7 @@ class Widgets {
 	public static function widgetTitleURL($hook_name, $entity_type, $return, $params) {
 	
 		$widget = elgg_extract('entity', $params);
-		if (!elgg_instanceof($widget, 'object', 'widget')) {
+		if (!($widget instanceof \ElggWidget)) {
 			return;
 		}
 		
@@ -75,5 +73,38 @@ class Widgets {
 		}
 	
 		return $return;
+	}
+	
+	/**
+	 * Unregisters a widget handler in case of group
+	 *
+	 * @param string $hook        hook name
+	 * @param string $entity_type hook type
+	 * @param array  $returnvalue current return value
+	 * @param array  $params      parameters
+	 *
+	 * @return array
+	 */
+	public static function registerHandlers($hook, $entity_type, $returnvalue, $params) {
+		
+		$container = elgg_extract('container', $params);
+		if (!($container instanceof \ElggGroup)) {
+			return;
+		}
+		
+		if ($container->thewire_enable !== 'no') {
+			return;
+		}
+		
+		/* @var $widget \Elgg\WidgetDefinition */
+		foreach ($returnvalue as $index => $widget) {
+			if ($widget->id !== 'thewire_groups') {
+				continue;
+			}
+			unset($returnvalue[$index]);
+			break;
+		}
+		
+		return $returnvalue;
 	}
 }

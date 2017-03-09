@@ -9,7 +9,6 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 // register default Elgg events
 elgg_register_event_handler('init', 'system', 'thewire_tools_init');
-elgg_register_event_handler('pagesetup', 'system', 'thewire_tools_pagesetup');
 
 /**
  * This function is called during the 'init' event
@@ -66,26 +65,12 @@ function thewire_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\TheWireTools\Menus::pageRegister');
 	
 	elgg_register_plugin_hook_handler('action', 'notificationsettings/save', '\ColdTrick\TheWireTools\Notifications::saveUserNotificationsSettings');
-		
+	
+	elgg_register_plugin_hook_handler('handlers', 'widgets', '\ColdTrick\TheWireTools\Widgets::registerHandlers');
+	
 	// overrule default save action
 	elgg_unregister_action('thewire/add');
 	elgg_register_action('thewire/add', dirname(__FILE__) . '/actions/thewire/add.php');
 	
 	elgg_register_action('thewire_tools/toggle_feature', dirname(__FILE__) . '/actions/toggle_feature.php');
-}
-
-/**
- * This function is called during the "pagesetup" event
- *
- * @return void
- */
-function thewire_tools_pagesetup() {
-	$page_owner = elgg_get_page_owner_entity();
-	
-	if (elgg_instanceof($page_owner, 'group')) {
-		// cleanup group widget
-		if ($page_owner->thewire_enable == 'no') {
-			elgg_unregister_widget_type('thewire_groups');
-		}
-	}
 }
