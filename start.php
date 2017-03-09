@@ -63,6 +63,7 @@ function thewire_tools_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterFeature');
 	elgg_register_plugin_hook_handler('register', 'menu:river', '\ColdTrick\TheWireTools\Menus::riverRegisterReply');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '\ColdTrick\TheWireTools\Menus::ownerBlockRegister');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '\ColdTrick\TheWireTools\Menus::pageRegister');
 	
 	elgg_register_plugin_hook_handler('action', 'notificationsettings/save', '\ColdTrick\TheWireTools\Notifications::saveUserNotificationsSettings');
 		
@@ -86,23 +87,5 @@ function thewire_tools_pagesetup() {
 		if ($page_owner->thewire_enable == 'no') {
 			elgg_unregister_widget_type('thewire_groups');
 		}
-	} else {
-		
-		$user = elgg_get_logged_in_user_entity();
-		if ($user) {
-			elgg_register_menu_item('page', [
-				'name' => 'mentions',
-				'href' => 'thewire/search/@' . $user->username,
-				'text' => elgg_echo('thewire_tools:menu:mentions'),
-				'context' => 'thewire',
-			]);
-		}
-		
-		elgg_register_menu_item('page', [
-			'name' => 'search',
-			'href' => 'thewire/search',
-			'text' => elgg_echo('search'),
-			'context' => 'thewire',
-		]);
 	}
 }

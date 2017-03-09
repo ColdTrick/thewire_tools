@@ -305,4 +305,43 @@ class Menus {
 		
 		return $returnvalue;
 	}
+	
+	/**
+	 * Add menu items to the page menu on thewire pages
+	 *
+	 * @param string          $hook        the name of the hook
+	 * @param string          $type        the type of the hook
+	 * @param \ElggMenuItem[] $returnvalue current return value
+	 * @param array           $params      supplied params
+	 *
+	 * @return void|\ElggMenuItem[]
+	 */
+	public static function pageRegister($hook, $type, $returnvalue, $params) {
+		
+		if (!elgg_in_context('thewire')) {
+			return;
+		}
+		
+		$page_owner = elgg_get_page_owner_entity();
+		if ($page_owner instanceof \ElggGroup) {
+			return;
+		}
+		
+		$user = elgg_get_logged_in_user_entity();
+		if (!empty($user)) {
+			$returnvalue[] = \ElggMenuItem::factory([
+				'name' => 'mentions',
+				'href' => "thewire/search/@{$user->username}",
+				'text' => elgg_echo('thewire_tools:menu:mentions'),
+			]);
+		}
+		
+		$returnvalue[] = \ElggMenuItem::factory([
+			'name' => 'search',
+			'href' => 'thewire/search',
+			'text' => elgg_echo('search'),
+		]);
+		
+		return $returnvalue;
+	}
 }
