@@ -1,6 +1,12 @@
 Version history
 ===============
 
+6.0 (2017-03-24):
+
+- changed: increased Elgg requirement to 2.2
+- changed: moved group widget deregistration to plugin hook
+- changed: moved page menu item registration to plugin hook
+
 5.2 (2016-09-01):
 
 - added: option to feature wire posts
