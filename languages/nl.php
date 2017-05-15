@@ -1,10 +1,11 @@
 <?php
 /**
- * This file was created by Translation Editor v5.1
- * On 2016-06-29 16:42
+ * This file was created by Translation Editor v5.2
+ * On 2017-05-15 14:29
  */
 
 return array (
+  'thewire_tools:entity_tools:unable' => 'Kan niet worden gewijzigd',
   'thewire_tools:feature' => 'Aanraden',
   'thewire_tools:unfeature' => 'Afraden',
   'thewire_tools:sidebar:featured' => 'Aangeraden berichten',

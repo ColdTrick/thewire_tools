@@ -51,6 +51,9 @@ To view your mentions on the wire click here:
 	// featured
 	'thewire_tools:sidebar:featured' => "Featured posts",
 	
+	// entity tools
+	'thewire_tools:entity_tools:unable' => "Unable to change",
+	
 	// widget
 	// thewire_groups
 	'widgets:thewire_groups:title' => "Group wire posts",

@@ -67,7 +67,9 @@ function thewire_tools_init() {
 	elgg_register_plugin_hook_handler('action', 'notificationsettings/save', '\ColdTrick\TheWireTools\Notifications::saveUserNotificationsSettings');
 	
 	elgg_register_plugin_hook_handler('handlers', 'widgets', '\ColdTrick\TheWireTools\Widgets::registerHandlers');
-	
+
+	elgg_register_plugin_hook_handler('supported_types', 'entity_tools', '\ColdTrick\TheWireTools\Migrate::registerClass');
+
 	// overrule default save action
 	elgg_unregister_action('thewire/add');
 	elgg_register_action('thewire/add', dirname(__FILE__) . '/actions/thewire/add.php');
