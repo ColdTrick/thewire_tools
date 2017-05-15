@@ -31,7 +31,10 @@ $object_link = elgg_view('output/url', [
 $summary = elgg_echo('river:create:object:thewire', [$subject_link, $object_link]);
 
 $attachments = '';
+$ia = elgg_set_ignore_access(true);
 $reshare = $object->getEntitiesFromRelationship(['relationship' => 'reshare', 'limit' => 1]);
+elgg_set_ignore_access($ia);
+
 if (!empty($reshare)) {
 	$attachments = elgg_view('thewire_tools/reshare_source', ['entity' => $reshare[0]]);
 }

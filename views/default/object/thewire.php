@@ -112,8 +112,11 @@ if (!empty($more_content)) {
 }
 elgg_pop_context();
 
-// check for reshare entity
+// check for reshare entity (ignore access while doing so as shared entity could be unaccessable)
+$ia = elgg_set_ignore_access(true);
 $reshare = $post->getEntitiesFromRelationship(['relationship' => 'reshare', 'limit' => 1]);
+elgg_set_ignore_access($ia);
+
 if (!empty($reshare)) {
 	$content .= elgg_format_element('div', ['class' => 'elgg-divide-left pls'], elgg_view('thewire_tools/reshare_source', ['entity' => $reshare[0]]));
 }
