@@ -1,6 +1,11 @@
 Version history
 ===============
 
+6.1 (2017-05-30):
+
+- added: support for entity tools migration of group wire threads
+- changed: unaccessable reshared source entity now is always visible
+
 6.0 (2017-03-24):
 
 - changed: increased Elgg requirement to 2.2
