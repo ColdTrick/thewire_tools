@@ -52,42 +52,31 @@ function thewire_tools_get_wire_length() {
  *
  * @return bool|int the GUID of the new wire post or false
  */
-function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $method = "site", $reshare_guid = 0) {
+function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid = 0, $method = "site", $reshare_guid = 0, $container_guid = null) {
 	
 	// set correct container
-	$container_guid = $userid;
+	if (is_null($container_guid)) {
+		$container_guid = $userid;
+	}
 	
+	if (thewire_tools_groups_enabled() && is_null($access_id)) {
+		// need to default to group ACL
+		$group = get_entity($container_guid);
+		if ($group instanceof ElggGroup) {
+			$access_id = $group->group_acl;
+		}
+	}
+
 	// check the access id
 	if ($access_id == ACCESS_PRIVATE) {
 		// private wire posts aren't allowed
 		$access_id = ACCESS_LOGGED_IN;
-	} elseif (thewire_tools_groups_enabled()) {
-		// allow the saving of a wire post in a group (if enabled)
-		if (!in_array($access_id, [ACCESS_FRIENDS, ACCESS_LOGGED_IN, ACCESS_PUBLIC])) {
-			// try to find a group with access_id
-			$group_options = [
-				'type' => 'group',
-				'limit' => 1,
-				'metadata_name_value_pairs' => ['group_acl' => $access_id],
-			];
-			
-			$groups = elgg_get_entities_from_metadata($group_options);
-			if (!empty($groups)) {
-				$group = $groups[0];
-					
-				if ($group->thewire_enable == 'no') {
-					// not allowed to post in this group
-					register_error(elgg_echo('thewire_tools:groups:error:not_enabled'));
-						
-					// let creation of object fail
-					return false;
-				} else {
-					$container_guid = $group->getGUID();
-				}
-			}
-		}
 	}
 	
+	if (is_null($access_id)) {
+		$access_id = ACCESS_PUBLIC;
+	}
+		
 	// create the new post
 	$post = new ElggObject();
 

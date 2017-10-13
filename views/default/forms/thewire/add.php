@@ -7,17 +7,23 @@
 
 elgg_load_js('elgg.thewire');
 
+elgg_require_js('thewire_tools/autocomplete');
+
 $post = elgg_extract('post', $vars);
 $char_limit = thewire_tools_get_wire_length();
 $reshare = elgg_extract('reshare', $vars); // for reshare functionality
 
-$text = elgg_echo('post');
-if ($post) {
-	$text = elgg_echo('reply');
-}
+$text = $post ? elgg_echo('reply') : elgg_echo('post');
+
 $chars_left = elgg_echo('thewire:charleft');
 
 $parent_input = '';
+$mentions = '';
+$container_input = elgg_view('forms/thewire/add/container', ['entity' => $post]);
+$access_input = elgg_view('forms/thewire/add/access', ['entity' => $post]);
+$reshare_input = '';
+$post_value = '';
+
 if ($post) {
 	$parent_input = elgg_view('input/hidden', [
 		'name' => 'parent_guid',
@@ -25,8 +31,6 @@ if ($post) {
 	]);
 }
 
-$reshare_input = '';
-$post_value = '';
 if (!empty($reshare)) {
 	$reshare_input = elgg_view('input/hidden', [
 		'name' => 'reshare_guid',
@@ -65,57 +69,13 @@ $post_input = elgg_view('input/plaintext', [
 
 $submit_button = elgg_view('input/submit', [
 	'value' => $text,
-	'class' => 'elgg-button elgg-button-submit thewire-submit-button',
+	'class' => 'thewire-submit-button',
 ]);
 
-$mentions = '';
-$access_input = '';
-if (thewire_tools_groups_enabled()) {
+echo $reshare_input;
+echo $post_input;
+echo elgg_format_element('div', ['class' => 'thewire-characters-remaining'], $count_down);
 
-	if ($post) {
-		$access_input = elgg_view('input/hidden', [
-			'name' => 'access_id',
-			'value' => $post->access_id,
-		]);
-	} else {
-		$page_owner_entity = elgg_get_page_owner_entity();
+$footer = $parent_input . $submit_button . $container_input . $access_input;
 
-		if ($page_owner_entity instanceof ElggGroup) {
-			// in a group only allow sharing in the current group
-			$access_input = elgg_view('input/hidden', [
-				'name' => 'access_id',
-				'value' => $page_owner_entity->group_acl,
-			]);
-			$mentions = elgg_format_element('div', ['class' => 'elgg-subtext mbn'], elgg_echo('thewire_tools:groups:mentions'));
-		} else {
-			$params = ['name' => 'access_id'];
-			
-			if (elgg_in_context('widgets')) {
-				$params['class'] = 'thewire-tools-widget-access';
-			}
-			
-			elgg_push_context('thewire_add');
-			$access_input = elgg_view('input/access', $params);
-			elgg_pop_context();
-		}
-	}
-}
-
-echo <<<HTML
-	$reshare_input
-	$post_input
-<div class="thewire-characters-remaining">
-	$count_down
-</div>
-$mentions
-<div class="elgg-foot mts">
-	$parent_input
-	$submit_button
-	$access_input
-</div>
-HTML;
-
-elgg_require_js('thewire_tools/autocomplete');
-if (elgg_is_xhr()) {
-	elgg_format_element('script', [], 'require["thewire_tools/autocomplete"];');
-}
+elgg_set_form_footer($footer);

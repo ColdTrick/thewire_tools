@@ -13,7 +13,6 @@ return array (
   'thewire_tools:action:toggle_feature:featured' => 'Het bericht is nu aangeraden',
   'thewire_tools:reshare:count' => 'Wie heeft dit gedeeld',
   'thewire_tools:reshare:list' => '%s deelde dit %s',
-  'thewire_tools:groups:mentions' => 'Vermeldingen zijn beperkt tot groepsleden',
   'thewire_tools:settings:mention_display' => 'Hoe moeten vermeldingen worden weergegeven in een Wire post',
   'thewire_tools:settings:mention_display:username' => '@gebruikersnaam',
   'thewire_tools:settings:mention_display:displayname' => '@weegavenaam',

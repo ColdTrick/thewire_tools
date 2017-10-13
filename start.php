@@ -52,7 +52,6 @@ function thewire_tools_init() {
 	
 	// register hooks
 	elgg_register_plugin_hook_handler('route', 'thewire', '\ColdTrick\TheWireTools\Router::thewire');
-	elgg_register_plugin_hook_handler('access:collections:write', 'all', '\ColdTrick\TheWireTools\Access::collectionsWrite', 999);
 	
 	elgg_register_plugin_hook_handler('entity:url', 'object', '\ColdTrick\TheWireTools\Widgets::widgetTitleURL');
 	elgg_register_plugin_hook_handler('group_tool_widgets', 'widget_manager', '\ColdTrick\TheWireTools\Widgets::groupToolBasedWidgets');

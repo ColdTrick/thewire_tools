@@ -35,7 +35,10 @@ To view your mentions on the wire click here:
 	'thewire_tools:group:title' => "Group wire posts",
 	'thewire_tools:groups:tool_option' => "Enable group wire posts",
 	'thewire_tools:groups:error:not_enabled' => "The wire has been disabled for this group",
-	'thewire_tools:groups:mentions' => "Mentions will be limited to group members",
+	
+	'thewire_tools:add:container:site' => "Post on site",
+	'thewire_tools:add:access:group' => "Only share in selected group",
+	
 	
 	// search
 	'thewire_tools:search:title' => "Search the wire for: '%s'",
