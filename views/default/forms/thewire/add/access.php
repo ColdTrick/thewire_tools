@@ -28,14 +28,18 @@ if (!$count) {
 	return;
 }
 
+$access_options = [];
+if (!elgg_get_config('walled_garden')) {
+	$access_options[ACCESS_PUBLIC] = elgg_echo('PUBLIC');
+}
+
+$access_options[ACCESS_LOGGED_IN] = elgg_echo('LOGGED_IN');
+$access_options[-100] = elgg_echo('thewire_tools:add:access:group');
+
 $access_params = [
 	'name' => 'access_id',
 	'class' => ['mls'],
-	'options_values' => [
-		ACCESS_PUBLIC => elgg_echo('PUBLIC'),
-		ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
-		-100 => elgg_echo('thewire_tools:add:access:group'),
-	],
+	'options_values' => $access_options,
 ];
 
 if (elgg_in_context('widgets')) {
