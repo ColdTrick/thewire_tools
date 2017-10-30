@@ -37,6 +37,7 @@ To view your mentions on the wire click here:
 	'thewire_tools:groups:error:not_enabled' => "The wire has been disabled for this group",
 	
 	'thewire_tools:add:container:site' => "Post on site",
+	'thewire_tools:add:access' => "Visible for: %s",
 	'thewire_tools:add:access:group' => "Only share in selected group",
 	
 	

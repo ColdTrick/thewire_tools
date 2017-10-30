@@ -1,10 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v5.2
- * On 2017-05-15 14:29
+ * This file was created by Translation Editor v6.0
+ * On 2017-10-30 17:21
  */
 
 return array (
+  'thewire_tools:add:container:site' => 'Plaats op de site',
+  'thewire_tools:add:access' => 'Zichtbaar voor: %s',
+  'thewire_tools:add:access:group' => 'Enkel delen in de geselecteerde groep',
   'thewire_tools:entity_tools:unable' => 'Kan niet worden gewijzigd',
   'thewire_tools:feature' => 'Aanraden',
   'thewire_tools:unfeature' => 'Afraden',

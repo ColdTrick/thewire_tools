@@ -30,10 +30,10 @@ if (!$count) {
 
 $access_options = [];
 if (!elgg_get_config('walled_garden')) {
-	$access_options[ACCESS_PUBLIC] = elgg_echo('PUBLIC');
+	$access_options[ACCESS_PUBLIC] = elgg_echo('thewire_tools:add:access', [elgg_echo('PUBLIC')]);
 }
 
-$access_options[ACCESS_LOGGED_IN] = elgg_echo('LOGGED_IN');
+$access_options[ACCESS_LOGGED_IN] = elgg_echo('thewire_tools:add:access', [elgg_echo('LOGGED_IN')]);
 $access_options[-100] = elgg_echo('thewire_tools:add:access:group');
 
 $access_params = [
