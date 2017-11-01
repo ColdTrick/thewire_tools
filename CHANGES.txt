@@ -1,6 +1,12 @@
 Version history
 ===============
 
+7.0 (2017-11-01):
+
+- added: access control on group wire posts
+- changed: updated minimal Elgg requirement to 2.3
+- fixed: do not show public access in walled garden mode
+
 6.1 (2017-05-30):
 
 - added: support for entity tools migration of group wire threads
