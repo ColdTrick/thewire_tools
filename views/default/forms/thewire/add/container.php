@@ -29,7 +29,7 @@ if (!$user_guid) {
 	return;
 }
 
-$options_values = ['' => elgg_echo('thewire_tools:add:container:site')];
+$options_values = [$user_guid => elgg_echo('thewire_tools:add:container:site')];
 
 $groups = new \ElggBatch('elgg_get_entities_from_relationship', [
 	'type' => 'group',
