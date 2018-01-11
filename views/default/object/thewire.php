@@ -32,17 +32,12 @@ if (!elgg_in_context('thewire_tools_thread') && !elgg_in_context('thewire_thread
 }
 
 $owner = $post->getOwnerEntity();
-$container = $post->getContainerEntity();
-$subtitle = [];
-
 $owner_icon = elgg_view_entity_icon($owner, 'tiny');
-$owner_link = elgg_view('output/url', [
-	'href' => "thewire/owner/{$owner->username}",
-	'text' => $owner->name,
-	'is_trusted' => true,
+
+$subtitle = elgg_view('page/elements/by_line', [
+	'entity' => $post,
+	'owner_url' => "thewire/owner/{$owner->username}",
 ]);
-$subtitle[] = elgg_echo('byline', [$owner_link]);
-$subtitle[] = elgg_view_friendly_time($post->time_created);
 
 $metadata = elgg_view_menu('entity', [
 	'entity' => $post,
@@ -50,17 +45,6 @@ $metadata = elgg_view_menu('entity', [
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
 ]);
-
-// check if need to show group
-if (elgg_instanceof($container, 'group') && ($container->getGUID() != elgg_get_page_owner_guid())) {
-	$group_link = elgg_view('output/url', [
-		'href' => "thewire/group/{$container->getGUID()}",
-		'text' => $container->name,
-		'class' => 'thewire_tools_object_link',
-	]);
-	
-	$subtitle[] = elgg_echo('river:ingroup', [$group_link]);
-}
 
 // show text different in widgets
 $text = $post->description;
@@ -96,6 +80,7 @@ if (elgg_in_context('widgets')) {
 		$text = $post->description;
 	}
 }
+
 elgg_push_context('input');
 $content = elgg_view('output/longtext', [
 	'value' => thewire_tools_filter($text) . $more_link,
@@ -118,7 +103,11 @@ $reshare = $post->getEntitiesFromRelationship(['relationship' => 'reshare', 'lim
 elgg_set_ignore_access($ia);
 
 if (!empty($reshare)) {
-	$content .= elgg_format_element('div', ['class' => 'elgg-divide-left pls'], elgg_view('thewire_tools/reshare_source', ['entity' => $reshare[0]]));
+	$content .= elgg_format_element('div', [
+		'class' => 'elgg-divide-left pls',
+	], elgg_view('thewire_tools/reshare_source', [
+		'entity' => $reshare[0],
+	]));
 }
 
 if (elgg_is_logged_in() && !elgg_in_context('thewire_tools_thread')) {
@@ -132,7 +121,7 @@ if (elgg_is_logged_in() && !elgg_in_context('thewire_tools_thread')) {
 $params = [
 	'entity' => $post,
 	'metadata' => $metadata,
-	'subtitle' => implode(' ', $subtitle),
+	'subtitle' => $subtitle,
 	'content' => $content,
 	'tags' => false,
 ];
