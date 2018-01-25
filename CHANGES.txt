@@ -1,6 +1,10 @@
 Version history
 ===============
 
+7.0.2 (2018-01-25):
+
+- changed: use Elgg default by_line in object view
+
 7.0.1 (2017-11-29):
 
 - fix: ie not submitting form if container not set to a non null value
