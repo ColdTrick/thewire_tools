@@ -3,7 +3,7 @@
 	"description": "Extend the functionality of The Wire",
 	"type": "elgg-plugin",
 	"keywords": ["elgg", "plugin"],
-	"license": "GPL-2.0",
+	"license": "GPL-2.0-only",
 	"support": {
 		"source": "https://github.com/ColdTrick/thewire_tools",
 		"issues": "https://github.com/ColdTrick/thewire_tools/issues"
