@@ -64,11 +64,11 @@ To view your mentions on the wire click here:
 	'widgets:thewire_groups:description' => "Show the wire posts in the group",
 	
 	// index_thewire
-	'widgets:index_thewire:title' => "The Wire",
+	'widgets:index_thewire:name' => "The Wire",
 	'widgets:index_thewire:description' => "Show the latest wire posts on your community",
 	
 	// the wire post
-	'widgets:thewire_post:title' => "Update the wire",
+	'widgets:thewire_post:name' => "Update the wire",
 	'widgets:thewire_post:description' => "Update your status on the wire from this widget",
 
 	// the wire (default widget)

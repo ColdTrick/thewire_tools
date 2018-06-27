@@ -1,0 +1,62 @@
+<?php
+
+namespace ColdTrick\TheWireTools;
+
+use Elgg\DefaultPluginBootstrap;
+
+class Bootstrap extends DefaultPluginBootstrap {
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function init() {
+
+		if (thewire_tools_groups_enabled()) {
+			// add widget (for Widget Manager only)
+			elgg_register_widget_type('thewire_groups', elgg_echo('widgets:thewire_groups:title'), elgg_echo('widgets:thewire_groups:description'), ['groups'], true);
+			
+			// add group tool option
+			add_group_tool_option('thewire', elgg_echo('thewire_tools:groups:tool_option'), true);
+		}
+		
+		$this->registerViews();
+		$this->registerEvents();
+		$this->registerHooks();
+	}
+	
+	protected function registerViews() {
+		
+		elgg_extend_view('core/river/filter', 'thewire_tools/activity_post', 400);
+		elgg_extend_view('css/elgg', 'css/thewire_tools.css');
+		elgg_extend_view('js/elgg', 'js/thewire_tools.js');
+		elgg_extend_view('notifications/subscriptions/personal', 'thewire_tools/notifications/settings');
+		elgg_extend_view('page/layouts/elements/filter', 'thewire_tools/group_activity', 400);
+		elgg_extend_view('thewire/sidebar', 'thewire_tools/extends/thewire/sidebar', 400);
+		
+		elgg_register_ajax_view('thewire_tools/reshare');
+		elgg_register_ajax_view('thewire_tools/reshare_list');
+		elgg_register_ajax_view('thewire_tools/thread');
+	}
+	
+	protected function registerEvents() {
+		elgg_register_event_handler('create', 'object', '\ColdTrick\TheWireTools\Notifications::triggerMentionNotificationEvent');
+	}
+	
+	protected function registerHooks() {
+		$hooks = $this->elgg()->hooks;
+		
+		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::daily');
+		$hooks->registerHandler('route', 'thewire', '\ColdTrick\TheWireTools\Router::thewire');
+		$hooks->registerHandler('entity:url', 'object', '\ColdTrick\TheWireTools\Widgets::widgetTitleURL');
+		$hooks->registerHandler('group_tool_widgets', 'widget_manager', '\ColdTrick\TheWireTools\Widgets::groupToolBasedWidgets');
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterImprove');
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterReshare');
+		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterFeature');
+		$hooks->registerHandler('register', 'menu:river', '\ColdTrick\TheWireTools\Menus::riverRegisterReply');
+		$hooks->registerHandler('register', 'menu:owner_block', '\ColdTrick\TheWireTools\Menus::ownerBlockRegister');
+		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\TheWireTools\Menus::pageRegister');
+		$hooks->registerHandler('action', 'notificationsettings/save', '\ColdTrick\TheWireTools\Notifications::saveUserNotificationsSettings');
+		$hooks->registerHandler('handlers', 'widgets', '\ColdTrick\TheWireTools\Widgets::registerHandlers');
+		$hooks->registerHandler('supported_types', 'entity_tools', '\ColdTrick\TheWireTools\Migrate::registerClass');
+	}
+}

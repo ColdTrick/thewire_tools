@@ -46,8 +46,8 @@ Om je vermeldingen op The Wire te bekijken klik op onderstaande link:
   'thewire_tools:search:no_query' => 'Om op The Wire te zoeken, geef je zoekterm hierboven op',
   'widgets:thewire_groups:title' => 'Groeps wire berichten',
   'widgets:thewire_groups:description' => 'Toon The Wire berichten in de groep',
-  'widgets:index_thewire:title' => 'The Wire',
+  'widgets:index_thewire:name' => 'The Wire',
   'widgets:index_thewire:description' => 'Toon de laatste Wire berichten van je community',
-  'widgets:thewire_post:title' => 'Plaats op The Wire',
+  'widgets:thewire_post:name' => 'Plaats op The Wire',
   'widgets:thewire_post:description' => 'Werk je status op The Wire bij via deze widget',
 );
