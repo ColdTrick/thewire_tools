@@ -11,6 +11,20 @@ return [
 		'mention_display' => 'username',
 		
 	],
+	'routes' => [
+		'collection:object:thewire:group' => [
+			'path' => '/thewire/group/{guid}',
+			'resource' => 'thewire/group',
+		],
+		'collection:object:thewire:autocomplete' => [
+			'path' => '/thewire/autocomplete',
+			'resource' => 'thewire/autocomplete',
+		],
+		'collection:object:thewire:search' => [
+			'path' => '/thewire/search/{q?}',
+			'resource' => 'thewire/search',
+		],
+	],
 	'widgets' => [
 		'index_thewire' => [
 			'context' => ['index'],

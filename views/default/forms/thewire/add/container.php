@@ -9,7 +9,7 @@ if ($entity) {
 	return;
 }
 
-if (!thewire_tools_groups_enabled()) {
+if (elgg_get_plugin_setting('enable_group', 'thewire_tools') !== 'yes') {
 	return;
 }
 
@@ -31,13 +31,15 @@ if (!$user_guid) {
 
 $options_values = [$user_guid => elgg_echo('thewire_tools:add:container:site')];
 
-$groups = new \ElggBatch('elgg_get_entities_from_relationship', [
+$groups = new \ElggBatch('elgg_get_entities', [
 	'type' => 'group',
 	'limit' => false,
 	'relationship' => 'member',
 	'relationship_guid' => $user_guid,
-	'joins' => ['JOIN ' . elgg_get_config('dbprefix') . 'groups_entity ge ON e.guid = ge.guid'],
-	'order_by' => 'ge.name ASC',
+	'order_by_metadata' => [
+		'name' => 'name',
+		'direction' => 'ASC',
+	],
 ]);
 foreach ($groups as $group) {
 	if ($group->thewire_enable !== 'no') {

@@ -67,7 +67,7 @@ class Migrate extends \ColdTrick\EntityTools\MigrateTheWire {
 		// ignore access for this part
 		$ia = elgg_set_ignore_access(true);
 		
-		$batch = new \ElggBatch('elgg_get_entities_from_metadata', [
+		$batch = new \ElggBatch('elgg_get_entities', [
 			'type' => 'object',
 			'subtype' => 'thewire',
 			'limit' => false,

@@ -15,7 +15,7 @@ if ($page_owner instanceof ElggUser) {
 	$options['container_guid'] = $page_owner->getGUID();
 }
 
-$posts = elgg_get_entities_from_metadata($options);
+$posts = elgg_get_entities($options);
 if (empty($posts)) {
 	return;
 }

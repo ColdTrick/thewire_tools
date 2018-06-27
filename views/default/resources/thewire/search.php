@@ -3,29 +3,29 @@
  * Search in TheWire
  */
 
-$query = get_input('query', get_input('q'));
+$query = get_input('q');
 
 elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
-elgg_push_breadcrumb(elgg_echo('thewire_tools:search:title:no_query'));
 
 if (!empty($query)) {
 	$options = [
-		'types' => 'object',
-		'subtypes' => 'thewire',
+		'type' => 'object',
+		'subtype' => 'thewire',
 		'pagination' => true,
-		'joins' => ['JOIN ' . elgg_get_config('dbprefix') . 'objects_entity oe ON e.guid = oe.guid'],
-		'no_results' => elgg_echo('notfound'),
+		'no_results' => true,
+		'metadata_name_value_pairs_operator' => 'OR',
+		'metadata_name_value_pairs' => [],
 	];
 	
 	$where_options = explode(' ', $query);
 	if (!empty($where_options)) {
-		$wheres = [];
-		foreach ($where_options as $wo) {
-			$wheres[] = "oe.description LIKE '%" . sanitise_string($wo) . "%'";
-		}
-		
-		if (!empty($wheres)) {
-			$options['wheres'] = '(' . implode(' AND ', $wheres) . ')';
+		foreach ($where_options as $word) {
+			$options['metadata_name_value_pairs'][] = [
+				'name' => 'description',
+				'value' => "%{$word}%",
+				'operand' => 'LIKE',
+				'case_sensitive' => false,
+			];
 		}
 	}
 	
@@ -56,4 +56,4 @@ $body = elgg_view_layout('one_sidebar', [
 ]);
 
 // Display page
-echo elgg_view_page($title_text,$body);
+echo elgg_view_page($title_text, $body);

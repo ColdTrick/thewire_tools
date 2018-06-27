@@ -3,12 +3,7 @@
 $widget = elgg_extract('entity', $vars);
 $group = $widget->getOwnerEntity();
 
-$count = (int) $widget->wire_count;
 $filter = $widget->filter;
-
-if ($count < 1) {
-	$count = 5;
-}
 
 if ($group->isMember()) {
 	echo elgg_view_form('thewire/add');
@@ -17,23 +12,28 @@ if ($group->isMember()) {
 $options = [
 	'type' => 'object',
 	'subtype' => 'thewire',
-	'limit' => $count,
-	'container_guid' => $group->getGUID(),
+	'limit' => (int) $widget->wire_count ?: 5,
+	'container_guid' => $group->guid,
 	'pagination' => false,
-	'full_view' => false,
+	'metadata_name_value_pairs_operator' => 'OR',
+	'metadata_name_value_pairs' => [],
 ];
 
 if (!empty($filter)) {
 	$filters = string_to_tag_array($filter);
-	$filters = array_map('sanitise_string', $filters);
-
-	$options['joins'] = ['JOIN ' . elgg_get_config('dbprefix') . 'objects_entity oe ON oe.guid = e.guid'];
-	$options['wheres'] = ["(oe.description LIKE '%" . implode("%' OR oe.description LIKE '%", $filters) . "%')"];
+	foreach ($filters as $word) {
+		$options['metadata_name_value_pairs'][] = [
+			'name' => 'description',
+			'value' => "%{$word}%",
+			'operand' => 'LIKE',
+			'case_sensitive' => false,
+		];
+	}
 }
 
 $list = elgg_list_entities($options);
 if (empty($list)) {
-	echo elgg_echo("thewire_tools:no_result");
+	echo elgg_echo('thewire_tools:no_result');
 	return;
 }
 

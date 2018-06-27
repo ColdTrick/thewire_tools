@@ -2,24 +2,16 @@
 
 $widget = elgg_extract('entity', $vars);
 
-$count = (int) $widget->wire_count;
-if ($count < 1) {
-	$count = 8;
-}
-
-$setting = elgg_echo('thewire:num');
-$setting .= elgg_view('input/text', [
-	'name' => 'params[wire_count]',
-	'value' => $count,
-	'size' => 4,
-	'maxlength' => 4,
+echo elgg_view('object/widget/edit/num_display', [
+	'entity' => $widget,
+	'name' => 'wire_count',
+	'label' => elgg_echo('thewire:num'),
+	'default' => 8,
 ]);
-echo elgg_format_element('div', [], $setting);
 
-$setting = elgg_echo('widgets:thewire:filter');
-$setting .= elgg_view('input/text', [
+echo elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('widgets:thewire:filter'),
 	'name' => 'params[filter]',
 	'value' => $widget->filter,
-	'class' => 'mlm',
 ]);
-echo elgg_format_element('div', [], $setting);

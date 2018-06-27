@@ -35,15 +35,15 @@ if (substr($q, 0, 1) == '@') {
 	];
 	
 	$group = get_entity($page_owner_guid);
-	if (elgg_instanceof($group, 'group')) {
+	if ($group instanceof \ElggGroup) {
 		$options['relationship'] = 'member';
-		$options['relationship_guid'] = $group->getGUID();
+		$options['relationship_guid'] = $group->guid;
 	} else {
 		$options['relationship'] = 'member_of_site';
-		$options['relationship_guid'] = $site->getGUID();
+		$options['relationship_guid'] = $site->guid;
 	}
 	
-	$users = elgg_get_entities_from_relationship($options);
+	$users = elgg_get_entities($options);
 	if (!empty($users)) {
 		foreach ($users as $user) {
 			$result[] = [

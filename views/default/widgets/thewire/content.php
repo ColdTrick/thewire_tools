@@ -34,7 +34,7 @@ switch ($owner) {
 			"site_guids" => false
 		);
 		
-		$friends = elgg_get_entities_from_relationship($friends_options);
+		$friends = elgg_get_entities_from($friends_options);
 		if (!empty($friends)) {
 			$guids = array();
 			

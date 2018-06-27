@@ -21,7 +21,7 @@ if (empty($body)) {
 	return elgg_error_response(elgg_echo('thewire:blank'));
 }
 
-if (!thewire_tools_groups_enabled()) {
+if (elgg_get_plugin_setting('enable_group', 'thewire_tools') !== 'yes') {
 	$container_guid = null;
 } else {
 	$group = get_entity($container_guid);

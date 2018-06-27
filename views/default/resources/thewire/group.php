@@ -5,11 +5,11 @@
 
 group_gatekeeper();
 
-$group_guid = sanitize_int(get_input('group_guid', 0));
+$group_guid = sanitize_int(get_input('guid', 0));
 $entities_only = sanitize_int(get_input('entities_only', 0));
 
 $group = get_entity($group_guid);
-if (!elgg_instanceof($group, 'group')) {
+if (!$group instanceof \ElggGroup) {
 	forward('thewire/all');
 }
 

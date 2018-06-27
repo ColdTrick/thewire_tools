@@ -5,7 +5,7 @@ if (empty($guid)) {
 	return;
 }
 
-$batch = new ElggBatch('elgg_get_entities_from_relationship', [
+$batch = new ElggBatch('elgg_get_entities', [
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'relationship_guid' => $guid,

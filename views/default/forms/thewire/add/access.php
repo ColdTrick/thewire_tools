@@ -9,7 +9,7 @@ if ($entity) {
 	return;
 }
 
-if (!thewire_tools_groups_enabled()) {
+if (elgg_get_plugin_setting('enable_group', 'thewire_tools') !== 'yes') {
 	return;
 }
 

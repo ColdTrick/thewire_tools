@@ -68,7 +68,7 @@ class Widgets {
 				$return = 'thewire/all';
 				break;
 			case 'thewire_groups':
-				$return = "thewire/group/{$widget->getOwnerGUID()}";
+				$return = "thewire/group/{$widget->owner_guid}";
 				break;
 		}
 	
@@ -92,7 +92,7 @@ class Widgets {
 			return;
 		}
 		
-		if ($container->thewire_enable !== 'no') {
+		if ($container->isToolEnabled('thewire')) {
 			return;
 		}
 		

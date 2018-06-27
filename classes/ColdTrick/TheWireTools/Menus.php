@@ -21,7 +21,7 @@ class Menus {
 		}
 		
 		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggEntity)) {
+		if (!$entity instanceof \ElggEntity) {
 			return;
 		}
 		
@@ -31,13 +31,10 @@ class Menus {
 		
 		elgg_load_js('elgg.thewire');
 	
-		elgg_load_js('lightbox');
-		elgg_load_css('lightbox');
-	
 		$reshare_guid = $entity->getGUID();
 		$reshare = null;
 		
-		if (elgg_instanceof($entity, 'object', 'thewire')) {
+		if ($entity instanceof \ElggWire) {
 			$reshare = $entity->getEntitiesFromRelationship([
 				'relationship' => 'reshare',
 				'limit' => 1,
@@ -78,8 +75,8 @@ class Menus {
 	
 		$returnvalue[] = \ElggMenuItem::factory([
 			'name' => 'thewire_tools_reshare',
-			'text' => elgg_view_icon('share'),
-			'title' => elgg_echo('thewire_tools:reshare'),
+			'icon' => 'share',
+			'text' => elgg_echo('thewire_tools:reshare'),
 			'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $reshare_guid,
 			'link_class' => 'elgg-lightbox',
 			'is_trusted' => true,
@@ -144,15 +141,15 @@ class Menus {
 	 */
 	public static function ownerBlockRegister($hook_name, $entity_type, $return, $params) {
 		$group = elgg_extract('entity', $params);
-		if (!elgg_instanceof($group, 'group')) {
+		if (!$group instanceof \ElggGroup) {
 			return;
 		}
 		
-		if (!thewire_tools_groups_enabled()) {
+		if (elgg_get_plugin_setting('enable_group', 'thewire_tools') !== 'yes') {
 			return;
 		}
 	
-		if ($group->thewire_enable == 'no') {
+		if (!$group->isToolEnabled('thewire')) {
 			return;
 		}
 	
@@ -178,7 +175,7 @@ class Menus {
 	public static function entityRegisterImprove($hook_name, $entity_type, $return, $params) {
 	
 		$entity = elgg_extract('entity', $params, false);
-		if (!elgg_instanceof($entity, 'object', 'thewire')) {
+		if (!$entity instanceof \ElggWire) {
 			return;
 		}
 		
@@ -238,7 +235,7 @@ class Menus {
 		$item = elgg_extract('item', $params);
 		$entity = $item->getObjectEntity();
 	
-		if (!elgg_instanceof($entity, 'object', 'thewire')) {
+		if (!$entity instanceof \ElggWire) {
 			return;
 		}
 		
@@ -269,7 +266,7 @@ class Menus {
 	public static function entityRegisterFeature($hook, $type, $returnvalue, $params) {
 		
 		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggWire)) {
+		if (!$entity instanceof \ElggWire) {
 			return;
 		}
 		
@@ -282,24 +279,25 @@ class Menus {
 			return;
 		}
 		
-		elgg_require_js('thewire_tools/entity_menu');
-		
-		$featured = !empty($entity->featured);
+		$toggle_action = elgg_generate_action_url('thewire_tools/toggle_feature', ['guid' => $entity->guid]);
 		
 		$returnvalue[] = \ElggMenuItem::factory([
-			'name' => 'thewire_tools_feature',
+			'name' => 'thewire-tools-feature',
 			'text' => elgg_echo('thewire_tools:feature'),
-			'href' => "action/thewire_tools/toggle_feature?guid={$entity->getGUID()}",
-			'is_action' => true,
-			'item_class' => $featured ? 'hidden' : '',
+			'icon' => 'arrow-up',
+			'href' => $toggle_action,
+			'item_class' => $entity->featured ? 'hidden' : '',
+			'data-toggle' => 'thewire-tools-unfeature',
 			'priority' => 200,
 		]);
+		
 		$returnvalue[] = \ElggMenuItem::factory([
-			'name' => 'thewire_tools_unfeature',
+			'name' => 'thewire-tools-unfeature',
 			'text' => elgg_echo('thewire_tools:unfeature'),
-			'href' => "action/thewire_tools/toggle_feature?guid={$entity->getGUID()}",
-			'is_action' => true,
-			'item_class' => $featured ? '' : 'hidden',
+			'icon' => 'arrow-down',
+			'href' => $toggle_action,
+			'item_class' => $entity->featured ? '' : 'hidden',
+			'data-toggle' => 'thewire-tools-feature',
 			'priority' => 201,
 		]);
 		

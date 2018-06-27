@@ -4,26 +4,6 @@
  */
 
 /**
- * Check is TheWire is enabled for groups
- *
- * @return boolean
- */
-function thewire_tools_groups_enabled() {
-	static $result;
-	
-	if (isset($result)) {
-		return $result;
-	}
-	$result = false;
-	
-	if (elgg_get_plugin_setting('enable_group', 'thewire_tools') == 'yes') {
-		$result = true;
-	}
-	
-	return $result;
-}
-
-/**
  * Get the max number of characters allowed in a wire post
  *
  * @return int the number of characters
@@ -59,7 +39,7 @@ function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid
 		$container_guid = $userid;
 	}
 	
-	if (thewire_tools_groups_enabled() && is_null($access_id)) {
+	if ((elgg_get_plugin_setting('enable_group', 'thewire_tools') === 'yes') && is_null($access_id)) {
 		// need to default to group ACL
 		$group = get_entity($container_guid);
 		if ($group instanceof ElggGroup) {

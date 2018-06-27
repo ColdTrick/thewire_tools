@@ -1,8 +1,15 @@
 <?php
 
-echo elgg_view('input/text', [
+echo elgg_view_field([
+	'#type' => 'text',
 	'name' => 'q',
 	'value' => elgg_extract('query', $vars),
 ]);
-echo elgg_view('input/submit', ['value' => elgg_echo('search')]);
+
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('search'),
+]);
+
+elgg_set_form_footer($footer);
 	

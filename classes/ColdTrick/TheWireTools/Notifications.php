@@ -15,7 +15,7 @@ class Notifications {
 	 */
 	public static function triggerMentionNotificationEvent($event, $type, \ElggObject $object) {
 		
-		if (!elgg_instanceof($object, 'object', 'thewire')) {
+		if (!$entity instanceof \ElggWire) {
 			return;
 		}
 		

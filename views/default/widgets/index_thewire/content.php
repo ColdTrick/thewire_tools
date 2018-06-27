@@ -3,32 +3,32 @@
 $widget = elgg_extract('entity', $vars);
 
 // get widget settings
-$count = (int) $widget->wire_count;
 $filter = $widget->filter;
 
-if ($count < 1) {
-	$count = 8;
+// show add form
+if (elgg_is_logged_in() && (elgg_get_plugin_setting('extend_widgets', 'thewire_tools') !== 'no')) {
+	echo elgg_view_form('thewire/add');
 }
 
 $options = [
 	'type' => 'object',
 	'subtype' => 'thewire',
-	'limit' => $count,
-	'full_view' => false,
+	'limit' => (int) $widget->wire_count ?: 8,
 	'pagination' => false,
+	'metadata_name_value_pairs_operator' => 'OR',
+	'metadata_name_value_pairs' => [],
 ];
 
 if (!empty($filter)) {
 	$filters = string_to_tag_array($filter);
-	$filters = array_map('sanitise_string', $filters);
-	
-	$options['joins'] = ['JOIN ' . elgg_get_config('dbprefix') . 'objects_entity oe ON oe.guid = e.guid'];
-	$options['wheres'] = ["(oe.description LIKE '%" . implode("%' OR oe.description LIKE '%", $filters) . "%')"];
-}
-
-// show add form
-if (elgg_is_logged_in() && (elgg_get_plugin_setting('extend_widgets', 'thewire_tools') !== 'no')) {
-	echo elgg_view_form('thewire/add');
+	foreach ($filters as $word) {
+		$options['metadata_name_value_pairs'][] = [
+			'name' => 'description',
+			'value' => "%{$word}%",
+			'operand' => 'LIKE',
+			'case_sensitive' => false,
+		];
+	}
 }
 
 // list content
@@ -39,6 +39,7 @@ if (empty($content)) {
 }
 	
 echo $content;
+
 $more_link = elgg_view('output/url', [
 	'href' => 'thewire/all',
 	'text' => elgg_echo('thewire:moreposts'),

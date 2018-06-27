@@ -11,7 +11,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 */
 	public function init() {
 
-		if (thewire_tools_groups_enabled()) {
+		if (elgg_get_plugin_setting('enable_group', 'thewire_tools') === 'yes') {
 			// add widget (for Widget Manager only)
 			elgg_register_widget_type('thewire_groups', elgg_echo('widgets:thewire_groups:title'), elgg_echo('widgets:thewire_groups:description'), ['groups'], true);
 			
@@ -46,7 +46,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks = $this->elgg()->hooks;
 		
 		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::daily');
-		$hooks->registerHandler('route', 'thewire', '\ColdTrick\TheWireTools\Router::thewire');
 		$hooks->registerHandler('entity:url', 'object', '\ColdTrick\TheWireTools\Widgets::widgetTitleURL');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', '\ColdTrick\TheWireTools\Widgets::groupToolBasedWidgets');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterImprove');
