@@ -47,6 +47,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		
 		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::daily');
 		$hooks->registerHandler('entity:url', 'object', '\ColdTrick\TheWireTools\Widgets::widgetTitleURL');
+		$hooks->registerHandler('export:counters', 'elasticsearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', '\ColdTrick\TheWireTools\Widgets::groupToolBasedWidgets');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterImprove');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterReshare');
