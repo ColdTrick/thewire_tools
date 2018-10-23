@@ -2,7 +2,7 @@
 
 namespace ColdTrick\TheWireTools;
 
-class Migrate extends \ColdTrick\EntityTools\MigrateTheWire {
+class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	
 
 	/**
@@ -16,7 +16,8 @@ class Migrate extends \ColdTrick\EntityTools\MigrateTheWire {
 	 * return array
 	 */
 	static public function registerClass($hook, $type, $returnvalue, $params) {
-		$returnvalue['thewire'] = Migrate::class;
+		$returnvalue['thewire'] = self::class;
+		
 		return $returnvalue;
 	}
 	
