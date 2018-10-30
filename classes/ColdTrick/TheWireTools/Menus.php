@@ -95,18 +95,17 @@ class Menus {
 	 */
 	protected static function canReshareEntity(\ElggEntity $entity) {
 		
-		if (!($entity instanceof \ElggEntity)) {
+		if (!$entity instanceof \ElggEntity) {
 			return false;
 		}
 		
 		// only allow objects and groups
-		if (!($entity instanceof \ElggObject) && !($entity instanceof \ElggGroup)) {
+		if (!$entity instanceof \ElggObject && !$entity instanceof \ElggGroup) {
 			return false;
 		}
 		
 		// comments and discussion replies are never allowed
-		$blocked_subtypes = ['comment', 'discussion_reply'];
-		if (in_array($entity->getSubtype(), $blocked_subtypes)) {
+		if ($entity instanceof \ElggComment) {
 			return false;
 		}
 		

@@ -50,7 +50,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('export:counters', 'elasticsearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', '\ColdTrick\TheWireTools\Widgets::groupToolBasedWidgets');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterImprove');
-		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterReshare');
+		$hooks->registerHandler('register', 'menu:social', '\ColdTrick\TheWireTools\Menus::entityRegisterReshare');
 		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterFeature');
 		$hooks->registerHandler('register', 'menu:river', '\ColdTrick\TheWireTools\Menus::riverRegisterReply');
 		$hooks->registerHandler('register', 'menu:owner_block', '\ColdTrick\TheWireTools\Menus::ownerBlockRegister');
