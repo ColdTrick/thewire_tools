@@ -13,10 +13,19 @@ class Bootstrap extends DefaultPluginBootstrap {
 
 		if (elgg_get_plugin_setting('enable_group', 'thewire_tools') === 'yes') {
 			// add widget (for Widget Manager only)
-			elgg_register_widget_type('thewire_groups', elgg_echo('widgets:thewire_groups:title'), elgg_echo('widgets:thewire_groups:description'), ['groups'], true);
+			elgg_register_widget_type([
+				'id' => 'thewire_groups',
+				'name' => elgg_echo('widgets:thewire_groups:title'),
+				'description' => elgg_echo('widgets:thewire_groups:description'),
+				'context' => ['groups'],
+				'multiple' => true,
+			]);
 			
 			// add group tool option
-			add_group_tool_option('thewire', elgg_echo('thewire_tools:groups:tool_option'), true);
+			$this->elgg()->group_tools->register('thewire', [
+				'label' => elgg_echo('thewire_tools:groups:tool_option'),
+				'default_on' => true,
+			]);
 		}
 		
 		$this->registerViews();
