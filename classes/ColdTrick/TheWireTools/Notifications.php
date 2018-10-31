@@ -7,15 +7,15 @@ class Notifications {
 	/**
 	 * This functions performs actions when a wire post is created
 	 *
-	 * @param string     $event  'create'
-	 * @param string     $type   'object'
+	 * @param string      $event  'create'
+	 * @param string      $type   'object'
 	 * @param \ElggObject $object the ElggObject created
 	 *
 	 * @return void
 	 */
 	public static function triggerMentionNotificationEvent($event, $type, \ElggObject $object) {
 		
-		if (!$entity instanceof \ElggWire) {
+		if (!$object instanceof \ElggWire) {
 			return;
 		}
 		
@@ -63,7 +63,7 @@ class Notifications {
 	 * Save the wire_tools preferences for the user
 	 *
 	 * @param string $hook         the name of the hook
-	 * @param stirng $type         the type of the hook
+	 * @param string $type         the type of the hook
 	 * @param array  $return_value the current return value
 	 * @param array  $params       supplied values
 	 *
@@ -104,6 +104,5 @@ class Notifications {
 	
 		// set flag for correct fallback behaviour
 		elgg_set_plugin_user_setting('notification_settings_saved', '1', $user->getGUID(), 'thewire_tools');
-	
 	}
 }
