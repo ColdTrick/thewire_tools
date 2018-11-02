@@ -66,6 +66,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\TheWireTools\Menus::pageRegister');
 		$hooks->registerHandler('action', 'notificationsettings/save', '\ColdTrick\TheWireTools\Notifications::saveUserNotificationsSettings');
 		$hooks->registerHandler('handlers', 'widgets', '\ColdTrick\TheWireTools\Widgets::registerHandlers');
+		$hooks->registerHandler('search:format', 'entity', '\ColdTrick\TheWireTools\Search::formatEntity');
 		$hooks->registerHandler('supported_types', 'entity_tools', '\ColdTrick\TheWireTools\Migrate::registerClass');
+		
 	}
 }
