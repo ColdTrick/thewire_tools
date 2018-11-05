@@ -4,8 +4,11 @@ define(['jquery'], function($) {
 		$(elem)
 		// don't navigate away from the field on tab when selecting an item
 		.bind("keydown", function(event) {
-			if ((event.keyCode === $.ui.keyCode.TAB) && $(this).data("autocomplete").menu.active) {
-				event.preventDefault();
+			if (event.keyCode === $.ui.keyCode.TAB) {
+				var autocomplete = $(this).data("autocomplete");
+				if (typeof autocomplete !== 'undefined' && autocomplete.menu.active) {
+					event.preventDefault();
+				}
 			}
 		})
 		.autocomplete({

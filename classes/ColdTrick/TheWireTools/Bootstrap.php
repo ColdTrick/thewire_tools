@@ -35,7 +35,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	
 	protected function registerViews() {
 		
-		elgg_extend_view('core/river/filter', 'thewire_tools/activity_post', 400);
+		elgg_extend_view('river/filter', 'thewire_tools/activity_post', 400);
 		elgg_extend_view('css/elgg', 'css/thewire_tools.css');
 		elgg_extend_view('js/elgg', 'js/thewire_tools.js');
 		elgg_extend_view('notifications/subscriptions/personal', 'thewire_tools/notifications/settings');

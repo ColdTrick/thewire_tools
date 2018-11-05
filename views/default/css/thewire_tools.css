@@ -37,3 +37,7 @@
 .thewire-tools-reshare-popup {
 	width: 350px;
 }
+
+.elgg-form-thewire-add .thewire-characters-remaining {
+	background: none;
+}
