@@ -54,7 +54,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	protected function registerHooks() {
 		$hooks = $this->elgg()->hooks;
 		
-		$hooks->registerHandler('cron', 'daily', __NAMESPACE__ . '\Cron::daily');
 		$hooks->registerHandler('entity:url', 'object', '\ColdTrick\TheWireTools\Widgets::widgetTitleURL');
 		$hooks->registerHandler('export:counters', 'elasticsearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', '\ColdTrick\TheWireTools\Widgets::groupToolBasedWidgets');
