@@ -21,7 +21,7 @@ class Search {
 			return;
 		}
 		
-		if (empty($entity->getVolatileData('search_matched_title'))) {
+		if (!empty($entity->getVolatileData('search_matched_title'))) {
 			return;
 		}
 		
