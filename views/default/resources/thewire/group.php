@@ -3,7 +3,7 @@
  * Display TheWire for a group
  */
 
-group_gatekeeper();
+elgg_group_gatekeeper();
 
 $group_guid = sanitize_int(get_input('guid', 0));
 $entities_only = sanitize_int(get_input('entities_only', 0));
@@ -14,13 +14,9 @@ if (!$group instanceof \ElggGroup) {
 }
 
 // check if The Wire is enabled
-if ($group->thewire_enable == 'no') {
-	register_error(elgg_echo('thewire_tools:groups:error:not_enabled'));
-	forward($group->getURL());
-}
+elgg_group_tool_gatekeeper('thewire', $group_guid);
 
 elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
-elgg_push_breadcrumb($group->name);
 
 $result = elgg_list_entities([
 	'types' => 'object',

@@ -8,7 +8,7 @@ if (empty($thread_guid) || empty($guid)) {
 }
 
 elgg_push_context('thewire_tools_thread');
-echo elgg_list_entities_from_metadata([
+echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'base_url' => 'thewire/thread/' . $thread_guid,

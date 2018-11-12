@@ -12,7 +12,7 @@ if (!($group instanceof ElggGroup)) {
 	return;
 }
 
-if ($group->thewire_enable == 'no') {
+if (!$group->isToolEnabled('thewire')) {
 	return;
 }
 

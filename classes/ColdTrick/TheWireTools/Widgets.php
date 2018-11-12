@@ -33,7 +33,7 @@ class Widgets {
 		}
 
 		// check different group tools for which we supply widgets
-		if ($entity->thewire_enable !== 'no') {
+		if ($entity->isToolEnabled('thewire')) {
 			$return['enable'][] = 'thewire_groups';
 		} else {
 			$return['disable'][] = 'thewire_groups';

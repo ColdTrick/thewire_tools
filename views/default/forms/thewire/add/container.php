@@ -42,7 +42,7 @@ $groups = new \ElggBatch('elgg_get_entities', [
 	],
 ]);
 foreach ($groups as $group) {
-	if ($group->thewire_enable !== 'no') {
+	if ($group->isToolEnabled('thewire')) {
 		$options_values[$group->guid] = $group->name;
 	}
 }

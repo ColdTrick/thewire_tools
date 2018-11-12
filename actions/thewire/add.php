@@ -26,7 +26,7 @@ if (elgg_get_plugin_setting('enable_group', 'thewire_tools') !== 'yes') {
 } else {
 	$group = get_entity($container_guid);
 	if ($group instanceof ElggGroup) {
-		if ($group->thewire_enable == 'no') {
+		if (!$group->isToolEnabled('thewire')) {
 			// not allowed to post in this group
 			return elgg_error_response(elgg_echo('thewire_tools:groups:error:not_enabled'));
 		}
