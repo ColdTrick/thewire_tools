@@ -38,7 +38,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_extend_view('river/filter', 'thewire_tools/activity_post', 400);
 		elgg_extend_view('css/elgg', 'css/thewire_tools.css');
 		elgg_extend_view('js/elgg', 'js/thewire_tools.js');
-		elgg_extend_view('notifications/subscriptions/personal', 'thewire_tools/notifications/settings');
+		elgg_extend_view('notifications/settings/other', 'thewire_tools/notifications/settings');
 		elgg_extend_view('page/layouts/elements/filter', 'thewire_tools/group_activity', 400);
 		elgg_extend_view('thewire/sidebar', 'thewire_tools/extends/thewire/sidebar', 400);
 		
@@ -63,7 +63,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:river', '\ColdTrick\TheWireTools\Menus::riverRegisterReply');
 		$hooks->registerHandler('register', 'menu:owner_block', '\ColdTrick\TheWireTools\Menus::ownerBlockRegister');
 		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\TheWireTools\Menus::pageRegister');
-		$hooks->registerHandler('action', 'notificationsettings/save', '\ColdTrick\TheWireTools\Notifications::saveUserNotificationsSettings');
+		$hooks->registerHandler('action', 'notifications/settings', '\ColdTrick\TheWireTools\Notifications::saveUserNotificationsSettings');
 		$hooks->registerHandler('handlers', 'widgets', '\ColdTrick\TheWireTools\Widgets::registerHandlers');
 		$hooks->registerHandler('search:format', 'entity', '\ColdTrick\TheWireTools\Search::formatEntity');
 		$hooks->registerHandler('supported_types', 'entity_tools', '\ColdTrick\TheWireTools\Migrate::registerClass');
