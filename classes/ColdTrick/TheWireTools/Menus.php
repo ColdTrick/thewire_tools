@@ -7,20 +7,17 @@ class Menus {
 	/**
 	 * Add reshare menu items to the entity menu
 	 *
-	 * @param string          $hook        the name of the hook
-	 * @param string          $type        the type of the hook
-	 * @param \ElggMenuItem[] $returnvalue current return value
-	 * @param array           $params      supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:social'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function entityRegisterReshare($hook, $type, $returnvalue, $params) {
+	public static function entityRegisterReshare(\Elgg\Hook $hook) {
 		
 		if (!elgg_is_logged_in()) {
 			return;
 		}
 		
-		$entity = elgg_extract('entity', $params);
+		$entity = $hook->getEntityParam();
 		if (!$entity instanceof \ElggEntity) {
 			return;
 		}
@@ -30,8 +27,8 @@ class Menus {
 		}
 		
 		elgg_load_js('elgg.thewire');
-	
-		$reshare_guid = $entity->getGUID();
+		
+		$reshare_guid = $entity->guid;
 		$reshare = null;
 		
 		if ($entity instanceof \ElggWire) {
@@ -48,6 +45,16 @@ class Menus {
 			}
 		}
 		
+		$menu_options = [
+			'name' => 'thewire_tools_reshare',
+			'icon' => 'share',
+			'text' => elgg_echo('thewire_tools:reshare'),
+			'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $reshare_guid,
+			'link_class' => 'elgg-lightbox',
+			'is_trusted' => true,
+			'priority' => 500,
+		];
+		
 		if (empty($reshare)) {
 			// check is this item was shared on thewire
 			$count = $entity->getEntitiesFromRelationship([
@@ -60,30 +67,19 @@ class Menus {
 			
 			if ($count) {
 				// show counter
-				$returnvalue[] = \ElggMenuItem::factory([
-					'name' => 'thewire_tools_reshare_count',
-					'text' => $count,
-					'title' => elgg_echo('thewire_tools:reshare:count'),
-					'href' => 'ajax/view/thewire_tools/reshare_list?entity_guid=' . $reshare_guid,
-					'link_class' => 'elgg-lightbox',
-					'is_trusted' => true,
-					'priority' => 501,
-					'data-colorbox-opts' => json_encode(['maxHeight' => '85%']),
-				]);
+				$menu_options['badge'] = $count;
+				$menu_options['data-badge-link'] = elgg_normalize_url(elgg_http_add_url_query_elements('ajax/view/thewire_tools/reshare_list', [
+					'entity_guid' => $reshare_guid,
+				]));
+				$menu_options['deps'][] = 'thewire_tools/ReshareBadge';
 			}
 		}
-	
-		$returnvalue[] = \ElggMenuItem::factory([
-			'name' => 'thewire_tools_reshare',
-			'icon' => 'share',
-			'text' => elgg_echo('thewire_tools:reshare'),
-			'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $reshare_guid,
-			'link_class' => 'elgg-lightbox',
-			'is_trusted' => true,
-			'priority' => 500,
-		]);
 		
-		return $returnvalue;
+		$result = $hook->getValue();
+		
+		$result[] = \ElggMenuItem::factory($menu_options);
+		
+		return $result;
 	}
 	
 	/**

@@ -1,32 +1,39 @@
 <?php
+/**
+ * Ajax view to show a list of users who shared an item on TheWire
+ *
+ */
+
+use Elgg\BadRequestException;
 
 $guid = (int) get_input('entity_guid');
 if (empty($guid)) {
-	return;
+	throw new BadRequestException();
 }
 
-$batch = new ElggBatch('elgg_get_entities', [
+$batch = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'relationship_guid' => $guid,
 	'relationship' => 'reshare',
 	'inverse_relationship' => true,
-	'limit' => 99,
+	'limit' => false,
+	'batch' => true,
 ]);
 
 $list_items = [];
+/* @var $wire_post ElggWire */
 foreach ($batch as $wire_post) {
 	$owner = $wire_post->getOwnerEntity();
 	$icon = elgg_view_entity_icon($owner, 'tiny', ['use_hover' => false]);
 	
 	$owner_link = elgg_view('output/url', [
-		'text' => $owner->name,
+		'text' => $owner->getDisplayName(),
 		'href' => $owner->getURL(),
 		'is_trusted' => true,
 	]);
 	
 	$friendly_time = elgg_view_friendly_time($wire_post->time_created);
-	$friendly_time = elgg_format_element('span', ['class' =>'elgg-subtext'], $friendly_time);
 	
 	$text = elgg_echo('thewire_tools:reshare:list', [$owner_link, $friendly_time]);
 	
@@ -39,4 +46,4 @@ if (empty($list_items)) {
 	return;
 }
 
-echo elgg_format_element('ul', ['class' => 'elgg-list thewire-tools-reshare-popup'], implode('', $list_items));
+echo elgg_format_element('ul', ['class' => 'elgg-list thewire-tools-reshare-popup'], implode(PHP_EOL, $list_items));
