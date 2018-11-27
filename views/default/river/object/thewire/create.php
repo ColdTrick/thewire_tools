@@ -1,4 +1,6 @@
 <?php
+
+/* @var $item ElggRiverItem */
 $item = elgg_extract('item', $vars);
 
 $object = $item->getObjectEntity();
@@ -16,24 +18,29 @@ if (substr($excerpt, -3) === '...') {
 $subject = $item->getSubjectEntity();
 $subject_link = elgg_view('output/url', [
 	'href' => $subject->getURL(),
-	'text' => $subject->name,
+	'text' => $subject->getDisplayName(),
 	'class' => 'elgg-river-subject',
 	'is_trusted' => true,
 ]);
 
 $object_link = elgg_view('output/url', [
-	'href' => "thewire/owner/{$subject->username}",
+	'href' => elgg_generate_url('collection:object:thewire:owner', [
+		'username' => $subject->username,
+	]),
 	'text' => elgg_echo('thewire:wire'),
 	'class' => 'elgg-river-object',
 	'is_trusted' => true,
 ]);
 
-$summary = elgg_echo('river:create:object:thewire', [$subject_link, $object_link]);
+$summary = elgg_echo('river:object:thewire:create', [$subject_link, $object_link]);
 
 $attachments = '';
-$ia = elgg_set_ignore_access(true);
-$reshare = $object->getEntitiesFromRelationship(['relationship' => 'reshare', 'limit' => 1]);
-elgg_set_ignore_access($ia);
+$reshare = elgg_call(ELGG_IGNORE_ACCESS, function() use ($object) {
+	return $object->getEntitiesFromRelationship([
+		'relationship' => 'reshare',
+		'limit' => 1,
+	]);
+});
 
 if (!empty($reshare)) {
 	$attachments = elgg_view('thewire_tools/reshare_source', ['entity' => $reshare[0]]);
