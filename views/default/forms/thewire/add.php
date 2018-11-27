@@ -2,19 +2,20 @@
 /**
  * Wire add form body
  *
- * @uses $vars["post"]
+ * @uses $vars['post']
  */
 
-elgg_load_js('elgg.thewire');
-
+elgg_require_js('elgg/thewire');
 elgg_require_js('thewire_tools/autocomplete');
 
 $post = elgg_extract('post', $vars);
 $char_limit = thewire_tools_get_wire_length();
 $reshare = elgg_extract('reshare', $vars); // for reshare functionality
 
-$text = $post ? elgg_echo('reply') : elgg_echo('post');
-
+$text = elgg_echo('post');
+if ($post) {
+	$text = elgg_echo('reply');
+}
 $chars_left = elgg_echo('thewire:charleft');
 
 $parent_input = '';
@@ -61,20 +62,22 @@ if ($char_limit == 0) {
 
 $post_input = elgg_view('input/plaintext', [
 	'name' => 'body',
-	'class' => 'mtm thewire-textarea',
+	'class' => 'mtm',
+	'id' => 'thewire-textarea',
 	'rows' => $num_lines,
-	'value' => $post_value,
 	'data-max-length' => $char_limit,
+	'required' => true,
+	'value' => $post_value,
 ]);
 
 $submit_button = elgg_view('input/submit', [
 	'value' => $text,
-	'class' => 'thewire-submit-button',
+	'id' => 'thewire-submit-button',
 ]);
 
 echo $reshare_input;
 echo $post_input;
-echo elgg_format_element('div', ['class' => 'thewire-characters-remaining'], $count_down);
+echo elgg_format_element('div', ['id' => 'thewire-characters-remaining'], $count_down);
 
 $footer = $parent_input . $submit_button . $container_input . $access_input;
 

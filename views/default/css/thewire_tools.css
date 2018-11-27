@@ -1,13 +1,5 @@
-.elgg-river-layout .elgg-form-thewire-add .elgg-input-access {
-	float: none;
-}
-
 .thewire-tools-widget-access {
 	max-width: 200px;
-}
-
-.elgg-form-thewire-add .ui-helper-hidden-accessible {
-	display: none;
 }
 
 .ui-autocomplete .ui-menu-item .ui-state-focus {
@@ -34,6 +26,17 @@
 	width: 350px;
 }
 
-.elgg-form-thewire-add .thewire-characters-remaining {
-	background: none;
+.elgg-form-thewire-add {
+	
+	.ui-helper-hidden-accessible {
+		display: none;
+	}
+	
+	.thewire-characters-remaining {
+		background: none;
+	}
+	
+	.elgg-input-select {
+		max-width: 20rem;
+	}
 }

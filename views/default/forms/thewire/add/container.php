@@ -1,7 +1,7 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if ($entity) {
+if ($entity instanceof ElggEntity) {
 	echo elgg_view('input/hidden', [
 		'name' => 'container_guid',
 		'value' => $entity->container_guid,
@@ -29,11 +29,14 @@ if (!$user_guid) {
 	return;
 }
 
-$options_values = [$user_guid => elgg_echo('thewire_tools:add:container:site')];
+$options_values = [
+	$user_guid => elgg_echo('thewire_tools:add:container:site'),
+];
 
-$groups = new \ElggBatch('elgg_get_entities', [
+$groups = elgg_get_entities([
 	'type' => 'group',
 	'limit' => false,
+	'batch' => true,
 	'relationship' => 'member',
 	'relationship_guid' => $user_guid,
 	'order_by_metadata' => [
@@ -41,10 +44,13 @@ $groups = new \ElggBatch('elgg_get_entities', [
 		'direction' => 'ASC',
 	],
 ]);
+/* @var $group ElggGroup */
 foreach ($groups as $group) {
-	if ($group->isToolEnabled('thewire')) {
-		$options_values[$group->guid] = $group->name;
+	if (!$group->isToolEnabled('thewire')) {
+		continue;
 	}
+	
+	$options_values[$group->guid] = $group->getDisplayName();
 }
 
 if (count($options_values) < 2) {
