@@ -10,8 +10,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 	 * {@inheritdoc}
 	 */
 	public function init() {
-
-		if (elgg_get_plugin_setting('enable_group', 'thewire_tools') === 'yes') {
+		
+		if ($this->plugin()->getSetting('enable_group') === 'yes') {
 			// add widget (for Widget Manager only)
 			elgg_register_widget_type([
 				'id' => 'thewire_groups',
@@ -33,6 +33,11 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$this->registerHooks();
 	}
 	
+	/**
+	 * Register view extensions / ajax views
+	 *
+	 * @return void
+	 */
 	protected function registerViews() {
 		
 		elgg_extend_view('river/filter', 'thewire_tools/activity_post', 400);
@@ -47,26 +52,38 @@ class Bootstrap extends DefaultPluginBootstrap {
 		elgg_register_ajax_view('thewire_tools/thread');
 	}
 	
+	/**
+	 * Register event listeners
+	 *
+	 * @return void
+	 */
 	protected function registerEvents() {
-		elgg_register_event_handler('create', 'object', '\ColdTrick\TheWireTools\Notifications::triggerMentionNotificationEvent');
+		$events = $this->elgg()->events;
+		
+		$events->registerHandler('create', 'object', __NAMESPACE__ . '\Notifications::triggerMentionNotificationEvent');
 	}
 	
+	/**
+	 * Register plugin hook handlers
+	 *
+	 * @return void
+	 */
 	protected function registerHooks() {
 		$hooks = $this->elgg()->hooks;
 		
-		$hooks->registerHandler('entity:url', 'object', '\ColdTrick\TheWireTools\Widgets::widgetTitleURL');
+		$hooks->registerHandler('entity:url', 'object', __NAMESPACE__ . '\Widgets::widgetTitleURL');
 		$hooks->registerHandler('export:counters', 'elasticsearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
-		$hooks->registerHandler('group_tool_widgets', 'widget_manager', '\ColdTrick\TheWireTools\Widgets::groupToolBasedWidgets');
-		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterImprove');
-		$hooks->registerHandler('register', 'menu:social', '\ColdTrick\TheWireTools\Menus::entityRegisterReshare');
-		$hooks->registerHandler('register', 'menu:entity', '\ColdTrick\TheWireTools\Menus::entityRegisterFeature');
-		$hooks->registerHandler('register', 'menu:river', '\ColdTrick\TheWireTools\Menus::riverRegisterReply');
-		$hooks->registerHandler('register', 'menu:owner_block', '\ColdTrick\TheWireTools\Menus::ownerBlockRegister');
-		$hooks->registerHandler('register', 'menu:page', '\ColdTrick\TheWireTools\Menus::pageRegister');
-		$hooks->registerHandler('action', 'notifications/settings', '\ColdTrick\TheWireTools\Notifications::saveUserNotificationsSettings');
-		$hooks->registerHandler('handlers', 'widgets', '\ColdTrick\TheWireTools\Widgets::registerHandlers');
-		$hooks->registerHandler('search:format', 'entity', '\ColdTrick\TheWireTools\Search::formatEntity');
-		$hooks->registerHandler('supported_types', 'entity_tools', '\ColdTrick\TheWireTools\Migrate::registerClass');
+		$hooks->registerHandler('group_tool_widgets', 'widget_manager', __NAMESPACE__ . '\Widgets::groupToolBasedWidgets');
+		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterImprove');
+		$hooks->registerHandler('register', 'menu:social', __NAMESPACE__ . '\Menus::entityRegisterReshare');
+		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterFeature');
+		$hooks->registerHandler('register', 'menu:river', __NAMESPACE__ . '\Menus::riverRegisterReply');
+		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\Menus::ownerBlockRegister');
+		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\Menus::pageRegister');
+		$hooks->registerHandler('action', 'notifications/settings', __NAMESPACE__ . '\Notifications::saveUserNotificationsSettings');
+		$hooks->registerHandler('handlers', 'widgets', __NAMESPACE__ . '\Widgets::registerHandlers');
+		$hooks->registerHandler('search:format', 'entity', __NAMESPACE__ . '\Search::formatEntity');
+		$hooks->registerHandler('supported_types', 'entity_tools', __NAMESPACE__ . '\Migrate::registerClass');
 		
 	}
 }
