@@ -37,8 +37,8 @@ $access_options[ACCESS_LOGGED_IN] = elgg_echo('thewire_tools:add:access', [elgg_
 $access_options[-100] = elgg_echo('thewire_tools:add:access:group');
 
 $access_params = [
+	'#type' => 'access',
 	'name' => 'access_id',
-	'class' => ['mls'],
 	'options_values' => $access_options,
 ];
 
@@ -46,4 +46,4 @@ if (elgg_in_context('widgets')) {
 	$access_params['class'][] = 'thewire-tools-widget-access';
 }
 
-echo elgg_view('input/access', $access_params);
+echo elgg_view_field($access_params);

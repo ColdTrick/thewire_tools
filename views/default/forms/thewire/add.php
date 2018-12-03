@@ -70,7 +70,8 @@ $post_input = elgg_view('input/plaintext', [
 	'value' => $post_value,
 ]);
 
-$submit_button = elgg_view('input/submit', [
+$submit_button = elgg_view_field([
+	'#type' => 'submit',
 	'value' => $text,
 	'id' => 'thewire-submit-button',
 ]);
@@ -79,6 +80,16 @@ echo $reshare_input;
 echo $post_input;
 echo elgg_format_element('div', ['id' => 'thewire-characters-remaining'], $count_down);
 
-$footer = $parent_input . $submit_button . $container_input . $access_input;
+$footer = elgg_view_field([
+	'#type' => 'fieldset',
+	'align' => 'horizontal',
+	'fields' => [
+		[
+			'#html' => $parent_input . $submit_button . $container_input . $access_input,
+		]
+	],
+	
+	
+]);
 
 elgg_set_form_footer($footer);

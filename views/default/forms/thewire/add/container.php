@@ -57,8 +57,8 @@ if (count($options_values) < 2) {
 	return;
 }
 
-echo elgg_view('input/select', [
+echo elgg_view_field([
+	'#type' => 'select',
 	'name' => 'container_guid',
-	'class' => ['mls'],
 	'options_values' => $options_values,
 ]);
