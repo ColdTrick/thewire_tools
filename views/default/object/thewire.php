@@ -14,7 +14,8 @@ elgg_require_js('elgg/thewire');
 
 $full = (bool) elgg_extract('full_view', $vars, false);
 
-if (elgg_in_context('thewire_thread')) {
+$route = _elgg_services()->request->getRoute();
+if (!empty($route) && $route->getName() === 'collection:object:thewire:thread') {
 	$full = true;
 }
 
@@ -25,7 +26,7 @@ if (!$thread_id) {
 }
 
 $show_thread = false;
-if (!elgg_in_context('thewire_tools_thread') && !elgg_in_context('thewire_thread')) {
+if (!elgg_in_context('thewire_tools_thread') && !$full) {
 	if ($entity->countEntitiesFromRelationship('parent') || $entity->countEntitiesFromRelationship('parent', true)) {
 		$show_thread = true;
 	}
