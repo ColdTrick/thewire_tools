@@ -2,6 +2,8 @@
 
 namespace ColdTrick\TheWireTools;
 
+use Elgg\Menu\MenuItems;
+
 class Menus {
 	
 	/**
@@ -160,55 +162,55 @@ class Menus {
 	/**
 	 * Improves entity menu items for thewire objects
 	 *
-	 * @param string         $hook_name   'register'
-	 * @param string         $entity_type 'menu:entity'
-	 * @param ElggMenuItem[] $return      the current menu items
-	 * @param array          $params      supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
 	 *
-	 * @return ElggMenuItem[]
+	 * @return MenuItems
 	 */
-	public static function entityRegisterImprove($hook_name, $entity_type, $return, $params) {
+	public static function entityRegisterImprove(\Elgg\Hook $hook) {
 	
-		$entity = elgg_extract('entity', $params, false);
+		$entity = $hook->getEntityParam();
 		if (!$entity instanceof \ElggWire) {
 			return;
 		}
 		
-		if (!is_array($return)) {
-			return;
-		}
+		/* @var $return MenuItems */
+		$return = $hook->getValue();
+		$current_route = _elgg_services()->request->getRoute();
 		
-		foreach ($return as $index => $menu_item) {
-			switch ($menu_item->getName()) {
-				case 'thread':
-						
-					if (elgg_in_context('thewire_tools_thread') || elgg_in_context('thewire_thread')) {
-						unset($return[$index]);
-						break;
-					}
-						
-					//removes thread link from thewire entity menu if there is no conversation
-					if (!($entity->countEntitiesFromRelationship('parent') || $entity->countEntitiesFromRelationship('parent', true))) {
-						unset($return[$index]);
-					} else {
-						$menu_item->rel = $entity->getGUID();
-					}
-					break;
-				case 'previous':
-					unset($return[$index]);
-					break;
-				case 'reply':
-					if (elgg_in_context('thewire_tools_thread')) {
-						unset($return[$index]);
-						break;
-					}
-						
-					$menu_item->setHref("#thewire-tools-reply-{$entity->getGUID()}");
-					$menu_item->rel = 'toggle';
-					break;
+		// remove items
+		$return->remove('previous');
+		
+		// rework items
+		if ($return->has('thread')) {
+			$on_thread_page = false;
+			if (!empty($current_route) && $current_route->getName() === 'collection:object:thewire:thread') {
+				$on_thread_page = true;
+			}
+			
+			if (elgg_in_context('thewire_tools_thread') || $on_thread_page) {
+				$return->remove('thread');
+			} elseif (!($entity->countEntitiesFromRelationship('parent') || $entity->countEntitiesFromRelationship('parent', true))) {
+				$return->remove('thread');
+			} else {
+				/* @var $menu_item \ElggMenuItem */
+				$menu_item = $return->get('thread');
+				
+				$menu_item->rel = $entity->guid;
 			}
 		}
-	
+		
+		if ($return->has('reply')) {
+			if (elgg_in_context('thewire_tools_thread')) {
+				$return->remove('reply');
+			} else {
+				/* @var $menu_item \ElggMenuItem */
+				$menu_item = $return->get('reply');
+					
+				$menu_item->setHref("#thewire-tools-reply-{$entity->guid}");
+				$menu_item->rel = 'toggle';
+			}
+		}
+		
 		return $return;
 	}
 	
