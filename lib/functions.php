@@ -15,7 +15,10 @@ function thewire_tools_get_wire_length() {
 		return $result;
 	}
 		
-	$result = sanitize_int(elgg_get_plugin_setting('limit', 'thewire', 140), false);
+	$result = (int) elgg_get_plugin_setting('limit', 'thewire', 140);
+	if ($result < 1) {
+		$result = 140;
+	}
 	
 	return $result;
 }
@@ -58,9 +61,7 @@ function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid
 	}
 		
 	// create the new post
-	$post = new ElggObject();
-
-	$post->subtype = 'thewire';
+	$post = new ElggWire();
 	$post->owner_guid = $userid;
 	$post->container_guid = $container_guid;
 	$post->access_id = $access_id;
@@ -224,42 +225,42 @@ function thewire_tools_filter($text) {
  * @return array
  */
 function thewire_tools_get_notification_settings($user_guid = 0) {
-
-	$result = [];
 	
-	$user_guid = sanitise_int($user_guid, false);
+	$user_guid = (int) $user_guid;
 	if (empty($user_guid)) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
-
-	if (empty($user_guid)) {
-		return $result;
+	
+	$user = get_user($user_guid);
+	if (empty($user)) {
+		return [];
 	}
-
+	
 	if (elgg_is_active_plugin('notifications')) {
-		$saved = elgg_get_plugin_user_setting('notification_settings_saved', $user_guid, 'thewire_tools');
+		$saved = elgg_get_plugin_user_setting('notification_settings_saved', $user->guid, 'thewire_tools');
 		if (!empty($saved)) {
-			$settings = elgg_get_plugin_user_setting('notification_settings', $user_guid, 'thewire_tools');
-				
+			$settings = elgg_get_plugin_user_setting('notification_settings', $user->guid, 'thewire_tools');
+			
 			if (!empty($settings)) {
 				return string_to_tag_array($settings);
 			}
-				
-			return $result;
+			
+			return [];
 		}
 	}
-
+	
 	// default elgg settings
-	$settings = (array) get_user_notification_settings($user_guid);
+	$settings = (array) $user->getNotificationSettings();
 	if (empty($settings)) {
-		return $result;
+		return [];
 	}
-
+	
+	$result = [];
 	foreach ($settings as $method => $value) {
 		if (!empty($value)) {
 			$result[] = $method;
 		}
 	}
-
+	
 	return $result;
 }
