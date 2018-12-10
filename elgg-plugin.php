@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Router\Middleware\Gatekeeper;
+
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
@@ -19,6 +21,9 @@ return [
 		'collection:object:thewire:autocomplete' => [
 			'path' => '/thewire/autocomplete',
 			'resource' => 'thewire/autocomplete',
+			'middleware' => [
+				Gatekeeper::class,
+			],
 		],
 		'collection:object:thewire:search' => [
 			'path' => '/thewire/search/{q?}',

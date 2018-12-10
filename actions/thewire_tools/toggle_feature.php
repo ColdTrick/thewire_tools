@@ -1,10 +1,10 @@
 <?php
 
 $guid = get_input('guid');
-elgg_entity_gatekeeper($guid, 'object', 'thewire');
-
-/* @var $entity ElggWire */
 $entity = get_entity($guid);
+if (!$entity instanceof ElggWire) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
 $container = $entity->getContainerEntity();
 if ($container instanceof \ElggGroup) {

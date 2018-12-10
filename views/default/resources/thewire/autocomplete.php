@@ -3,7 +3,6 @@
  * jQuery autocomplete procedure
  *
  */
-gatekeeper();
 
 $q = get_input('q');
 $limit = (int) get_input('limit', 50);
