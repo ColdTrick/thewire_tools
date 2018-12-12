@@ -24,15 +24,25 @@ $subject_link = elgg_view('output/url', [
 ]);
 
 $object_link = elgg_view('output/url', [
-	'href' => elgg_generate_url('collection:object:thewire:owner', [
-		'username' => $subject->username,
-	]),
+	'href' => elgg_generate_url('collection:object:thewire:thread', [
+		'guid' => $object->wire_thread,
+	]) . "#elgg-object-{$object->guid}",
 	'text' => elgg_echo('thewire:wire'),
 	'class' => 'elgg-river-object',
 	'is_trusted' => true,
 ]);
 
 $summary = elgg_echo('river:object:thewire:create', [$subject_link, $object_link]);
+
+$container = $object->getContainerEntity();
+if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
+	$group_link = elgg_view('output/url', [
+		'href' => $container->getURL(),
+		'text' => $container->getDisplayName(),
+		'is_trusted' => true,
+	]);
+	$summary .= ' ' .  elgg_echo('river:ingroup', [$group_link]);
+}
 
 $attachments = '';
 $reshare = elgg_call(ELGG_IGNORE_ACCESS, function() use ($object) {
