@@ -213,43 +213,7 @@ class Menus {
 		
 		return $return;
 	}
-	
-	/**
-	 * Add wire reply link to river wire entities
-	 *
-	 * @param string         $hook_name   'register'
-	 * @param string         $entity_type 'menu:river'
-	 * @param ElggMenuItem[] $return      the current menu items
-	 * @param array          $params      supplied params
-	 *
-	 * @return ElggMenuItem[]
-	 */
-	public static function riverRegisterReply($hook_name, $entity_type, $return, $params) {
-		if (!elgg_is_logged_in()) {
-			return;
-		}
 		
-		$item = elgg_extract('item', $params);
-		$entity = $item->getObjectEntity();
-	
-		if (!$entity instanceof \ElggWire) {
-			return;
-		}
-		
-		if (!is_array($return)) {
-			$return = [];
-		}
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'reply',
-			'text' => elgg_echo('reply'),
-			'href' => "thewire/reply/{$entity->getGUID()}",
-			'priority' => 150,
-		]);
-		
-		return $return;
-	}
-	
 	/**
 	 * Add feature menu items to the entity menu of a wire post
 	 *
