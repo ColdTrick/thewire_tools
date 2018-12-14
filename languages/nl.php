@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v6.0
- * On 2017-10-30 17:21
+ * This file was created by Translation Editor v7.0-beta
+ * On 2018-12-14 16:44
  */
 
 return array (
@@ -14,7 +14,6 @@ return array (
   'thewire_tools:sidebar:featured' => 'Aangeraden berichten',
   'thewire_tools:action:toggle_feature:unfeatured' => 'Het bericht is niet langer aangereden',
   'thewire_tools:action:toggle_feature:featured' => 'Het bericht is nu aangeraden',
-  'thewire_tools:reshare:count' => 'Wie heeft dit gedeeld',
   'thewire_tools:reshare:list' => '%s deelde dit %s',
   'thewire_tools:settings:mention_display' => 'Hoe moeten vermeldingen worden weergegeven in een Wire post',
   'thewire_tools:settings:mention_display:username' => '@gebruikersnaam',
