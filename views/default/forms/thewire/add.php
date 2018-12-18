@@ -68,6 +68,7 @@ $post_input = elgg_view('input/plaintext', [
 	'data-max-length' => $char_limit,
 	'required' => true,
 	'value' => $post_value,
+	'placeholder' => elgg_echo('thewire:form:body:placeholder'),
 ]);
 
 $submit_button = elgg_view_field([
@@ -88,8 +89,6 @@ $footer = elgg_view_field([
 			'#html' => $parent_input . $submit_button . $container_input . $access_input,
 		]
 	],
-	
-	
 ]);
 
 elgg_set_form_footer($footer);
