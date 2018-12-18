@@ -18,7 +18,7 @@ $route = _elgg_services()->request->getRoute();
 if (!empty($route) && $route->getName() === 'collection:object:thewire:thread') {
 	$full = true;
 }
-
+ 
 // make compatible with posts created with original Curverider plugin
 $thread_id = $entity->wire_thread;
 if (!$thread_id) {
@@ -90,7 +90,11 @@ elgg_set_ignore_access($ia);
 
 if (!empty($reshare)) {
 	$content .= elgg_format_element('div', [
-		'class' => 'elgg-divide-left pls',
+		'class' => [
+			'thewire-tools-reshare-source-wrapper',
+			'elgg-divide-left',
+			'pls',
+		],
 	], elgg_view('thewire_tools/reshare_source', [
 		'entity' => $reshare[0],
 	]));
