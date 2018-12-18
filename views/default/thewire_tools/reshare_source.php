@@ -4,32 +4,26 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-
 if (!$entity instanceof \ElggObject) {
-	return true;
+	return;
 }
 
-$text = '';
-if (!empty($entity->title)) {
-	$text = $entity->title;
-} elseif (!empty($entity->name)) {
-	$text = $entity->name;
-} elseif (!empty($entity->description)) {
+$text = $entity->getDisplayName();
+if (elgg_is_empty($text)) {
 	$text = elgg_get_excerpt($entity->description, 140);
-} else {
+}
+
+if (elgg_is_empty($text)) {
 	// no text to display
-	return true;
+	return;
 }
 
 $icon = '';
-if ($entity->icontime) {
+if ($entity->hasIcon('tiny')) {
 	$icon = elgg_view_entity_icon($entity, 'tiny');
 }
 
 $url = $entity->getURL();
-if ($url === elgg_get_site_url()) {
-	$url = false;
-}
 
 $content = elgg_echo('thewire_tools:reshare:source') . ': ';
 if (!empty($url)) {
