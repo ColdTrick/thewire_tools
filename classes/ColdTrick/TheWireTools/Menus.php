@@ -196,6 +196,7 @@ class Menus {
 				$menu_item = $return->get('thread');
 				
 				$menu_item->rel = $entity->guid;
+				$menu_item->setSection('_begin');
 			}
 		}
 		
