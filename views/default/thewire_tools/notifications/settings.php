@@ -5,6 +5,11 @@ if (!$user instanceof ElggUser) {
 	return;
 }
 
+if (elgg_is_active_plugin('mentions')) {
+	// mentions is better
+	return;
+}
+
 $methods = elgg_get_notification_methods();
 if (empty($methods)) {
 	return;

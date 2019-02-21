@@ -32,13 +32,15 @@ echo elgg_view_field([
 	'switch' => true,
 ]);
 
-echo elgg_view_field([
-	'#type' => 'select',
-	'#label' => elgg_echo('thewire_tools:settings:mention_display'),
-	'name' => 'params[mention_display]',
-	'value' => $plugin->mention_display,
-	'options_values' => [
-		'username' => elgg_echo('thewire_tools:settings:mention_display:username'),
-		'displayname' => elgg_echo('thewire_tools:settings:mention_display:displayname'),
-	],
-]);
+if (!elgg_is_active_plugin('mentions')) {
+	echo elgg_view_field([
+		'#type' => 'select',
+		'#label' => elgg_echo('thewire_tools:settings:mention_display'),
+		'name' => 'params[mention_display]',
+		'value' => $plugin->mention_display,
+		'options_values' => [
+			'username' => elgg_echo('thewire_tools:settings:mention_display:username'),
+			'displayname' => elgg_echo('thewire_tools:settings:mention_display:displayname'),
+		],
+	]);
+}

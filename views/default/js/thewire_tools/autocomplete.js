@@ -1,4 +1,5 @@
-define(['jquery'], function($) {
+define(function(require) {
+	var $ = require('jquery');
 	
 	var init_autocomplete = function(elem) {
 		$(elem)

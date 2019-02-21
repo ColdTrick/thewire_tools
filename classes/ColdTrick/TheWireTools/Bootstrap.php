@@ -79,7 +79,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterFeature');
 		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\Menus::ownerBlockRegister');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\Menus::pageRegister');
-		$hooks->registerHandler('action', 'notifications/settings', __NAMESPACE__ . '\Notifications::saveUserNotificationsSettings');
+		$hooks->registerHandler('action:validate', 'notifications/settings', __NAMESPACE__ . '\Notifications::saveUserNotificationsSettings');
 		$hooks->registerHandler('handlers', 'widgets', __NAMESPACE__ . '\Widgets::registerHandlers');
 		$hooks->registerHandler('supported_types', 'entity_tools', __NAMESPACE__ . '\Migrate::registerClass');
 		

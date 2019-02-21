@@ -19,6 +19,11 @@ class Notifications {
 			return;
 		}
 		
+		if (elgg_is_active_plugin('mentions')) {
+			// mentions is better
+			return;
+		}
+		
 		// @todo replace with decent Elgg 2.0 notification event handling
 	
 		//send out notification to users mentioned in a wire post
@@ -67,6 +72,11 @@ class Notifications {
 	 * @return void
 	 */
 	public static function saveUserNotificationsSettings(\Elgg\Hook $hook) {
+		
+		if (elgg_is_active_plugin('mentions')) {
+			// no settings to save if mentions plugin is enabled
+			return;
+		}
 		
 		$user_guid = (int) get_input('guid');
 		if (empty($user_guid)) {

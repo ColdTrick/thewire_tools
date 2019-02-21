@@ -6,7 +6,11 @@
  */
 
 elgg_require_js('elgg/thewire');
-elgg_require_js('thewire_tools/autocomplete');
+
+if (!elgg_is_active_plugin('mentions')) {
+	// mentions not enabled, use our version of autocomplete
+	elgg_require_js('thewire_tools/autocomplete');
+}
 
 $post = elgg_extract('post', $vars);
 $char_limit = thewire_tools_get_wire_length();

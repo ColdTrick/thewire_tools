@@ -159,49 +159,51 @@ function thewire_tools_filter($text) {
 
 	// links
 	$text = parse_urls($text);
-	$click_url = 'thewire/owner/';
-	if (elgg_is_active_plugin('profile')) {
-		$click_url = 'profile/';
-	}
 	
 	// usernames
-	$matches = [];
-	$match_count = preg_match_all(
-		'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
-		$text,
-		$matches,
-		PREG_SET_ORDER
-	);
-	
-	if ($match_count > 0) {
-		$proccessed_usernames = [];
+	if (!elgg_is_active_plugin('mentions')) {
+		$click_url = 'thewire/owner/';
+		if (elgg_is_active_plugin('profile')) {
+			$click_url = 'profile/';
+		}
+		$matches = [];
+		$match_count = preg_match_all(
+			'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
+			$text,
+			$matches,
+			PREG_SET_ORDER
+		);
 		
-		foreach ($matches as $set) {
-			$replaces = 0;
+		if ($match_count > 0) {
+			$proccessed_usernames = [];
 			
-			if (in_array($set[2], $proccessed_usernames)) {
-				continue;
-			}
-			
-			$user = get_user_by_username($set[2]);
-			if (empty($user)) {
-				continue;
-			}
-			if ($mention_display == 'displayname') {
-				$user_text = $user->name;
-			} else {
-				$user_text = $user->username;
-			}
-			
-			$replace = ' ' . elgg_view('output/url', [
-				'text' => '@' . $user_text,
-				'href' => $click_url . $user->username,
-				'is_trusted' => true,
-			]);
-			
-			$text = str_ireplace($set[0], $replace, $text, $replaces);
-			if ($replaces > 0) {
-				$proccessed_usernames[] = $set[2];
+			foreach ($matches as $set) {
+				$replaces = 0;
+				
+				if (in_array($set[2], $proccessed_usernames)) {
+					continue;
+				}
+				
+				$user = get_user_by_username($set[2]);
+				if (empty($user)) {
+					continue;
+				}
+				if ($mention_display == 'displayname') {
+					$user_text = $user->name;
+				} else {
+					$user_text = $user->username;
+				}
+				
+				$replace = ' ' . elgg_view('output/url', [
+					'text' => '@' . $user_text,
+					'href' => $click_url . $user->username,
+					'is_trusted' => true,
+				]);
+				
+				$text = str_ireplace($set[0], $replace, $text, $replaces);
+				if ($replaces > 0) {
+					$proccessed_usernames[] = $set[2];
+				}
 			}
 		}
 	}
