@@ -8,7 +8,7 @@
 }
 
 #thewire-tools-reshare-wrapper {
-	width: 600px;
+	min-width: 600px;
 }
 
 .thewire-thread {
