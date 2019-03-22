@@ -55,6 +55,9 @@ class Menus {
 			'link_class' => 'elgg-lightbox',
 			'is_trusted' => true,
 			'priority' => 500,
+			'data-colorbox-opts' => json_encode([
+				'scrolling' => false,
+			]),
 		];
 		
 		if (empty($reshare)) {
