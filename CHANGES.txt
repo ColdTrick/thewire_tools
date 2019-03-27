@@ -1,6 +1,29 @@
 Version history
 ===============
 
+8.0 (2019-03-27):
+
+- added: reshare counter to elasticsearch export
+- changed: minimal requirement now is Elgg 3
+- changed: moved plugin initialisation into elgg-plugin
+- changed: no longer add reply menu item to river menu
+- changed: prefer mentions of own autocomplete/notifications
+- changed: reshare count as badge on reshare menu item
+- changed: reshare menu item moved to social menu
+- changed: updated link and added group info to river create
+- changed: updated settings form
+- changed: wire thread link outside entity menu dropdown
+- fixed: add form
+- fixed: ajax loaded thread in listing
+- fixed: checking wrong variable
+- fixed: correct EntityTools extend
+- fixed: entity menu item modifications
+- fixed: notification settings
+- fixed: river view
+- fixed: styling and db issues
+- fixed: usage of deprecated functions
+- removed: search modification
+
 7.0.2 (2018-01-25):
 
 - changed: use Elgg default by_line in object view
