@@ -1,6 +1,10 @@
 Version history
 ===============
 
+8.0.1 (2019-03-28):
+
+- several small chores/fixes
+
 8.0 (2019-03-27):
 
 - added: reshare counter to elasticsearch export
