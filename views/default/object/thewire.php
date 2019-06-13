@@ -16,7 +16,7 @@ $full = (bool) elgg_extract('full_view', $vars, false);
 
 $route = _elgg_services()->request->getRoute();
 if (!empty($route) && $route->getName() === 'collection:object:thewire:thread') {
-	$full = true;
+// 	$full = true;
 }
  
 // make compatible with posts created with original Curverider plugin
@@ -111,12 +111,22 @@ if (elgg_is_logged_in() && !elgg_in_context('thewire_tools_thread')) {
 $params = [
 	'title' => false,
 	'access' => false,
-	'content' => $content,
 	'tags' => false,
 	'icon_entity' => $entity->getOwnerEntity(),
 ];
-$params = $params + $vars;
-echo elgg_view('object/elements/summary', $params);
+
+if ($full) {
+	$params['body'] = $content;
+	$params['show_summary'] = true;
+	
+	$params = $params + $vars;
+	echo elgg_view('object/elements/full', $params);
+} else {
+	$params['content'] = $content;
+	
+	$params = $params + $vars;
+	echo elgg_view('object/elements/summary', $params);
+}
 
 if ($show_thread) {
 	echo elgg_format_element('div', [
