@@ -15,8 +15,8 @@ function thewire_tools_get_wire_length() {
 		return $result;
 	}
 		
-	$result = (int) elgg_get_plugin_setting('limit', 'thewire', 140);
-	if ($result < 1) {
+	$result = (int) elgg_get_plugin_setting('limit', 'thewire');
+	if ($result < 0) {
 		$result = 140;
 	}
 	
