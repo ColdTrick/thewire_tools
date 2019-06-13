@@ -46,12 +46,15 @@ function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid
 		// need to default to group ACL
 		$group = get_entity($container_guid);
 		if ($group instanceof ElggGroup) {
-			$access_id = $group->group_acl;
+			$acl = $group->getOwnedAccessCollection('group_acl');
+			if ($acl instanceof ElggAccessCollection) {
+				$access_id = $acl->id;
+			}
 		}
 	}
-
+	
 	// check the access id
-	if ($access_id == ACCESS_PRIVATE) {
+	if ($access_id === ACCESS_PRIVATE) {
 		// private wire posts aren't allowed
 		$access_id = ACCESS_LOGGED_IN;
 	}
@@ -59,36 +62,35 @@ function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid
 	if (is_null($access_id)) {
 		$access_id = ACCESS_PUBLIC;
 	}
-		
+	
 	// create the new post
 	$post = new ElggWire();
 	$post->owner_guid = $userid;
 	$post->container_guid = $container_guid;
 	$post->access_id = $access_id;
-
+	
 	// only xxx characters allowed (see plugin setting of thewire, 0 is unlimited)
 	$max_length = thewire_tools_get_wire_length();
 	if ($max_length) {
 		$text = elgg_substr($text, 0, $max_length);
 	}
-
+	
 	// no html tags allowed so we escape
 	$post->description = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8');
-
+	
 	$post->method = $method; //method: site, email, api, ...
-
+	
 	$tags = thewire_get_hashtags($text);
 	if (!empty($tags)) {
 		$post->tags = $tags;
 	}
-
+	
 	// must do this before saving so notifications pick up that this is a reply
 	if ($parent_guid) {
 		$post->reply = true;
 	}
-
+	
 	$guid = $post->save();
-
 	if ($guid) {
 		// set thread guid
 		if ($parent_guid) {
