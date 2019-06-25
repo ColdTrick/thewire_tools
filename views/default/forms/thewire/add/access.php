@@ -28,6 +28,17 @@ if (!$count) {
 	return;
 }
 
+$container = elgg_get_page_owner_entity();
+if ($container instanceof \ElggGroup) {
+	if ($container->getContentAccessMode() === \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+		echo elgg_view('input/hidden', [
+			'name' => 'access_id',
+			'value' => $container->getOwnedAccessCollection('group_acl')->id,
+		]);
+		return;
+	}
+}
+
 $access_options = [];
 if (!elgg_get_config('walled_garden')) {
 	$access_options[ACCESS_PUBLIC] = elgg_echo('thewire_tools:add:access', [elgg_echo('access:label:public')]);
