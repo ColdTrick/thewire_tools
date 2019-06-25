@@ -42,13 +42,15 @@ function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid
 		$container_guid = $userid;
 	}
 	
-	if ((elgg_get_plugin_setting('enable_group', 'thewire_tools') === 'yes') && is_null($access_id)) {
+	if ((elgg_get_plugin_setting('enable_group', 'thewire_tools') === 'yes')) {
 		// need to default to group ACL
 		$group = get_entity($container_guid);
 		if ($group instanceof ElggGroup) {
 			$acl = $group->getOwnedAccessCollection('group_acl');
 			if ($acl instanceof ElggAccessCollection) {
-				$access_id = $acl->id;
+				if (is_null($access_id) || $group->getContentAccessMode() === \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+					$access_id = $acl->id;
+				}
 			}
 		}
 	}
