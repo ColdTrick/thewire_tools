@@ -1,6 +1,13 @@
 Version history
 ===============
 
+8.0.2 (2019-07-11):
+
+- fixed: force group posts to be only for group members if access limited
+- fixed: no access option on limited content access groups
+- fixed: set group access on wire posts
+- fixed: use correct char limit
+
 8.0.1 (2019-03-28):
 
 - several small chores/fixes
