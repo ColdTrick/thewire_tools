@@ -132,15 +132,12 @@ class Menus {
 	/**
 	 * Optionally extend the group owner block with a link to the wire posts of the group
 	 *
-	 * @param string         $hook_name   'register'
-	 * @param string         $entity_type 'menu:owner_block'
-	 * @param ElggMenuItem[] $return      all the current menu items
-	 * @param array          $params      supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:owner_block'
 	 *
-	 * @return ElggMenuItem[]
+	 * @return \ElggMenuItem[]
 	 */
-	public static function ownerBlockRegister($hook_name, $entity_type, $return, $params) {
-		$group = elgg_extract('entity', $params);
+	public static function ownerBlockRegister(\Elgg\Hook $hook) {
+		$group = $hook->getEntityParam();
 		if (!$group instanceof \ElggGroup) {
 			return;
 		}
@@ -157,7 +154,15 @@ class Menus {
 			return;
 		}
 
-		$return[] = new \ElggMenuItem('thewire', elgg_echo('thewire_tools:group:title'), "thewire/group/{$group->getGUID()}");
+		$return = $hook->getValue();
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'thewire',
+			'text' => elgg_echo('thewire_tools:group:title'),
+			'href' => elgg_generate_url('collection:object:thewire:group', [
+				'guid' => $group->guid,
+			]),
+		]);
 	
 		return $return;
 	}
@@ -221,16 +226,13 @@ class Menus {
 	/**
 	 * Add feature menu items to the entity menu of a wire post
 	 *
-	 * @param string          $hook        the name of the hook
-	 * @param string          $type        the type of the hook
-	 * @param \ElggMenuItem[] $returnvalue current return value
-	 * @param array           $params      supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function entityRegisterFeature($hook, $type, $returnvalue, $params) {
+	public static function entityRegisterFeature(\Elgg\Hook $hook) {
 		
-		$entity = elgg_extract('entity', $params);
+		$entity = $hook->getEntityParam();
 		if (!$entity instanceof \ElggWire) {
 			return;
 		}
@@ -246,7 +248,8 @@ class Menus {
 		
 		$toggle_action = elgg_generate_action_url('thewire_tools/toggle_feature', ['guid' => $entity->guid]);
 		
-		$returnvalue[] = \ElggMenuItem::factory([
+		$return = $hook->getValue();
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'thewire-tools-feature',
 			'text' => elgg_echo('thewire_tools:feature'),
 			'icon' => 'arrow-up',
@@ -256,7 +259,7 @@ class Menus {
 			'priority' => 200,
 		]);
 		
-		$returnvalue[] = \ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'thewire-tools-unfeature',
 			'text' => elgg_echo('thewire_tools:unfeature'),
 			'icon' => 'arrow-down',
@@ -266,20 +269,17 @@ class Menus {
 			'priority' => 201,
 		]);
 		
-		return $returnvalue;
+		return $return;
 	}
 	
 	/**
 	 * Add menu items to the page menu on thewire pages
 	 *
-	 * @param string          $hook        the name of the hook
-	 * @param string          $type        the type of the hook
-	 * @param \ElggMenuItem[] $returnvalue current return value
-	 * @param array           $params      supplied params
+	 * @param \Elgg\Hook $hook 'register', 'menu:page'
 	 *
 	 * @return void|\ElggMenuItem[]
 	 */
-	public static function pageRegister($hook, $type, $returnvalue, $params) {
+	public static function pageRegister(\Elgg\Hook $hook) {
 		
 		if (!elgg_in_context('thewire')) {
 			return;
@@ -290,21 +290,25 @@ class Menus {
 			return;
 		}
 		
+		$return = $hook->getValue();
+		
 		$user = elgg_get_logged_in_user_entity();
 		if (!empty($user)) {
-			$returnvalue[] = \ElggMenuItem::factory([
+			$return[] = \ElggMenuItem::factory([
 				'name' => 'mentions',
-				'href' => "thewire/search/@{$user->username}",
 				'text' => elgg_echo('thewire_tools:menu:mentions'),
+				'href' => elgg_generate_url('collection:object:thewire:search', [
+					'q' => "@{$user->username}",
+				]),
 			]);
 		}
 		
-		$returnvalue[] = \ElggMenuItem::factory([
+		$return[] = \ElggMenuItem::factory([
 			'name' => 'search',
-			'href' => 'thewire/search',
 			'text' => elgg_echo('search'),
+			'href' => elgg_generate_url('collection:object:thewire:search'),
 		]);
 		
-		return $returnvalue;
+		return $return;
 	}
 }

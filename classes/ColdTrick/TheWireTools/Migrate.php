@@ -2,23 +2,23 @@
 
 namespace ColdTrick\TheWireTools;
 
+use Elgg\Database\QueryBuilder;
+
 class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	
-
 	/**
 	 * Registers this class to the entity_tools supported_types hook
 	 *
-	 * @param string $hook        the name of the hook
-	 * @param string $type        the type of the hook
-	 * @param array  $returnvalue current return value
-	 * @param array  $params      supplied params
+	 * @param \Elgg\Hook $hook 'supported_types', 'entity_tools'
 	 *
 	 * return array
 	 */
-	static public function registerClass($hook, $type, $returnvalue, $params) {
-		$returnvalue['thewire'] = self::class;
+	static public function registerClass(\Elgg\Hook $hook) {
+		$return = $hook->getValue();
 		
-		return $returnvalue;
+		$return['thewire'] = self::class;
+		
+		return $return;
 	}
 	
 	/**
@@ -32,8 +32,10 @@ class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 			return (bool) ($page_owner_entity instanceof \ElggGroup);
 		}
 		
+		$object = $this->getObject();
+		
 		// no listing so just checking the entity
-		if (!($this->getObject()->getContainerEntity() instanceof \ElggGroup)) {
+		if (!$object->getContainerEntity() instanceof \ElggGroup) {
 			return false;
 		}
 		
@@ -64,33 +66,34 @@ class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	 * @return void
 	 */
 	protected function moveThreadItems($new_container_guid) {
-		
 		// ignore access for this part
-		$ia = elgg_set_ignore_access(true);
-		
-		$batch = new \ElggBatch('elgg_get_entities', [
-			'type' => 'object',
-			'subtype' => 'thewire',
-			'limit' => false,
-			'metadata_name_value_pairs' => [
-				'name' => 'wire_thread',
-				'value' => $this->getObject()->getGUID(),
-			],
-			'wheres' => [
-				'e.guid <> ' . $this->getObject()->getGUID(),
-			]
-		]);
-		
-		/* @var $post \ElggObject */
-		foreach ($batch as $post) {
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($new_container_guid) {
+			$object = $this->getObject();
 			
-			$migrate = new Migrate($post);
-			$migrate->changeContainer($new_container_guid);
+			$batch = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => 'thewire',
+				'limit' => false,
+				'batch' => true,
+				'metadata_name_value_pairs' => [
+					'name' => 'wire_thread',
+					'value' => $object->guid,
+				],
+				'wheres' => [
+					function(QueryBuilder $qb, $main_alias) use ($object) {
+						return $qb->compare("{$main_alias}.guid", '!=', $object->guid, ELGG_VALUE_GUID);
+					},
+				]
+			]);
 			
-			$post->save();
-		}
-		
-		// restore access
-		elgg_set_ignore_access($ia);
+			/* @var $post \ElggWire */
+			foreach ($batch as $post) {
+				
+				$migrate = new Migrate($post);
+				$migrate->changeContainer($new_container_guid);
+				
+				$post->save();
+			}
+		});
 	}
 }

@@ -7,14 +7,13 @@ class Notifications {
 	/**
 	 * This functions performs actions when a wire post is created
 	 *
-	 * @param string      $event  'create'
-	 * @param string      $type   'object'
-	 * @param \ElggObject $object the ElggObject created
+	 * @param \Elgg\Event $event 'create', 'object'
 	 *
 	 * @return void
 	 */
-	public static function triggerMentionNotificationEvent($event, $type, \ElggObject $object) {
+	public static function triggerMentionNotificationEvent(\Elgg\Event $event) {
 		
+		$object = $event->getObject();
 		if (!$object instanceof \ElggWire) {
 			return;
 		}
@@ -44,23 +43,25 @@ class Notifications {
 			$username = str_ireplace('@', '', $username);
 			$user = get_user_by_username($username);
 	
-			if (empty($user) || ($user->getGUID() == $object->getOwnerGUID())) {
+			if (empty($user) || ($user->guid === $object->owner_guid)) {
 				continue;
 			}
 				
-			$setting = thewire_tools_get_notification_settings($user->getGUID());
+			$setting = thewire_tools_get_notification_settings($user->guid);
 			if (empty($setting)) {
 				continue;
 			}
 	
-			$subject = elgg_echo('thewire_tools:notify:mention:subject');
+			$subject = elgg_echo('thewire_tools:notify:mention:subject', [], $user->getLanguage());
 			$message = elgg_echo('thewire_tools:notify:mention:message', [
-				$user->name,
-				$object->getOwnerEntity()->name,
-				elgg_normalize_url("thewire/search/@{$user->username}"),
-			]);
+				$user->getDisplayName(),
+				$object->getOwnerEntity()->getDisplayName(),
+				elgg_generate_url('collection:object:thewire:search', [
+					'q' => "@{$user->username}",
+				]),
+			], $user->getLanguage());
 	
-			notify_user($user->getGUID(), $object->getOwnerGUID(), $subject, $message, $params, $setting);
+			notify_user($user->guid, $object->owner_guid, $subject, $message, $params, $setting);
 		}
 	}
 	

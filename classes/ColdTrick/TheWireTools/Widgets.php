@@ -7,88 +7,81 @@ class Widgets {
 	/**
 	 * Add or remove widgets based on the group tool option
 	 *
-	 * @param string $hook_name   'group_tool_widgets'
-	 * @param string $entity_type 'widget_manager'
-	 * @param array  $return      current enable/disable widget handlers
-	 * @param array  $params      supplied params
+	 * @param \Elgg\Hook $hook 'group_tool_widgets', 'widget_manager'
 	 *
 	 * @return array
 	 */
-	public static function groupToolBasedWidgets($hook_name, $entity_type, $return, $params) {
+	public static function groupToolBasedWidgets(\Elgg\Hook $hook) {
 	
-		$entity = elgg_extract('entity', $params);
-		if (!($entity instanceof \ElggGroup)) {
+		$entity = $hook->getEntityParam();
+		if (!$entity instanceof \ElggGroup) {
 			return;
 		}
 		
+		$return = $hook->getValue();
 		if (!is_array($return)) {
 			$return = [];
 		}
-
+		
 		if (!isset($return['enable'])) {
 			$return['enable'] = [];
 		}
 		if (!isset($return['disable'])) {
 			$return['disable'] = [];
 		}
-
+		
 		// check different group tools for which we supply widgets
 		if ($entity->isToolEnabled('thewire')) {
 			$return['enable'][] = 'thewire_groups';
 		} else {
 			$return['disable'][] = 'thewire_groups';
 		}
-	
+		
 		return $return;
 	}
 	
 	/**
-	 * returns the correct widget title
+	 * Returns the correct widget title url
 	 *
-	 * @param string $hook_name   'widget_url'
-	 * @param string $entity_type 'widget_manager'
-	 * @param string $return      the current widget url
-	 * @param array  $params      supplied params
+	 * @param \Elgg\Hook $hook 'entity:url', 'object'
 	 *
-	 * @return string the url for the widget
+	 * @return void|string the url for the widget
 	 */
-	public static function widgetTitleURL($hook_name, $entity_type, $return, $params) {
+	public static function widgetTitleURL(\Elgg\Hook $hook) {
 	
-		$widget = elgg_extract('entity', $params);
-		if (!($widget instanceof \ElggWidget)) {
+		$widget = $hook->getEntityParam();
+		if (!$widget instanceof \ElggWidget) {
 			return;
 		}
 		
 		switch ($widget->handler) {
 			case 'thewire':
-				$return = "thewire/owner/{$widget->getOwnerEntity()->username}";
-				break;
+				return elgg_generate_url('collection:object:thewire:owner', [
+					'username' => $widget->getOwnerEntity()->username,
+				]);
+			
 			case 'index_thewire':
 			case 'thewire_post':
-				$return = 'thewire/all';
-				break;
+				return elgg_generate_url('collection:object:thewire:all');
+				
 			case 'thewire_groups':
-				$return = "thewire/group/{$widget->owner_guid}";
-				break;
+				return elgg_generate_url('collection:object:thewire:group', [
+					'guid' => $widget->owner_guid,
+				]);
 		}
-	
-		return $return;
 	}
 	
 	/**
 	 * Unregisters a widget handler in case of group
 	 *
-	 * @param string $hook        hook name
-	 * @param string $entity_type hook type
-	 * @param array  $returnvalue current return value
-	 * @param array  $params      parameters
+	 * @param \Elgg\Hook $hook 'handlers', 'widgets'
 	 *
-	 * @return array
+	 * @return \Elgg\WidgetDefinition[]
 	 */
-	public static function registerHandlers($hook, $entity_type, $returnvalue, $params) {
+	public static function registerHandlers(\Elgg\Hook $hook) {
 		
-		$container = elgg_extract('container', $params);
-		if (!($container instanceof \ElggGroup)) {
+		$container = $hook->getParam('container');
+		if (!$container instanceof \ElggGroup) {
 			return;
 		}
 		
@@ -96,15 +89,17 @@ class Widgets {
 			return;
 		}
 		
+		$return = $hook->getValue();
+		
 		/* @var $widget \Elgg\WidgetDefinition */
-		foreach ($returnvalue as $index => $widget) {
+		foreach ($return as $index => $widget) {
 			if ($widget->id !== 'thewire_groups') {
 				continue;
 			}
-			unset($returnvalue[$index]);
+			unset($return[$index]);
 			break;
 		}
 		
-		return $returnvalue;
+		return $return;
 	}
 }
