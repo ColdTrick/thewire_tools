@@ -28,8 +28,6 @@ class Menus {
 			return;
 		}
 		
-		elgg_load_js('elgg.thewire');
-		
 		$reshare_guid = $entity->guid;
 		$reshare = null;
 		
