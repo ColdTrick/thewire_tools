@@ -1,6 +1,10 @@
 Version history
 ===============
 
+8.0.3 (2019-08-22):
+
+- several small chores/fixes
+
 8.0.2 (2019-07-11):
 
 - fixed: force group posts to be only for group members if access limited
