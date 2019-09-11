@@ -50,6 +50,7 @@ To view your mentions on the wire click here:
 	'thewire_tools:reshare' => "Share on The Wire",
 	'thewire_tools:reshare:source' => "Source",
 	'thewire_tools:reshare:list' => "%s shared this %s",
+	'thewire_tools:reshare:list:group' => "%s shared this in the group %s %s",
 	
 	// featured
 	'thewire_tools:sidebar:featured' => "Featured posts",

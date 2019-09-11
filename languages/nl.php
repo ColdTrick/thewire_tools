@@ -1,10 +1,11 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0-beta
- * On 2018-12-14 16:44
+ * This file was created by Translation Editor v7.0.4
+ * On 2019-09-11 14:30
  */
 
 return array (
+  'thewire_tools:reshare:list:group' => '%s deelde dit in de groep %s %s',
   'thewire_tools:add:container:site' => 'Plaats op de site',
   'thewire_tools:add:access' => 'Zichtbaar voor: %s',
   'thewire_tools:add:access:group' => 'Enkel delen in de geselecteerde groep',

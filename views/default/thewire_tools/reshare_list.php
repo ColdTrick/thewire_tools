@@ -35,7 +35,18 @@ foreach ($batch as $wire_post) {
 	
 	$friendly_time = elgg_view_friendly_time($wire_post->time_created);
 	
-	$text = elgg_echo('thewire_tools:reshare:list', [$owner_link, $friendly_time]);
+	$container = $wire_post->getContainerEntity();
+	if ($container instanceof \ElggGroup) {
+		$container_link = elgg_view('output/url', [
+			'text' => $container->getDisplayName(),
+			'href' => $container->getURL(),
+			'is_trusted' => true,
+		]);
+	
+		$text = elgg_echo('thewire_tools:reshare:list:group', [$owner_link, $container_link, $friendly_time]);
+	} else {
+		$text = elgg_echo('thewire_tools:reshare:list', [$owner_link, $friendly_time]);
+	}
 	
 	$block = elgg_view_image_block($icon, $text);
 	
