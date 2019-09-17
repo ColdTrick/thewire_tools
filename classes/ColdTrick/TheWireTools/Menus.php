@@ -108,6 +108,11 @@ class Menus {
 			return false;
 		}
 		
+		// private content can't be reshared
+		if ($entity->access_id === ACCESS_PRIVATE) {
+			return false;
+		}
+		
 		// by default allow searchable entities
 		$reshare_allowed = false;
 		if ($entity instanceof \ElggGroup) {
