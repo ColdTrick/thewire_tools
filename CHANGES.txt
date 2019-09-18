@@ -1,6 +1,11 @@
 Version history
 ===============
 
+8.1 (2019-09-18):
+
+- added: show group name in reshare list
+- fixed: do not allow reshare of private content
+
 8.0.3 (2019-08-22):
 
 - several small chores/fixes
