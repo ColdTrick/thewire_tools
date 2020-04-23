@@ -1,17 +1,17 @@
 <?php
 
+use ColdTrick\TheWireTools\Bootstrap;
 use Elgg\Router\Middleware\Gatekeeper;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
-	'bootstrap' => '\ColdTrick\TheWireTools\Bootstrap',
+	'bootstrap' => Bootstrap::class,
 	'settings' => [
 		'enable_group' => 'no',
 		'extend_widgets' => 'yes',
 		'extend_activity' => 'no',
 		'mention_display' => 'username',
-		
 	],
 	'routes' => [
 		'collection:object:thewire:group' => [
