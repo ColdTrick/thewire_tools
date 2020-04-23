@@ -5,7 +5,7 @@
 
 $query = get_input('q');
 
-elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
+elgg_push_collection_breadcrumbs('object', 'thewire');
 
 if (!empty($query)) {
 	$options = [
@@ -49,11 +49,7 @@ $body_vars = ['query' => $query];
 
 $form = elgg_view_form('thewire/search', $form_vars , $body_vars);
 
-// build page
-$body = elgg_view_layout('one_sidebar', [
-	'title' => $title_text,
+// Display page
+echo elgg_view_page($title_text, [
 	'content' => $form . $result,
 ]);
-
-// Display page
-echo elgg_view_page($title_text, $body);
