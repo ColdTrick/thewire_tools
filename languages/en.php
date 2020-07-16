@@ -27,6 +27,20 @@ return array(
 
 To view your mentions on the wire click here:
 %s",
+	// reshare
+	'thewire_tools:notify:reshare:subject' => "%s shared %s: %s",
+	'thewire_tools:notify:reshare:summary' => "%s shared %s: %s",
+	'thewire_tools:notify:reshare:body' => "Hi,
+
+%s shared the following content with you:
+
+%s
+
+To view the shared content, click here:
+%s
+
+View and reply to the Wire post:
+%s",
 
 	// user settings
 	'thewire_tools:usersettings:notify_mention' => "I wish to receive a notification when I'm mentioned in a Wire post",

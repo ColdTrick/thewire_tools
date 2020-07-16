@@ -1,10 +1,23 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0.4
- * On 2019-09-11 14:30
+ * This file was created by Translation Editor v8.0
+ * On 2020-07-16 10:26
  */
 
 return array (
+  'thewire_tools:notify:reshare:subject' => '%s deelde %s: %s',
+  'thewire_tools:notify:reshare:summary' => '%s deelde %s: %s',
+  'thewire_tools:notify:reshare:body' => 'Hallo,
+
+%s deelde de volgende content met jou:
+
+%s
+
+Bekijk de gedeelde content hier:
+%s
+
+Bekijk en reageer op het Wire bericht:
+%s',
   'thewire_tools:reshare:list:group' => '%s deelde dit in de groep %s %s',
   'thewire_tools:add:container:site' => 'Plaats op de site',
   'thewire_tools:add:access' => 'Zichtbaar voor: %s',
