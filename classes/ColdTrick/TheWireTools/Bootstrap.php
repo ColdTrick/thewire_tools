@@ -71,17 +71,16 @@ class Bootstrap extends DefaultPluginBootstrap {
 	protected function registerHooks() {
 		$hooks = $this->elgg()->hooks;
 		
+		$hooks->registerHandler('action:validate', 'notifications/settings', __NAMESPACE__ . '\Notifications::saveUserNotificationsSettings');
 		$hooks->registerHandler('entity:url', 'object', __NAMESPACE__ . '\Widgets::widgetTitleURL');
 		$hooks->registerHandler('export:counters', 'elasticsearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', __NAMESPACE__ . '\Widgets::groupToolBasedWidgets');
+		$hooks->registerHandler('handlers', 'widgets', __NAMESPACE__ . '\Widgets::registerHandlers');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterImprove', 501);
 		$hooks->registerHandler('register', 'menu:social', __NAMESPACE__ . '\Menus::entityRegisterReshare');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterFeature');
 		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\Menus::ownerBlockRegister');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\Menus::pageRegister');
-		$hooks->registerHandler('action:validate', 'notifications/settings', __NAMESPACE__ . '\Notifications::saveUserNotificationsSettings');
-		$hooks->registerHandler('handlers', 'widgets', __NAMESPACE__ . '\Widgets::registerHandlers');
 		$hooks->registerHandler('supported_types', 'entity_tools', __NAMESPACE__ . '\Migrate::registerClass');
-		
 	}
 }
