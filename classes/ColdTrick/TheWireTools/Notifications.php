@@ -145,7 +145,7 @@ class Notifications {
 			$type,
 			$title,
 		], $language);
-		$notification->subject = elgg_echo('thewire_tools:notify:reshare:summary', [
+		$notification->summary = elgg_echo('thewire_tools:notify:reshare:summary', [
 			$actor->getDisplayName(),
 			$type,
 			$title,
