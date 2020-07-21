@@ -1,6 +1,10 @@
 Version history
 ===============
 
+9.1 (2020-07-21):
+
+- added: custom notification for reshare posts
+
 9.0 (2020-05-26):
 
 - changed: increased minimal Elgg version to 3.3
