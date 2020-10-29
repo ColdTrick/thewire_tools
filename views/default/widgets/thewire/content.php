@@ -1,7 +1,7 @@
 <?php
 
 /* @var $widget ElggWidget */
-$widget = $vars['entity'];
+$widget = elgg_extract('entity', $vars);
 
 $num_display = (int) $widget->num_display;
 $owner = $widget->owner;
@@ -19,6 +19,7 @@ $options = [
 	'pagination' => false,
 ];
 
+$owner_entity = $widget->getOwnerEntity();
 $more_url = '';
 switch ($owner) {
 	case 'friends':
@@ -36,10 +37,12 @@ switch ($owner) {
 		$more_url = elgg_generate_url('collection:object:thewire:all');
 		break;
 	default:
-		$options['container_guid'] = $widget->getOwnerGUID();
-		$more_url = elgg_generate_url('collection:object:thewire:owner', [
-			'username' => $widget->getOwnerEntity()->username
-		]);
+		if ($owner_entity instanceof \ElggUser) {
+			$options['owner_guid'] = $owner_entity->guid;
+		} else {
+			$options['container_guid'] = $widget->owner_guid;
+		}
+		
 		break;
 }
 
@@ -63,14 +66,28 @@ if (elgg_is_logged_in() && (elgg_get_plugin_setting('extend_widgets', 'thewire_t
 
 // list content
 $content = elgg_list_entities($options);
-if (empty($error) && !empty($content)) {
-	echo $content;
-	
-	echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view('output/url', [
-		'href' => $more_url,
-		'text' => elgg_echo('thewire:moreposts'),
-		'is_trusted' => true,
-	]));
-} else {
+if (empty($content)) {
 	echo elgg_echo('thewire_tools:no_result');
+	return;
 }
+
+echo $content;
+
+if ($owner_entity instanceof ElggGroup) {
+	$more_url = elgg_generate_url('collection:object:thewire:group', [
+		'username' => $owner_entity->guid
+	]);
+} elseif ($owner_entity instanceof ElggUser) {
+	$more_url = elgg_generate_url('collection:object:thewire:owner', [
+		'username' => $owner_entity->username
+	]);
+}
+if (empty($more_url)) {
+	return;
+}
+
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view('output/url', [
+	'text' => elgg_echo('thewire:moreposts'),
+	'href' => $more_url,
+	'is_trusted' => true,
+]));
