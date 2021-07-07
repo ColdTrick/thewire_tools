@@ -6,8 +6,6 @@
 $group_guid = (int) get_input('guid', 0);
 elgg_entity_gatekeeper($group_guid, 'group');
 
-$entities_only = (int) get_input('entities_only', 0);
-
 /* @var $group ElggGroup */
 $group = get_entity($group_guid);
 
@@ -15,9 +13,6 @@ $group = get_entity($group_guid);
 elgg_group_tool_gatekeeper('thewire', $group_guid);
 
 elgg_push_collection_breadcrumbs('object', 'thewire', $group);
-
-// build page elements
-$title_text = elgg_echo('thewire_tools:group:title');
 
 $content = '';
 if ($group->isMember()) {
@@ -32,13 +27,10 @@ $content .= elgg_list_entities([
 	'no_results' => elgg_echo('notfound'),
 ]);
 
-$body = elgg_view_layout('default', [
-	'title' => $title_text,
+// Display page
+echo elgg_view_page(elgg_echo('thewire_tools:group:title'), [
 	'content' => $content,
 	'sidebar' => elgg_view('thewire/sidebar'),
 	'filter_id' => 'thewire/group',
 	'filter_value' => 'all',
 ]);
-
-// Display page
-echo elgg_view_page($title_text,$body);

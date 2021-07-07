@@ -10,8 +10,6 @@ if (!$entity instanceof \ElggWire) {
 	return;
 }
 
-elgg_require_js('elgg/thewire');
-
 $full = (bool) elgg_extract('full_view', $vars, false);
 
 $route = _elgg_services()->request->getRoute();

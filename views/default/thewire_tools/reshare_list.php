@@ -1,10 +1,9 @@
 <?php
 /**
  * Ajax view to show a list of users who shared an item on TheWire
- *
  */
 
-use Elgg\BadRequestException;
+use Elgg\Exceptions\Http\BadRequestException;
 
 $guid = (int) get_input('entity_guid');
 if (empty($guid)) {

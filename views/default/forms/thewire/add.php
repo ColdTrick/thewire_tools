@@ -5,13 +5,6 @@
  * @uses $vars['post']
  */
 
-elgg_require_js('elgg/thewire');
-
-if (!elgg_is_active_plugin('mentions')) {
-	// mentions not enabled, use our version of autocomplete
-	elgg_require_js('thewire_tools/autocomplete');
-}
-
 $post = elgg_extract('post', $vars);
 $char_limit = thewire_tools_get_wire_length();
 $reshare = elgg_extract('reshare', $vars); // for reshare functionality
@@ -23,7 +16,6 @@ if ($post) {
 $chars_left = elgg_echo('thewire:charleft');
 
 $parent_input = '';
-$mentions = '';
 $container_input = elgg_view('forms/thewire/add/container', ['entity' => $post]);
 $access_input = elgg_view('forms/thewire/add/access', ['entity' => $post]);
 $reshare_input = '';
@@ -57,6 +49,11 @@ if (!empty($reshare)) {
 
 $count_down = "<span>$char_limit</span> $chars_left";
 $num_lines = 2;
+
+if ($char_limit) {
+	elgg_require_js('forms/thewire/add');
+}
+
 if ($char_limit == 0) {
 	$num_lines = 3;
 	$count_down = '';

@@ -21,11 +21,10 @@ class Elasticsearch {
 		$return = $hook->getValue();
 		
 		$return['thewire_reshare'] = elgg_call(ELGG_IGNORE_ACCESS, function () use ($entity) {
-			return elgg_get_entities([
+			return elgg_count_entities([
 				'relationship' => 'reshare',
 				'relationship_guid' => $entity->guid,
 				'inverse_relationship' => true,
-				'count' => true,
 			]);
 		});
 		

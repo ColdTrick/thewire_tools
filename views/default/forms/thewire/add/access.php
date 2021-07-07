@@ -18,9 +18,8 @@ if (!$user_guid) {
 	return;
 }
 
-$count = elgg_get_entities([
+$count = elgg_count_entities([
 	'type' => 'group',
-	'count' => true,
 	'relationship' => 'member',
 	'relationship_guid' => $user_guid,
 ]);

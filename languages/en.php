@@ -14,25 +14,15 @@ return array(
 	'thewire_tools:settings:enable_group' => "Enable TheWire for groups",
 	'thewire_tools:settings:extend_widgets' => "Extend TheWire widget with the option to post update directly from the widget",
 	'thewire_tools:settings:extend_activity' => "Extend the activity page with the wire form",
-	'thewire_tools:settings:mention_display' => "How to show mentions in a Wire post",
-	'thewire_tools:settings:mention_display:username' => "@username",
-	'thewire_tools:settings:mention_display:displayname' => "@displayname",
 		
 	// notification
 	// mention
 	'thewire_tools:notify:mention:subject' => "You've been mentioned on the wire",
-	'thewire_tools:notify:mention:message' => "Hi %s,
 
-%s mentioned you in his/her wire post.
-
-To view your mentions on the wire click here:
-%s",
 	// reshare
 	'thewire_tools:notify:reshare:subject' => "%s shared %s: %s",
 	'thewire_tools:notify:reshare:summary' => "%s shared %s: %s",
-	'thewire_tools:notify:reshare:body' => "Hi,
-
-%s shared the following content with you:
+	'thewire_tools:notify:reshare:body' => "%s shared the following content with you:
 
 %s
 

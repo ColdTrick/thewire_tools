@@ -6,7 +6,7 @@ if (!$entity) {
 }
 
 if ($entity->guid !== $entity->wire_thread) {
-	echo '<div class="elgg-subtext">' . elgg_echo('thewire_tools:entity_tools:unable') . '</div>';
+	echo elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('thewire_tools:entity_tools:unable'));
 	return;
 }
 

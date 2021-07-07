@@ -28,39 +28,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 			]);
 		}
 		
-		$this->registerViews();
-		$this->registerEvents();
 		$this->registerHooks();
-	}
-	
-	/**
-	 * Register view extensions / ajax views
-	 *
-	 * @return void
-	 */
-	protected function registerViews() {
-		
-		elgg_extend_view('river/filter', 'thewire_tools/activity_post', 400);
-		elgg_extend_view('css/elgg', 'css/thewire_tools.css');
-		elgg_extend_view('js/elgg', 'js/thewire_tools.js');
-		elgg_extend_view('notifications/settings/other', 'thewire_tools/notifications/settings');
-		elgg_extend_view('page/layouts/elements/filter', 'thewire_tools/group_activity', 400);
-		elgg_extend_view('thewire/sidebar', 'thewire_tools/extends/thewire/sidebar', 400);
-		
-		elgg_register_ajax_view('thewire_tools/reshare');
-		elgg_register_ajax_view('thewire_tools/reshare_list');
-		elgg_register_ajax_view('thewire_tools/thread');
-	}
-	
-	/**
-	 * Register event listeners
-	 *
-	 * @return void
-	 */
-	protected function registerEvents() {
-		$events = $this->elgg()->events;
-		
-		$events->registerHandler('create', 'object', __NAMESPACE__ . '\Notifications::triggerMentionNotificationEvent');
 	}
 	
 	/**
@@ -71,7 +39,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 	protected function registerHooks() {
 		$hooks = $this->elgg()->hooks;
 		
-		$hooks->registerHandler('action:validate', 'notifications/settings', __NAMESPACE__ . '\Notifications::saveUserNotificationsSettings');
 		$hooks->registerHandler('entity:url', 'object', __NAMESPACE__ . '\Widgets::widgetTitleURL');
 		$hooks->registerHandler('export:counters', 'elasticsearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', __NAMESPACE__ . '\Widgets::groupToolBasedWidgets');
@@ -83,6 +50,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterFeature');
 		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\Menus::ownerBlockRegister');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\Menus::pageRegister');
-		$hooks->registerHandler('supported_types', 'entity_tools', __NAMESPACE__ . '\Migrate::registerClass');
+		if (elgg_is_active_plugin('entity_tools')) {
+			$hooks->registerHandler('supported_types', 'entity_tools', __NAMESPACE__ . '\Migrate::registerClass');
+		}
 	}
 }

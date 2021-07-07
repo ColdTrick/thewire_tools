@@ -8,28 +8,14 @@ $query = get_input('q');
 elgg_push_collection_breadcrumbs('object', 'thewire');
 
 if (!empty($query)) {
-	$options = [
+	$result = elgg_list_entities([
 		'type' => 'object',
 		'subtype' => 'thewire',
 		'pagination' => true,
 		'no_results' => true,
-		'metadata_name_value_pairs_operator' => 'OR',
-		'metadata_name_value_pairs' => [],
-	];
-	
-	$where_options = explode(' ', $query);
-	if (!empty($where_options)) {
-		foreach ($where_options as $word) {
-			$options['metadata_name_value_pairs'][] = [
-				'name' => 'description',
-				'value' => "%{$word}%",
-				'operand' => 'LIKE',
-				'case_sensitive' => false,
-			];
-		}
-	}
-	
-	$result = elgg_list_entities($options);
+		'query' => $query,
+		'fields' => ['metadata' => ['description']],
+	], 'elgg_search');
 		
 	// set title
 	$title_text = elgg_echo('thewire_tools:search:title', [$query]);
@@ -40,7 +26,6 @@ if (!empty($query)) {
 
 //build search form
 $form_vars = [
-	'id' => 'thewire_tools_search_form',
 	'action' => 'thewire/search',
 	'disable_security' => true,
 	'method' => 'GET',

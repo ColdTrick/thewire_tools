@@ -8,7 +8,7 @@
  *
  * @return int the number of characters
  */
-function thewire_tools_get_wire_length() {
+function thewire_tools_get_wire_length(): int {
 	static $result;
 	
 	if (isset($result)) {
@@ -35,7 +35,7 @@ function thewire_tools_get_wire_length() {
  *
  * @return bool|int the GUID of the new wire post or false
  */
-function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid = 0, $method = "site", $reshare_guid = 0, $container_guid = null) {
+function thewire_tools_save_post(string $text, int $userid, int $access_id = null, int $parent_guid = 0, string $method = 'site', int $reshare_guid = 0, int $container_guid = null) {
 	
 	// set correct container
 	if (is_null($container_guid)) {
@@ -92,45 +92,46 @@ function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid
 		$post->reply = true;
 	}
 	
-	$guid = $post->save();
-	if ($guid) {
-		// set thread guid
-		if ($parent_guid) {
-			$post->addRelationship($parent_guid, 'parent');
-		
-			// name conversation threads by guid of first post (works even if first post deleted)
-			$parent_post = get_entity($parent_guid);
-			$post->wire_thread = $parent_post->wire_thread;
-		} else {
-			// first post in this thread
-			$post->wire_thread = $guid;
-		}
-		
-		// add reshare
-		if ($reshare_guid) {
-			$post->addRelationship($reshare_guid, 'reshare');
-		}
-		
-		// add to river
-		elgg_create_river_item([
-			'view' => 'river/object/thewire/create',
-			'action_type' => 'create',
-			'subject_guid' => $post->getOwnerGUID(),
-			'object_guid' => $post->getGUID(),
-		]);
-		
-		// let other plugins know we are setting a user status
-		$params = [
-			'entity' => $post,
-			'user' => $post->getOwnerEntity(),
-			'message' => $post->description,
-			'url' => $post->getURL(),
-			'origin' => 'thewire',
-		];
-		elgg_trigger_plugin_hook('status', 'user', $params);
+	if (!$post->save()) {
+		return false;
 	}
 	
-	return $guid;
+	// set thread guid
+	if ($parent_guid) {
+		$post->addRelationship($parent_guid, 'parent');
+	
+		// name conversation threads by guid of first post (works even if first post deleted)
+		$parent_post = get_entity($parent_guid);
+		$post->wire_thread = $parent_post->wire_thread;
+	} else {
+		// first post in this thread
+		$post->wire_thread = $post->guid;
+	}
+	
+	// add reshare
+	if ($reshare_guid) {
+		$post->addRelationship($reshare_guid, 'reshare');
+	}
+	
+	// add to river
+	elgg_create_river_item([
+		'view' => 'river/object/thewire/create',
+		'action_type' => 'create',
+		'subject_guid' => $post->getOwnerGUID(),
+		'object_guid' => $post->guid,
+	]);
+	
+	// let other plugins know we are setting a user status
+	$params = [
+		'entity' => $post,
+		'user' => $post->getOwnerEntity(),
+		'message' => $post->description,
+		'url' => $post->getURL(),
+		'origin' => 'thewire',
+	];
+	elgg_trigger_plugin_hook('status', 'user', $params);
+
+	return $post->guid;
 }
 
 /**
@@ -142,17 +143,7 @@ function thewire_tools_save_post($text, $userid, $access_id = null, $parent_guid
  *
  * @return string
  */
-function thewire_tools_filter($text) {
-	static $mention_display;
-	$site_url = elgg_get_site_url();
-
-	if (!isset($mention_display)) {
-		$mention_display = 'username';
-		if (elgg_get_plugin_setting('mention_display', 'thewire_tools') == 'displayname') {
-			$mention_display = 'displayname';
-		}
-	}
-	
+function thewire_tools_filter(string $text): string {
 	$text = ' ' . $text;
 
 	// email addresses
@@ -163,64 +154,14 @@ function thewire_tools_filter($text) {
 
 	// links
 	$text = parse_urls($text);
-	
-	// usernames
-	if (!elgg_is_active_plugin('mentions')) {
-		$click_url = 'thewire/owner/';
-		if (elgg_is_active_plugin('profile')) {
-			$click_url = 'profile/';
-		}
-		$matches = [];
-		$match_count = preg_match_all(
-			'/(^|[^\w])@([\p{L}\p{Nd}._]+)/u',
-			$text,
-			$matches,
-			PREG_SET_ORDER
-		);
-		
-		if ($match_count > 0) {
-			$proccessed_usernames = [];
-			
-			foreach ($matches as $set) {
-				$replaces = 0;
-				
-				if (in_array($set[2], $proccessed_usernames)) {
-					continue;
-				}
-				
-				$user = get_user_by_username($set[2]);
-				if (empty($user)) {
-					continue;
-				}
-				if ($mention_display == 'displayname') {
-					$user_text = $user->name;
-				} else {
-					$user_text = $user->username;
-				}
-				
-				$replace = ' ' . elgg_view('output/url', [
-					'text' => '@' . $user_text,
-					'href' => $click_url . $user->username,
-					'is_trusted' => true,
-				]);
-				
-				$text = str_ireplace($set[0], $replace, $text, $replaces);
-				if ($replaces > 0) {
-					$proccessed_usernames[] = $set[2];
-				}
-			}
-		}
-	}
 
 	// hashtags
 	$text = preg_replace(
 			'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
-			'$1<a href="' . $site_url . 'thewire/tag/$2">#$2</a>',
+			'$1<a href="' . elgg_get_site_url() . 'thewire/tag/$2">#$2</a>',
 			$text);
 
-	$text = trim($text);
-
-	return $text;
+	return trim($text);
 }
 
 /**
@@ -230,7 +171,7 @@ function thewire_tools_filter($text) {
  *
  * @return array
  */
-function thewire_tools_get_notification_settings($user_guid = 0) {
+function thewire_tools_get_notification_settings(int $user_guid = 0): array {
 	
 	$user_guid = (int) $user_guid;
 	if (empty($user_guid)) {

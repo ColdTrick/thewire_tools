@@ -7,9 +7,7 @@
 return array (
   'thewire_tools:notify:reshare:subject' => '%s deelde %s: %s',
   'thewire_tools:notify:reshare:summary' => '%s deelde %s: %s',
-  'thewire_tools:notify:reshare:body' => 'Hallo,
-
-%s deelde de volgende content met jou:
+  'thewire_tools:notify:reshare:body' => '%s deelde de volgende content met jou:
 
 %s
 
@@ -31,7 +29,7 @@ Bekijk en reageer op het Wire bericht:
   'thewire_tools:reshare:list' => '%s deelde dit %s',
   'thewire_tools:settings:mention_display' => 'Hoe moeten vermeldingen worden weergegeven in een Wire post',
   'thewire_tools:settings:mention_display:username' => '@gebruikersnaam',
-  'thewire_tools:settings:mention_display:displayname' => '@weegavenaam',
+  'thewire_tools:settings:mention_display:displayname' => '@weergavenaam',
   'thewire_tools:reshare' => 'Deel op The Wire',
   'thewire_tools:reshare:source' => 'Bron',
   'thewire_tools:settings:extend_activity' => 'Voeg het The Wire formulier toe aan de activiteiten pagina',

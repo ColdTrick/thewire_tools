@@ -1,12 +1,8 @@
-define(function(require){
-	
-	var $ = require('jquery');
-	var lightbox = require('elgg/lightbox');
-	
-	var badge_click = function(event) {
+define(['jquery', 'elgg/lightbox'], function($, lightbox){
+
+	$(document).on('click', '.elgg-menu-item-thewire-tools-reshare > a > .elgg-badge', function(event) {
 		
-		var $link = $(this).closest('a');
-		var data = $link.data();
+		var data = $(this).closest('a').data();
 		
 		if (!data || !data.badgeLink) {
 			return true;
@@ -20,7 +16,5 @@ define(function(require){
 		});
 		
 		return false;
-	};
-	
-	$(document).on('click', '.elgg-menu-item-thewire-tools-reshare > a > .elgg-badge', badge_click);
+	});
 });

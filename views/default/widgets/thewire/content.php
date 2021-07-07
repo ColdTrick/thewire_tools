@@ -73,11 +73,11 @@ if (empty($content)) {
 
 echo $content;
 
-if ($owner_entity instanceof ElggGroup) {
+if ($owner_entity instanceof \ElggGroup) {
 	$more_url = elgg_generate_url('collection:object:thewire:group', [
 		'username' => $owner_entity->guid
 	]);
-} elseif ($owner_entity instanceof ElggUser) {
+} elseif ($owner_entity instanceof \ElggUser) {
 	$more_url = elgg_generate_url('collection:object:thewire:owner', [
 		'username' => $owner_entity->username
 	]);

@@ -15,7 +15,7 @@ if (elgg_get_plugin_setting('enable_group', 'thewire_tools') !== 'yes') {
 
 $page_owner_entity = elgg_get_page_owner_entity();
 
-if ($page_owner_entity instanceof ElggGroup) {
+if ($page_owner_entity instanceof \ElggGroup) {
 	// in a group only allow sharing in the current group
 	echo elgg_view('input/hidden', [
 		'name' => 'container_guid',

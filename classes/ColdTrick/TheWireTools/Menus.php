@@ -208,6 +208,7 @@ class Menus {
 				
 				$menu_item->rel = $entity->guid;
 				$menu_item->setSection('_begin');
+				$menu_item->addDeps('thewire_tools');
 			}
 		}
 		

@@ -2,20 +2,15 @@
 	max-width: 200px;
 }
 
-.ui-autocomplete .ui-menu-item .ui-state-focus {
-	display: block;
-	background-color: #EEE;
-}
-
 .thewire-thread {
 	display: none;
 	margin-left: 5px;
 	padding-left: 5px;
 	border-left: 3px solid #ccc;
-}
-
-.thewire-thread .elgg-list > li:last-child {
-	border: none;
+	
+	.elgg-list > li:last-child {
+		border: none;
+	}
 }
 
 .thewire-tools-reshare-popup {
