@@ -49,7 +49,6 @@ switch ($owner) {
 
 if (!empty($filter)) {
 	$filters = string_to_tag_array($filter);
-	$filters = array_map('sanitise_string', $filters);
 	
 	$options['metadata_name_value_pairs'][] = [
 		'name' => 'description',
