@@ -47,7 +47,7 @@ class Menus {
 		
 		$menu_options = [
 			'name' => 'thewire_tools_reshare',
-			'icon' => 'share',
+			'icon' => 'share-alt-square',
 			'text' => elgg_echo('thewire_tools:reshare'),
 			'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $reshare_guid,
 			'link_class' => 'elgg-lightbox',
