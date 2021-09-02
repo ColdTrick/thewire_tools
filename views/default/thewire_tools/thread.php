@@ -11,7 +11,9 @@ elgg_push_context('thewire_tools_thread');
 echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'thewire',
-	'base_url' => 'thewire/thread/' . $thread_guid,
+	'base_url' => elgg_generate_url('collection:object:thewire:thread', [
+		'guid' => $thread_guid,
+	]),
 	'metadata_name_value_pairs' => [
 		'name' => 'wire_thread',
 		'value' => $thread_guid,
