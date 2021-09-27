@@ -1,6 +1,11 @@
 Version history
 ===============
 
+10.0 (2021-09-27):
+
+- added: French translation
+- changed: updated for Elgg 4
+
 9.1.1 (2020-11-11):
 
 - fixed: widget content
