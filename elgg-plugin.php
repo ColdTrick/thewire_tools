@@ -1,12 +1,11 @@
 <?php
 
 use ColdTrick\TheWireTools\Bootstrap;
-use Elgg\Router\Middleware\Gatekeeper;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
-	'plugin'> [
+	'plugin' => [
 		'version' => '9.1.1',
 		'dependencies' => [
 			'thewire' => [
