@@ -1,4 +1,8 @@
 <?php
+/**
+ * This file was created by Translation Editor v8.0
+ * On 2021-09-30 10:12
+ */
 
 return array (
   'thewire_tools:group:title' => 'Flux des partages du groupe',
@@ -32,17 +36,6 @@ return array (
   'thewire_tools:settings:enable_group' => 'Activer le fil pour les groupes',
   'thewire_tools:settings:extend_widgets' => 'Donner la possibilité de poster des mises à jour directement à partir du widget The Wire',
   'thewire_tools:settings:extend_activity' => 'Ajouter le formulaire de post sur la page Activité',
-  'thewire_tools:settings:mention_display' => 'Comment faire apparaître les mentions dans un post',
-  'thewire_tools:settings:mention_display:username' => '@nomdutilisateur',
-  'thewire_tools:settings:mention_display:displayname' => '@nomaffiché',
-  'thewire_tools:notify:mention:subject' => 'Vous avez été mentionné sur le fil',
-  'thewire_tools:notify:mention:message' => 'Bonjour %s,
-
-%s vous a mentionné dans ce post.
-
-Pour accéder au message, cliquez ici :
-%s',
-  'thewire_tools:usersettings:notify_mention' => 'Je souhaite recevoir une notification lorsque je suis mentionné dans un post du fil',
   'thewire_tools:add:container:site' => 'Poster sur le site',
   'thewire_tools:add:access' => 'Visible pour : %s',
   'thewire_tools:add:access:group' => 'Partager seulement dans le groupe sélectionné',

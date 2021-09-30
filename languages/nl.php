@@ -1,7 +1,7 @@
 <?php
 /**
  * This file was created by Translation Editor v8.0
- * On 2020-07-16 10:26
+ * On 2021-09-30 10:11
  */
 
 return array (
@@ -27,9 +27,6 @@ Bekijk en reageer op het Wire bericht:
   'thewire_tools:action:toggle_feature:unfeatured' => 'Het bericht is niet langer aangereden',
   'thewire_tools:action:toggle_feature:featured' => 'Het bericht is nu aangeraden',
   'thewire_tools:reshare:list' => '%s deelde dit %s',
-  'thewire_tools:settings:mention_display' => 'Hoe moeten vermeldingen worden weergegeven in een Wire post',
-  'thewire_tools:settings:mention_display:username' => '@gebruikersnaam',
-  'thewire_tools:settings:mention_display:displayname' => '@weergavenaam',
   'thewire_tools:reshare' => 'Deel op The Wire',
   'thewire_tools:reshare:source' => 'Bron',
   'thewire_tools:settings:extend_activity' => 'Voeg het The Wire formulier toe aan de activiteiten pagina',
@@ -43,14 +40,6 @@ Bekijk en reageer op het Wire bericht:
   'thewire_tools:menu:mentions' => 'Vermeldingen',
   'thewire_tools:settings:enable_group' => 'Schakel The Wire in voor groepen',
   'thewire_tools:settings:extend_widgets' => 'Breidt The Wire widget uit met de optie om direct een bericht te kunnen plaatsen',
-  'thewire_tools:notify:mention:subject' => 'Je bent vermeld op The Wire',
-  'thewire_tools:notify:mention:message' => 'Beste %s,
-
-%s heeft je vermeld in zijn/haar Wire bericht.
-
-Om je vermeldingen op The Wire te bekijken klik op onderstaande link:
-%s',
-  'thewire_tools:usersettings:notify_mention' => 'Ik wil een bericht ontvangen als ik wordt vermeld in een Wire bericht',
   'thewire_tools:group:title' => 'Groeps wire berichten',
   'thewire_tools:search:title' => 'Zoek op The Wire naar: \'%s\'',
   'thewire_tools:search:title:no_query' => 'Zoek op The Wire',
