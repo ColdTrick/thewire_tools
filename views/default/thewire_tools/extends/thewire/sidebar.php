@@ -26,9 +26,8 @@ $content = '';
 foreach ($posts as $entity) {
 	$icon = elgg_view_entity_icon($entity->getOwnerEntity(), 'tiny');
 	
-	$byline = elgg_view('page/elements/by_line', [
+	$byline = elgg_view('object/elements/imprint/byline', [
 		'entity' => $entity,
-		'owner_url' => "thewire/owner/{$entity->getOwnerEntity()->username}",
 	]);
 	
 	$body = elgg_format_element('div', ['class' => 'elgg-subtext'], $byline);
