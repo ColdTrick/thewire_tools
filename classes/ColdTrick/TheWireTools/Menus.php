@@ -114,15 +114,7 @@ class Menus {
 		}
 		
 		// by default allow searchable entities
-		$reshare_allowed = false;
-		if ($entity instanceof \ElggGroup) {
-			$reshare_allowed = true;
-		} else {
-			$searchable_entities = get_registered_entity_types($entity->getType());
-			if (!empty($searchable_entities)) {
-				$reshare_allowed = in_array($entity->getSubtype(), $searchable_entities);
-			}
-		}
+		$reshare_allowed = $entity->hasCapability('searchable');
 		
 		// trigger hook to allow others to change
 		$params = [
