@@ -1,6 +1,7 @@
 <?php
 
 use ColdTrick\TheWireTools\Bootstrap;
+use ColdTrick\TheWireTools\Notifications\CreateTheWireEventHandler;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
@@ -61,5 +62,12 @@ return [
 		'thewire_tools/reshare' => ['ajax' => true],
 		'thewire_tools/reshare_list' => ['ajax' => true],
 		'thewire_tools/thread' => ['ajax' => true],
+	],
+	'notifications' => [
+		'object' => [
+			'thewire' => [
+				'create' => CreateTheWireEventHandler::class,
+			],
+		],
 	],
 ];

@@ -43,8 +43,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('export:counters', 'elasticsearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', __NAMESPACE__ . '\Widgets::groupToolBasedWidgets');
 		$hooks->registerHandler('handlers', 'widgets', __NAMESPACE__ . '\Widgets::registerHandlers');
-		$hooks->registerHandler('prepare', 'notification:create:object:thewire', __NAMESPACE__ . '\Notifications::prepareNotificationSubject', 600);
-		$hooks->registerHandler('prepare', 'notification:create:object:thewire', __NAMESPACE__ . '\Notifications::prepareReshareNotification', 700);
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterImprove', 501);
 		$hooks->registerHandler('register', 'menu:social', __NAMESPACE__ . '\Menus::entityRegisterReshare');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterFeature');
