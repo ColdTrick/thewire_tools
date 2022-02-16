@@ -1,6 +1,14 @@
 Version history
 ===============
 
+11.0 (2022-02-16):
+
+- added: Gaelic language
+- changed: create wire notification is now group tool dependent
+- changed: horizontal align search form fields
+- changed: updated code for Elgg 4.1 capabilities system
+- fixed: show correct by line imprint in sidebar feature items
+
 10.0 (2021-09-27):
 
 - added: French translation
