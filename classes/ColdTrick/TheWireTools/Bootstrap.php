@@ -41,6 +41,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		
 		$hooks->registerHandler('entity:url', 'object', __NAMESPACE__ . '\Widgets::widgetTitleURL');
 		$hooks->registerHandler('export:counters', 'elasticsearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
+		$hooks->registerHandler('export:counters', 'opensearch', __NAMESPACE__ . '\Elasticsearch::exportCounter');
 		$hooks->registerHandler('group_tool_widgets', 'widget_manager', __NAMESPACE__ . '\Widgets::groupToolBasedWidgets');
 		$hooks->registerHandler('handlers', 'widgets', __NAMESPACE__ . '\Widgets::registerHandlers');
 		$hooks->registerHandler('register', 'menu:entity', __NAMESPACE__ . '\Menus::entityRegisterImprove', 501);
@@ -49,6 +50,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 		$hooks->registerHandler('register', 'menu:owner_block', __NAMESPACE__ . '\Menus::ownerBlockRegister');
 		$hooks->registerHandler('register', 'menu:page', __NAMESPACE__ . '\Menus::pageRegister');
 		if (elgg_is_active_plugin('entity_tools')) {
+			// the Migrate class is an extension of a class provided by Entity Tools
 			$hooks->registerHandler('supported_types', 'entity_tools', __NAMESPACE__ . '\Migrate::registerClass');
 		}
 	}
