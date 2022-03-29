@@ -24,7 +24,7 @@ $list_items = [];
 /* @var $wire_post ElggWire */
 foreach ($batch as $wire_post) {
 	$owner = $wire_post->getOwnerEntity();
-	$icon = elgg_view_entity_icon($owner, 'tiny', ['use_hover' => false]);
+	$icon = elgg_view_entity_icon($owner, 'small', ['use_hover' => false]);
 	
 	$owner_link = elgg_view('output/url', [
 		'text' => $owner->getDisplayName(),
@@ -36,13 +36,7 @@ foreach ($batch as $wire_post) {
 	
 	$container = $wire_post->getContainerEntity();
 	if ($container instanceof \ElggGroup) {
-		$container_link = elgg_view('output/url', [
-			'text' => $container->getDisplayName(),
-			'href' => $container->getURL(),
-			'is_trusted' => true,
-		]);
-	
-		$text = elgg_echo('thewire_tools:reshare:list:group', [$owner_link, $container_link, $friendly_time]);
+		$text = elgg_echo('thewire_tools:reshare:list:group', [$owner_link, elgg_view_entity_url($container), $friendly_time]);
 	} else {
 		$text = elgg_echo('thewire_tools:reshare:list', [$owner_link, $friendly_time]);
 	}
@@ -56,4 +50,4 @@ if (empty($list_items)) {
 	return;
 }
 
-echo elgg_format_element('div', ['class' => 'thewire-tools-reshare-popup'], elgg_format_element('ul', ['class' => 'elgg-list'], implode(PHP_EOL, $list_items)));
+echo elgg_format_element('div', ['class' => 'thewire-tools-reshare-popup'], elgg_format_element('div', ['class' => 'elgg-list-container'], elgg_format_element('ul', ['class' => 'elgg-list'], implode(PHP_EOL, $list_items))));
