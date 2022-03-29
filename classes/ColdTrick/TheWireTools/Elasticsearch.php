@@ -7,7 +7,7 @@ class Elasticsearch {
 	/**
 	 * Export reshare counter
 	 *
-	 * @param \Elgg\Hook $hook 'export:counters', 'elasticsearch'
+	 * @param \Elgg\Hook $hook 'export:counters', 'elasticsearch'|'opensearch'
 	 *
 	 * @return void|array
 	 */
