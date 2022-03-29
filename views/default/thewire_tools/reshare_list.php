@@ -56,4 +56,4 @@ if (empty($list_items)) {
 	return;
 }
 
-echo elgg_format_element('ul', ['class' => 'elgg-list thewire-tools-reshare-popup'], implode(PHP_EOL, $list_items));
+echo elgg_format_element('div', ['class' => 'thewire-tools-reshare-popup'], elgg_format_element('ul', ['class' => 'elgg-list'], implode(PHP_EOL, $list_items)));
