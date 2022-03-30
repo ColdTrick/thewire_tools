@@ -1,6 +1,10 @@
 Version history
 ===============
 
+11.1 (2022-03-30):
+
+- added: support for OpenSearch
+
 11.0 (2022-02-16):
 
 - added: Gaelic language
