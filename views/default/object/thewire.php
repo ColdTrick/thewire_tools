@@ -53,11 +53,10 @@ if (elgg_in_context('widgets')) {
 	if (substr($text, -3) == '...') {
 		$more_link = elgg_view('output/url', [
 			'text' => elgg_echo('more'),
-			'href' => "#thewire-full-view-{$entity->getGUID()},#thewire-summary-view-{$entity->getGUID()}",
+			'href' => false,
 			'is_trusted' => true,
-			'rel' => 'toggle',
-			'class' => 'mls',
-			'data-toggle-selector' => "#thewire-full-view-{$entity->getGUID()}, #thewire-summary-view-{$entity->getGUID()}",
+			'class' => ['mls', 'elgg-toggle'],
+			'data-toggle-selector' => "#thewire-full-view-{$entity->guid}, #thewire-summary-view-{$entity->guid}",
 		]);
 		$more_content = $entity->description;
 	} else {
@@ -67,16 +66,18 @@ if (elgg_in_context('widgets')) {
 
 elgg_push_context('input');
 $content = elgg_view('output/longtext', [
-	'value' => thewire_tools_filter($text) . $more_link,
-	'id' => "thewire-summary-view-{$entity->getGUID()}",
+	'value' => elgg_sanitize_input(thewire_tools_filter($text)) . $more_link,
+	'id' => "thewire-summary-view-{$entity->guid}",
 	'data-toggle-slide' => 0,
+	'sanitize' => false, // already done and will cause issues with the more link
 ]);
 
 if (!empty($more_content)) {
 	$content .= elgg_view('output/longtext', [
-		'value' => thewire_tools_filter($more_content),
-		'id' => "thewire-full-view-{$entity->getGUID()}",
+		'value' => elgg_sanitize_input(thewire_tools_filter($more_content)),
+		'id' => "thewire-full-view-{$entity->guid}",
 		'class' => 'hidden',
+		'sanitize' => false, // already done
 	]);
 }
 elgg_pop_context();
@@ -100,7 +101,7 @@ if (!empty($reshare)) {
 
 if (elgg_is_logged_in() && !elgg_in_context('thewire_tools_thread')) {
 	$form_vars = [
-		'id' => 'thewire-tools-reply-' . $entity->getGUID(),
+		'id' => "thewire-tools-reply-{$entity->guid}",
 		'class' => 'hidden',
 	];
 	$content .= elgg_view_form('thewire/add', $form_vars, ['post' => $entity]);
@@ -128,7 +129,7 @@ if ($full) {
 
 if ($show_thread) {
 	echo elgg_format_element('div', [
-		'id' => "thewire-thread-{$entity->getGUID()}",
+		'id' => "thewire-thread-{$entity->guid}",
 		'class' => 'thewire-thread',
 		'data-thread' => $entity->wire_thread,
 		'data-guid' => $entity->guid,

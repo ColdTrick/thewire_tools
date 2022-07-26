@@ -17,6 +17,7 @@ $options = [
 	'limit' => $num_display,
 	'full_view' => false,
 	'pagination' => false,
+	'no_results' => elgg_echo('thewire_tools:no_result'),
 ];
 
 $owner_entity = $widget->getOwnerEntity();
@@ -29,7 +30,7 @@ switch ($owner) {
 		$options['relationship_join_on'] = 'container_guid';
 		
 		$more_url = elgg_generate_url('collection:object:thewire:friends', [
-			'username' => $widget->getOwnerEntity()->username
+			'username' => $owner_entity->username
 		]);
 		break;
 	case 'all':
@@ -46,9 +47,8 @@ switch ($owner) {
 		break;
 }
 
-
 if (!empty($filter)) {
-	$filters = string_to_tag_array($filter);
+	$filters = elgg_string_to_array((string) $filter);
 	
 	$options['metadata_name_value_pairs'][] = [
 		'name' => 'description',
@@ -58,35 +58,24 @@ if (!empty($filter)) {
 	];
 }
 
+if ($owner_entity instanceof \ElggGroup) {
+	$more_url = elgg_generate_url('collection:object:thewire:group', [
+		'username' => $owner_entity->guid
+	]);
+} elseif (empty($more_url) && $owner_entity instanceof \ElggUser) {
+	$more_url = elgg_generate_url('collection:object:thewire:owner', [
+		'username' => $owner_entity->username
+	]);
+}
+
+if (!empty($more_url)) {
+	$options['widget_more'] = elgg_view_url($more_url, elgg_echo('thewire:moreposts'));
+}
+
 // show add form in widget
 if (elgg_is_logged_in() && (elgg_get_plugin_setting('extend_widgets', 'thewire_tools') != 'no')) {
 	echo elgg_view_form('thewire/add');
 }
 
 // list content
-$content = elgg_list_entities($options);
-if (empty($content)) {
-	echo elgg_echo('thewire_tools:no_result');
-	return;
-}
-
-echo $content;
-
-if ($owner_entity instanceof \ElggGroup) {
-	$more_url = elgg_generate_url('collection:object:thewire:group', [
-		'username' => $owner_entity->guid
-	]);
-} elseif ($owner_entity instanceof \ElggUser) {
-	$more_url = elgg_generate_url('collection:object:thewire:owner', [
-		'username' => $owner_entity->username
-	]);
-}
-if (empty($more_url)) {
-	return;
-}
-
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view('output/url', [
-	'text' => elgg_echo('thewire:moreposts'),
-	'href' => $more_url,
-	'is_trusted' => true,
-]));
+echo elgg_list_entities($options);

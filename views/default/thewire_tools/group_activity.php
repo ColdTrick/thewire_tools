@@ -8,7 +8,7 @@ if (!elgg_is_logged_in() || !elgg_in_context('groups')) {
 }
 
 $group = elgg_get_page_owner_entity();
-if (!($group instanceof ElggGroup)) {
+if (!$group instanceof ElggGroup) {
 	return;
 }
 
@@ -20,11 +20,8 @@ if (!$group->canEdit() && !$group->isMember()) {
 	return;
 }
 
-$page = current_page_url();
-$page = str_ireplace(elgg_get_site_url(), '', $page);
-
 // check if we're on the activity page
-if (strpos($page, 'groups/activity/' . $group->getGUID()) !== 0) {
+if (elgg_get_current_route_name() !== 'collection:river:group') {
 	return;
 }
 

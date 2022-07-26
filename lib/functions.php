@@ -129,8 +129,8 @@ function thewire_tools_save_post(string $text, int $userid, int $access_id = nul
 		'url' => $post->getURL(),
 		'origin' => 'thewire',
 	];
-	elgg_trigger_plugin_hook('status', 'user', $params);
-
+	elgg_trigger_deprecated_plugin_hook('status', 'user', $params, null, "The 'status', 'user' hook has been deprecated. Use 'create', 'object' event.", '4.3');
+	
 	return $post->guid;
 }
 
@@ -148,18 +148,18 @@ function thewire_tools_filter(string $text): string {
 
 	// email addresses
 	$text = preg_replace(
-			'/(^|[^\w])([\w\-\.]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})/i',
-			'$1<a href="mailto:$2@$3">$2@$3</a>',
-			$text);
+		'/(^|[^\w])([\w\-\.]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})/i',
+		'$1<a href="mailto:$2@$3">$2@$3</a>',
+		$text);
 
 	// links
-	$text = parse_urls($text);
+	$text = elgg_parse_urls($text);
 
 	// hashtags
 	$text = preg_replace(
-			'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
-			'$1<a href="' . elgg_get_site_url() . 'thewire/tag/$2">#$2</a>',
-			$text);
+		'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
+		'$1<a href="' . elgg_get_site_url() . 'thewire/tag/$2">#$2</a>',
+		$text);
 
 	return trim($text);
 }
@@ -186,10 +186,9 @@ function thewire_tools_get_notification_settings(int $user_guid = 0): array {
 	if (elgg_is_active_plugin('notifications')) {
 		$saved = elgg_get_plugin_user_setting('notification_settings_saved', $user->guid, 'thewire_tools');
 		if (!empty($saved)) {
-			$settings = elgg_get_plugin_user_setting('notification_settings', $user->guid, 'thewire_tools');
-			
+			$settings = (string) elgg_get_plugin_user_setting('notification_settings', $user->guid, 'thewire_tools');
 			if (!empty($settings)) {
-				return string_to_tag_array($settings);
+				return elgg_string_to_array($settings);
 			}
 			
 			return [];

@@ -1,5 +1,6 @@
 <?php
 
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 // get widget settings
@@ -17,10 +18,12 @@ $options = [
 	'pagination' => false,
 	'metadata_name_value_pairs_operator' => 'OR',
 	'metadata_name_value_pairs' => [],
+	'no_results' => elgg_echo('thewire_tools:no_result'),
+	'widget_more' => elgg_view_url(elgg_generate_url('collection:object:thewire:all'), elgg_echo('thewire:moreposts')),
 ];
 
 if (!empty($filter)) {
-	$filters = string_to_tag_array($filter);
+	$filters = elgg_string_to_array((string) $filter);
 	foreach ($filters as $word) {
 		$options['metadata_name_value_pairs'][] = [
 			'name' => 'description',
@@ -32,17 +35,4 @@ if (!empty($filter)) {
 }
 
 // list content
-$content = elgg_list_entities($options);
-if (empty($content)) {
-	echo elgg_echo('thewire_tools:no_result');
-	return;
-}
-	
-echo $content;
-
-$more_link = elgg_view('output/url', [
-	'href' => 'thewire/all',
-	'text' => elgg_echo('thewire:moreposts'),
-	'is_trusted' => true,
-]);
-echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);
+echo elgg_list_entities($options);

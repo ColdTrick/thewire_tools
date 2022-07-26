@@ -39,8 +39,8 @@ $groups = elgg_get_entities([
 	'batch' => true,
 	'relationship' => 'member',
 	'relationship_guid' => $user_guid,
-	'order_by_metadata' => [
-		'name' => 'name',
+	'sort_by' => [
+		'property' => 'name',
 		'direction' => 'ASC',
 	],
 ]);

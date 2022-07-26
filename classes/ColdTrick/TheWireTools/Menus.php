@@ -212,7 +212,7 @@ class Menus {
 				$menu_item = $return->get('reply');
 					
 				$menu_item->setHref("#thewire-tools-reply-{$entity->guid}");
-				$menu_item->rel = 'toggle';
+				$menu_item->addLinkClass('elgg-toggle');
 			}
 		}
 		
