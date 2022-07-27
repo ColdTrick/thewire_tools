@@ -6,7 +6,7 @@
 
 return array (
   'thewire_tools:group:title' => 'Flux des partages du groupe',
-  'thewire_tools:groups:tool_option' => 'Activer le flux de partages du groupe',
+  'groups:tool:thewire' => 'Activer le flux de partages du groupe',
   'thewire_tools:groups:error:not_enabled' => 'Le flux de partages a été désactivé pour ce groupe',
   'thewire_tools:search:title' => 'Recherche dans le flux pour : \'%s\'',
   'thewire_tools:search:title:no_query' => 'Recherche dans le flux',

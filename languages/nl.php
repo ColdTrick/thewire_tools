@@ -31,7 +31,7 @@ Bekijk en reageer op het Wire bericht:
   'thewire_tools:reshare:source' => 'Bron',
   'thewire_tools:settings:extend_activity' => 'Voeg het The Wire formulier toe aan de activiteiten pagina',
   'thewire_tools:login_required' => 'Je moet zijn aangemeld om deze functionaliteit te kunnen gebruiken',
-  'thewire_tools:groups:tool_option' => 'Schakel The Wire voor deze groep in',
+  'groups:tool:thewire' => 'Schakel The Wire voor deze groep in',
   'thewire_tools:groups:error:not_enabled' => 'The Wire is voor deze groep uitgeschakeld',
   'widgets:thewire:owner' => 'Van wie moeten de Wire berichten worden getoond',
   'widgets:thewire:filter' => 'Filter Wire berichten (optioneel)',

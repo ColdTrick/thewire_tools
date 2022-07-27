@@ -30,7 +30,8 @@ View and reply to the Wire post:
 	
 	// group wire
 	'thewire_tools:group:title' => "Group wire posts",
-	'thewire_tools:groups:tool_option' => "Enable group wire posts",
+	'groups:tool:thewire' => "Enable group wire posts",
+	'groups:tool:thewire:description' => "Allow group members to write wire posts in this group.",
 	'thewire_tools:groups:error:not_enabled' => "The wire has been disabled for this group",
 	
 	'thewire_tools:add:container:site' => "Post on site",

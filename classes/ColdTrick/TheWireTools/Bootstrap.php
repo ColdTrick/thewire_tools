@@ -23,7 +23,6 @@ class Bootstrap extends DefaultPluginBootstrap {
 			
 			// add group tool option
 			$this->elgg()->group_tools->register('thewire', [
-				'label' => elgg_echo('thewire_tools:groups:tool_option'),
 				'default_on' => true,
 			]);
 		}
