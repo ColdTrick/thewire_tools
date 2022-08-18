@@ -1,10 +1,11 @@
 <?php
 /**
- * This file was created by Translation Editor v8.0
- * On 2021-09-30 10:11
+ * This file was created by Translation Editor v10.1.1
+ * On 2022-08-18 12:43
  */
 
 return array (
+  'groups:tool:thewire:description' => 'Laat groepsleden wire-berichten schrijven in deze groep.',
   'thewire_tools:notify:reshare:subject' => '%s deelde %s: %s',
   'thewire_tools:notify:reshare:summary' => '%s deelde %s: %s',
   'thewire_tools:notify:reshare:body' => '%s deelde de volgende content met jou:
