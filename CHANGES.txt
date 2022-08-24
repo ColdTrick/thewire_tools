@@ -1,6 +1,10 @@
 Version history
 ===============
 
+12.0 (2022-08-24):
+
+- changed: updated for Elgg 4.3
+
 11.1 (2022-03-30):
 
 - added: support for OpenSearch
