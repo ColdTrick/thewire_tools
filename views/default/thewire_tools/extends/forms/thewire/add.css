@@ -1,0 +1,9 @@
+.elgg-form-thewire-add {
+	.ui-helper-hidden-accessible {
+		display: none;
+	}
+	
+	.elgg-input-select {
+		max-width: 20rem;
+	}
+}

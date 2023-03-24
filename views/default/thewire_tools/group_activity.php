@@ -8,7 +8,7 @@ if (!elgg_is_logged_in() || !elgg_in_context('groups')) {
 }
 
 $group = elgg_get_page_owner_entity();
-if (!$group instanceof ElggGroup) {
+if (!$group instanceof \ElggGroup) {
 	return;
 }
 

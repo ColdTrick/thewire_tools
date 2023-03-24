@@ -1,6 +1,6 @@
 <?php
 /**
- * Al helper functions for this plugin are bundled here
+ * All helper functions for this plugin are bundled here
  */
 
 /**
@@ -26,28 +26,28 @@ function thewire_tools_get_wire_length(): int {
 /**
  * Save a wire post, overrules the default function because we need to support groups
  *
- * @param string $text         the text of the post
- * @param int    $userid       the owner of the post
- * @param int    $access_id    the access level of the post
- * @param int    $parent_guid  is this a reply on another post
- * @param string $method       which method was used
- * @param int    $reshare_guid is the a (re)share of some content item
+ * @param string $text           the text of the post
+ * @param int    $userid         the owner of the post
+ * @param int    $access_id      the access level of the post
+ * @param int    $parent_guid    is this a reply on another post
+ * @param string $method         which method was used
+ * @param int    $reshare_guid   is the a (re)share of some content item
+ * @param int    $container_guid container of the wire post
  *
  * @return bool|int the GUID of the new wire post or false
  */
-function thewire_tools_save_post(string $text, int $userid, int $access_id = null, int $parent_guid = 0, string $method = 'site', int $reshare_guid = 0, int $container_guid = null) {
-	
+function thewire_tools_save_post(string $text, int $userid, int $access_id = null, int $parent_guid = 0, string $method = 'site', int $reshare_guid = 0, int $container_guid = 0) {
 	// set correct container
-	if (is_null($container_guid)) {
+	if ($container_guid < 1) {
 		$container_guid = $userid;
 	}
 	
-	if ((elgg_get_plugin_setting('enable_group', 'thewire_tools') === 'yes')) {
+	if (elgg_get_plugin_setting('enable_group', 'thewire_tools') === 'yes') {
 		// need to default to group ACL
 		$group = get_entity($container_guid);
-		if ($group instanceof ElggGroup) {
+		if ($group instanceof \ElggGroup) {
 			$acl = $group->getOwnedAccessCollection('group_acl');
-			if ($acl instanceof ElggAccessCollection) {
+			if ($acl instanceof \ElggAccessCollection) {
 				if (is_null($access_id) || $group->getContentAccessMode() === \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 					$access_id = $acl->id;
 				}
@@ -66,19 +66,28 @@ function thewire_tools_save_post(string $text, int $userid, int $access_id = nul
 	}
 	
 	// create the new post
-	$post = new ElggWire();
+	$post = new \ElggWire();
 	$post->owner_guid = $userid;
 	$post->container_guid = $container_guid;
 	$post->access_id = $access_id;
 	
-	// only xxx characters allowed (see plugin setting of thewire, 0 is unlimited)
-	$max_length = thewire_tools_get_wire_length();
-	if ($max_length) {
-		$text = elgg_substr($text, 0, $max_length);
+	$text = $text ?? '';
+	$text = trim(str_replace('&nbsp;', ' ', $text));
+	
+	// Character limit is now from config
+	$limit = thewire_tools_get_wire_length();
+	if ($limit > 0) {
+		$text_for_size = elgg_strip_tags($text);
+		if (strlen($text_for_size) > $limit) {
+			return false;
+		}
 	}
 	
+	// no html tags allowed so we strip (except links (a) for mention support)
+	$text = elgg_strip_tags($text, '<a>');
+	
 	// no html tags allowed so we escape
-	$post->description = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8');
+	$post->description = $text;
 	
 	$post->method = $method; //method: site, email, api, ...
 	
@@ -117,96 +126,9 @@ function thewire_tools_save_post(string $text, int $userid, int $access_id = nul
 	elgg_create_river_item([
 		'view' => 'river/object/thewire/create',
 		'action_type' => 'create',
-		'subject_guid' => $post->getOwnerGUID(),
+		'subject_guid' => $post->owner_guid,
 		'object_guid' => $post->guid,
 	]);
 	
-	// let other plugins know we are setting a user status
-	$params = [
-		'entity' => $post,
-		'user' => $post->getOwnerEntity(),
-		'message' => $post->description,
-		'url' => $post->getURL(),
-		'origin' => 'thewire',
-	];
-	elgg_trigger_deprecated_plugin_hook('status', 'user', $params, null, "The 'status', 'user' hook has been deprecated. Use 'create', 'object' event.", '4.3');
-	
 	return $post->guid;
-}
-
-/**
- * Replace urls, hash tags, and @'s by links
- *
- * @see thewire_filter()
- *
- * @param string $text The text of a post
- *
- * @return string
- */
-function thewire_tools_filter(string $text): string {
-	$text = ' ' . $text;
-
-	// email addresses
-	$text = preg_replace(
-		'/(^|[^\w])([\w\-\.]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})/i',
-		'$1<a href="mailto:$2@$3">$2@$3</a>',
-		$text);
-
-	// links
-	$text = elgg_parse_urls($text);
-
-	// hashtags
-	$text = preg_replace(
-		'/(^|[^\w])#(\w*[^\s\d!-\/:-@]+\w*)/',
-		'$1<a href="' . elgg_get_site_url() . 'thewire/tag/$2">#$2</a>',
-		$text);
-
-	return trim($text);
-}
-
-/**
- * Get the subscription methods of the user
- *
- * @param int $user_guid the user_guid to check (default: current user)
- *
- * @return array
- */
-function thewire_tools_get_notification_settings(int $user_guid = 0): array {
-	
-	$user_guid = (int) $user_guid;
-	if (empty($user_guid)) {
-		$user_guid = elgg_get_logged_in_user_guid();
-	}
-	
-	$user = get_user($user_guid);
-	if (empty($user)) {
-		return [];
-	}
-	
-	if (elgg_is_active_plugin('notifications')) {
-		$saved = elgg_get_plugin_user_setting('notification_settings_saved', $user->guid, 'thewire_tools');
-		if (!empty($saved)) {
-			$settings = (string) elgg_get_plugin_user_setting('notification_settings', $user->guid, 'thewire_tools');
-			if (!empty($settings)) {
-				return elgg_string_to_array($settings);
-			}
-			
-			return [];
-		}
-	}
-	
-	// default elgg settings
-	$settings = (array) $user->getNotificationSettings();
-	if (empty($settings)) {
-		return [];
-	}
-	
-	$result = [];
-	foreach ($settings as $method => $value) {
-		if (!empty($value)) {
-			$result[] = $method;
-		}
-	}
-	
-	return $result;
 }

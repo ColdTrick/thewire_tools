@@ -1,24 +1,26 @@
 <?php
 
-namespace ColdTrick\TheWireTools;
+namespace ColdTrick\TheWireTools\Plugins;
 
-class Elasticsearch {
+/**
+ * Additions to the OpenSearch plugin
+ */
+class OpenSearch {
 	
 	/**
 	 * Export reshare counter
 	 *
-	 * @param \Elgg\Hook $hook 'export:counters', 'elasticsearch'|'opensearch'
+	 * @param \Elgg\Event $event 'export:counters', 'opensearch'
 	 *
-	 * @return void|array
+	 * @return null|array
 	 */
-	public static function exportCounter(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getEntityParam();
+	public static function exportCounter(\Elgg\Event $event): ?array {
+		$entity = $event->getEntityParam();
 		if (!$entity instanceof \ElggEntity) {
-			return;
+			return null;
 		}
 		
-		$return = $hook->getValue();
+		$return = $event->getValue();
 		
 		$return['thewire_reshare'] = elgg_call(ELGG_IGNORE_ACCESS, function () use ($entity) {
 			return elgg_count_entities([

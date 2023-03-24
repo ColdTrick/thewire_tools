@@ -2,8 +2,7 @@ The Wire Tools
 ==============
 
 ![Elgg 4.3](https://img.shields.io/badge/Elgg-4.3-green.svg)
-[![Build Status](https://scrutinizer-ci.com/g/ColdTrick/thewire_tools/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/thewire_tools/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ColdTrick/thewire_tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/thewire_tools/?branch=master)
+![Lint Checks](https://github.com/ColdTrick/thewire_tools/actions/workflows/lint.yml/badge.svg?event=push)
 [![Latest Stable Version](https://poser.pugx.org/coldtrick/thewire_tools/v/stable.svg)](https://packagist.org/packages/coldtrick/thewire_tools)
 [![License](https://poser.pugx.org/coldtrick/thewire_tools/license.svg)](https://packagist.org/packages/coldtrick/thewire_tools)
 

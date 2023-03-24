@@ -10,86 +10,92 @@ $char_limit = thewire_tools_get_wire_length();
 $reshare = elgg_extract('reshare', $vars); // for reshare functionality
 
 $text = elgg_echo('post');
-if ($post) {
+if ($post instanceof \ElggWire) {
 	$text = elgg_echo('reply');
-}
-$chars_left = elgg_echo('thewire:charleft');
-
-$parent_input = '';
-$container_input = elgg_view('forms/thewire/add/container', ['entity' => $post]);
-$access_input = elgg_view('forms/thewire/add/access', ['entity' => $post]);
-$reshare_input = '';
-$post_value = '';
-
-if ($post) {
-	$parent_input = elgg_view('input/hidden', [
+	
+	echo elgg_view_field([
+		'#type' => 'hidden',
 		'name' => 'parent_guid',
 		'value' => $post->guid,
 	]);
 }
 
-if (!empty($reshare)) {
-	$reshare_input = elgg_view('input/hidden', [
-		'name' => 'reshare_guid',
-		'value' => $reshare->getGUID(),
-	]);
-	
-	$reshare_input .= elgg_view('thewire_tools/reshare_source', ['entity' => $reshare]);
-	
-	if (!empty($reshare->title)) {
-		$post_value = $reshare->title;
-	} elseif (!empty($reshare->name)) {
-		$post_value = $reshare->name;
-	} elseif (!empty($reshare->description)) {
-		$post_value = elgg_get_excerpt($reshare->description, 140);
-	}
-	
-	$post_value = htmlspecialchars_decode($post_value, ENT_QUOTES);
+$chars_left = elgg_echo('thewire:charleft');
+
+$count_down = ($char_limit === 0) ? '' : elgg_format_element('span', [], $char_limit) . " {$chars_left}";
+$num_lines = ($char_limit === 0) ? 3 : 2;
+
+if ($char_limit > 140) {
+	$num_lines = 3;
 }
 
-$count_down = "<span>$char_limit</span> $chars_left";
-$num_lines = 2;
-
-if ($char_limit) {
+if ($char_limit && !elgg_is_active_plugin('ckeditor')) {
 	elgg_require_js('forms/thewire/add');
 }
 
-if ($char_limit == 0) {
-	$num_lines = 3;
-	$count_down = '';
-} else if ($char_limit > 140) {
-	$num_lines = 3;
+$post_value = '';
+if ($reshare instanceof \ElggEntity) {
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'reshare_guid',
+		'value' => $reshare->guid,
+	]);
+	
+	echo elgg_view('thewire_tools/reshare_source', [
+		'entity' => $reshare,
+	]);
+	
+	$post_value = $reshare->getDisplayName();
+	if (empty($post_value)) {
+		$post_value = (string) $reshare->description;
+	}
+	
+	$post_value = elgg_get_excerpt($post_value, 140);
+	$post_value = htmlspecialchars_decode($post_value, ENT_QUOTES);
 }
 
-$post_input = elgg_view('input/plaintext', [
+echo elgg_view('input/longtext', [
 	'name' => 'body',
-	'class' => 'mtm',
-	'id' => 'thewire-textarea',
+	'value' => $post_value,
+	'class' => 'thewire-textarea',
 	'rows' => $num_lines,
 	'data-max-length' => $char_limit,
 	'required' => true,
-	'value' => $post_value,
 	'placeholder' => elgg_echo('thewire:form:body:placeholder'),
+	'editor_type' => 'thewire',
 ]);
 
-$submit_button = elgg_view_field([
-	'#type' => 'submit',
-	'value' => $text,
-	'id' => 'thewire-submit-button',
-]);
+// form footer
+$fields = [
+	[
+		'#type' => 'submit',
+		'value' => $text,
+	],
+	[
+		'#html' => elgg_view('forms/thewire/add/container', [
+			'entity' => $post,
+		]),
+	],
+	[
+		'#html' => elgg_view('forms/thewire/add/access', [
+			'entity' => $post,
+		]),
+	],
+];
 
-echo $reshare_input;
-echo $post_input;
-echo elgg_format_element('div', ['id' => 'thewire-characters-remaining'], $count_down);
+if ($char_limit > 0) {
+	$chars = elgg_format_element('div', ['class' => 'elgg-field-input'], $count_down);
+	
+	$fields[] = [
+		'#html' => elgg_format_element('div', ['class' => ['elgg-field', 'thewire-characters-wrapper']], $chars),
+	];
+}
 
 $footer = elgg_view_field([
 	'#type' => 'fieldset',
 	'align' => 'horizontal',
-	'fields' => [
-		[
-			'#html' => $parent_input . $submit_button . $container_input . $access_input,
-		]
-	],
+	'class' => 'elgg-fieldset-wrap',
+	'fields' => $fields,
 ]);
 
 elgg_set_form_footer($footer);

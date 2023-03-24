@@ -3,10 +3,8 @@
 /* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
+/* @var $group \ELggGroup */
 $group = $widget->getOwnerEntity();
-
-$filter = $widget->filter;
-
 if ($group->isMember()) {
 	echo elgg_view_form('thewire/add');
 }
@@ -23,6 +21,7 @@ $options = [
 	'widget_more' => elgg_view_url(elgg_generate_url('collection:object:thewire:group', ['guid' => $group->guid]), elgg_echo('thewire:moreposts')),
 ];
 
+$filter = $widget->filter;
 if (!empty($filter)) {
 	$filters = elgg_string_to_array((string) $filter);
 	foreach ($filters as $word) {

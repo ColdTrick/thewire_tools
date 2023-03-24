@@ -1,29 +1,16 @@
 <?php
 
-namespace ColdTrick\TheWireTools;
+namespace ColdTrick\TheWireTools\Plugins\EntityTools;
 
 use Elgg\Database\QueryBuilder;
 
+/**
+ * Adjusted version of TheWire migration to support groups
+ */
 class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	
 	/**
-	 * Registers this class to the entity_tools supported_types hook
-	 *
-	 * @param \Elgg\Hook $hook 'supported_types', 'entity_tools'
-	 *
-	 * return array
-	 */
-	static public function registerClass(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
-		
-		$return['thewire'] = self::class;
-		
-		return $return;
-	}
-	
-	/**
 	 * {@inheritDoc}
-	 * @see \ColdTrick\EntityTools\Migrate::canChangeContainer()
 	 */
 	public function canChangeContainer() {
 		$page_owner_entity = elgg_get_page_owner_entity();
@@ -45,7 +32,6 @@ class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	
 	/**
 	 * {@inheritDoc}
-	 * @see \ColdTrick\EntityTools\Migrate::changeContainer()
 	 */
 	public function changeContainer($new_container_guid) {
 		
@@ -88,7 +74,6 @@ class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 			
 			/* @var $post \ElggWire */
 			foreach ($batch as $post) {
-				
 				$migrate = new Migrate($post);
 				$migrate->changeContainer($new_container_guid);
 				

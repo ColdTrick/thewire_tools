@@ -6,6 +6,8 @@ use Elgg\TheWire\Notifications\CreateTheWireEventHandler as CoreTheWireEventHand
 
 /**
  * Notification Event Handler for 'object' 'thewire' 'create' action
+ *
+ * Change the notification in case of a reshare wire post
  */
 class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 	

@@ -1,8 +1,9 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof ElggEntity) {
-	echo elgg_view('input/hidden', [
+if ($entity instanceof \ElggEntity) {
+	echo elgg_view_field([
+		'#type' => 'hidden',
 		'name' => 'container_guid',
 		'value' => $entity->container_guid,
 	]);
@@ -17,7 +18,8 @@ $page_owner_entity = elgg_get_page_owner_entity();
 
 if ($page_owner_entity instanceof \ElggGroup) {
 	// in a group only allow sharing in the current group
-	echo elgg_view('input/hidden', [
+	echo elgg_view_field([
+		'#type' => 'hidden',
 		'name' => 'container_guid',
 		'value' => $page_owner_entity->guid,
 	]);

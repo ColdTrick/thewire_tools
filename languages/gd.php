@@ -37,12 +37,6 @@ Cuir freagairt ris:
 	'thewire_tools:add:access' => "Ri fhaicinn le: %s",
 	'thewire_tools:add:access:group' => "Postaich ri buidheann a-mhàin",
 
-
-	// search
-	'thewire_tools:search:title' => "Lorg an ùeir airson: '%s'",
-	'thewire_tools:search:title:no_query' => "Lorg an ùeir",
-	'thewire_tools:search:no_query' => "Cuir a-steach teacsa gu h-àrd gus lorg an ùeir",
-
 	// reshare
 	'thewire_tools:reshare' => "Postaich ris an ùeir",
 	'thewire_tools:reshare:source' => "Tùs",
@@ -57,7 +51,7 @@ Cuir freagairt ris:
 
 	// widget
 	// thewire_groups
-	'widgets:thewire_groups:title' => "Postaichean-ùeire anns a' bhuidhinn",
+	'widgets:thewire_groups:name' => "Postaichean-ùeire anns a' bhuidhinn",
 	'widgets:thewire_groups:description' => "Seall postaichean-ùeire anns a' bhuidhinn",
 
 	// index_thewire

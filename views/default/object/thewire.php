@@ -12,12 +12,6 @@ if (!$entity instanceof \ElggWire) {
 
 $full = (bool) elgg_extract('full_view', $vars, false);
 
-$route = _elgg_services()->request->getRoute();
-if (!empty($route) && $route->getName() === 'collection:object:thewire:thread') {
-// 	$full = true;
-}
- 
-// make compatible with posts created with original Curverider plugin
 $thread_id = $entity->wire_thread;
 if (!$thread_id) {
 	$entity->wire_thread = $entity->guid;
@@ -66,7 +60,7 @@ if (elgg_in_context('widgets')) {
 
 elgg_push_context('input');
 $content = elgg_view('output/longtext', [
-	'value' => elgg_sanitize_input(thewire_tools_filter($text)) . $more_link,
+	'value' => elgg_sanitize_input(thewire_filter($text)) . $more_link,
 	'id' => "thewire-summary-view-{$entity->guid}",
 	'data-toggle-slide' => 0,
 	'sanitize' => false, // already done and will cause issues with the more link
@@ -74,17 +68,21 @@ $content = elgg_view('output/longtext', [
 
 if (!empty($more_content)) {
 	$content .= elgg_view('output/longtext', [
-		'value' => elgg_sanitize_input(thewire_tools_filter($more_content)),
+		'value' => elgg_sanitize_input(thewire_filter($more_content)),
 		'id' => "thewire-full-view-{$entity->guid}",
 		'class' => 'hidden',
 		'sanitize' => false, // already done
 	]);
 }
+
 elgg_pop_context();
 
-// check for reshare entity (ignore access while doing so as shared entity could be unaccessable)
+// check for reshare entity (ignore access while doing so as shared entity could be inaccessible)
 $reshare = elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity) {
-	return $entity->getEntitiesFromRelationship(['relationship' => 'reshare', 'limit' => 1]);
+	return $entity->getEntitiesFromRelationship([
+		'relationship' => 'reshare',
+		'limit' => 1,
+	]);
 });
 
 if (!empty($reshare)) {

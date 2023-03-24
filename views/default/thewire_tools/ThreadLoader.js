@@ -1,6 +1,4 @@
 define(['jquery', 'elgg/Ajax'], function($, Ajax) {
-	var ajax = new Ajax();
-	
 	$(document).on('click', '.elgg-menu-item-thread a', function (event) {
 		var guid = $(this).attr('rel');
 		var $placeholder = $('#thewire-thread-' + guid);
@@ -19,6 +17,7 @@ define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 			return false;
 		}
 		
+		var ajax = new Ajax();
 		ajax.view('thewire_tools/thread', {
 			data: $placeholder.data(),
 			success: function(result) {

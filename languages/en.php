@@ -39,11 +39,6 @@ View and reply to the Wire post:
 	'thewire_tools:add:access:group' => "Only share in selected group",
 	
 	
-	// search
-	'thewire_tools:search:title' => "Search the wire for: '%s'",
-	'thewire_tools:search:title:no_query' => "Search the wire",
-	'thewire_tools:search:no_query' => "To search in the wire, please enter your search text above",
-	
 	// reshare
 	'thewire_tools:reshare' => "Share on The Wire",
 	'thewire_tools:reshare:source' => "Source",
@@ -58,7 +53,7 @@ View and reply to the Wire post:
 	
 	// widget
 	// thewire_groups
-	'widgets:thewire_groups:title' => "Group wire posts",
+	'widgets:thewire_groups:name' => "Group wire posts",
 	'widgets:thewire_groups:description' => "Show the wire posts in the group",
 	
 	// index_thewire

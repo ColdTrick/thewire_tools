@@ -21,7 +21,7 @@ $batch = elgg_get_entities([
 ]);
 
 $list_items = [];
-/* @var $wire_post ElggWire */
+/* @var $wire_post \ElggWire */
 foreach ($batch as $wire_post) {
 	$owner = $wire_post->getOwnerEntity();
 	$icon = elgg_view_entity_icon($owner, 'small');
@@ -50,4 +50,4 @@ if (empty($list_items)) {
 	return;
 }
 
-echo elgg_format_element('div', ['class' => 'thewire-tools-reshare-popup'], elgg_format_element('div', ['class' => 'elgg-list-container'], elgg_format_element('ul', ['class' => 'elgg-list'], implode(PHP_EOL, $list_items))));
+echo elgg_format_element('div', [], elgg_format_element('div', ['class' => 'elgg-list-container'], elgg_format_element('ul', ['class' => 'elgg-list'], implode(PHP_EOL, $list_items))));

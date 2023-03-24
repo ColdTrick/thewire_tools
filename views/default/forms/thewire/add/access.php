@@ -1,8 +1,9 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof ElggEntity) {
-	echo elgg_view('input/hidden', [
+if ($entity instanceof \ElggEntity) {
+	echo elgg_view_field([
+		'#type' => 'hidden',
 		'name' => 'access_id',
 		'value' => $entity->access_id,
 	]);
@@ -30,7 +31,8 @@ if (!$count) {
 $container = elgg_get_page_owner_entity();
 if ($container instanceof \ElggGroup) {
 	if ($container->getContentAccessMode() === \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
-		echo elgg_view('input/hidden', [
+		echo elgg_view_field([
+			'#type' => 'hidden',
 			'name' => 'access_id',
 			'value' => $container->getOwnedAccessCollection('group_acl')->id,
 		]);
@@ -51,9 +53,5 @@ $access_params = [
 	'name' => 'access_id',
 	'options_values' => $access_options,
 ];
-
-if (elgg_in_context('widgets')) {
-	$access_params['class'][] = 'thewire-tools-widget-access';
-}
 
 echo elgg_view_field($access_params);

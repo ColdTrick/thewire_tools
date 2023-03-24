@@ -1,10 +1,13 @@
 <?php
 /**
  * Action for adding a wire post
+ *
+ * ColdTrick:
+ * - added: container support (groups)
+ * - added: share content
  */
 
-// don't filter since we strip and filter escapes some characters
-$body = get_input('body', '', false);
+$body = get_input('body');
 
 $access_id = (int) get_input('access_id', ACCESS_PUBLIC);
 $container_guid = (int) get_input('container_guid');
@@ -25,7 +28,7 @@ if (elgg_get_plugin_setting('enable_group', 'thewire_tools') !== 'yes') {
 	$container_guid = null;
 } else {
 	$group = get_entity($container_guid);
-	if ($group instanceof ElggGroup) {
+	if ($group instanceof \ElggGroup) {
 		if (!$group->isToolEnabled('thewire')) {
 			// not allowed to post in this group
 			return elgg_error_response(elgg_echo('thewire_tools:groups:error:not_enabled'));

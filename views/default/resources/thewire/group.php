@@ -4,8 +4,6 @@
  */
 
 $group_guid = (int) get_input('guid', 0);
-elgg_entity_gatekeeper($group_guid, 'group');
-
 /* @var $group ElggGroup */
 $group = get_entity($group_guid);
 
@@ -19,12 +17,8 @@ if ($group->isMember()) {
 	$content .= elgg_view_form('thewire/add');
 }
 
-$content .= elgg_list_entities([
-	'types' => 'object',
-	'subtypes' => 'thewire',
-	'pagination' => true,
-	'container_guid' => $group->guid,
-	'no_results' => elgg_echo('notfound'),
+$content .= elgg_view('thewire/listing/group', [
+	'entity' => $group,
 ]);
 
 // Display page

@@ -8,6 +8,7 @@ if (empty($thread_guid) || empty($guid)) {
 }
 
 elgg_push_context('thewire_tools_thread');
+
 echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'thewire',
@@ -19,4 +20,5 @@ echo elgg_list_entities([
 		'value' => $thread_guid,
 	],
 ]);
+
 elgg_pop_context();

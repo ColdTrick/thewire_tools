@@ -1,7 +1,7 @@
 <?php
 
-use ColdTrick\TheWireTools\Bootstrap;
 use ColdTrick\TheWireTools\Notifications\CreateTheWireEventHandler;
+use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
@@ -14,39 +14,82 @@ return [
 			],
 		]
 	],
-	'bootstrap' => Bootstrap::class,
 	'settings' => [
 		'enable_group' => 'no',
 		'extend_widgets' => 'yes',
 		'extend_activity' => 'no',
 	],
-	'routes' => [
-		'collection:object:thewire:group' => [
-			'path' => '/thewire/group/{guid}',
-			'resource' => 'thewire/group',
-		],
-		'collection:object:thewire:search' => [
-			'path' => '/thewire/search/{q?}',
-			'resource' => 'thewire/search',
-		],
-	],
-	'widgets' => [
-		'index_thewire' => [
-			'context' => ['index'],
-			'multiple' => true,
-		],
-		'thewire_post' => [
-			'context' => ['index', 'dashboard'],
-		],
-	],
 	'actions' => [
 		'thewire/add' => [],
 		'thewire_tools/toggle_feature' => [],
 	],
-	
+	'events' => [
+		'entity:url' => [
+			'object' => [
+				'\ColdTrick\TheWireTools\Widgets::widgetTitleURL' => [],
+			],
+		],
+		'export:counters' => [
+			'opensearch' => [
+				'\ColdTrick\TheWireTools\Plugins\OpenSearch::exportCounter' => [],
+			],
+		],
+		'group_tool_widgets' => [
+			'widget_manager' => [
+				'\ColdTrick\TheWireTools\Plugins\WidgetManager::groupToolBasedWidgets' => [],
+			],
+		],
+		'handlers' => [
+			'widgets' => [
+				'\ColdTrick\TheWireTools\Plugins\Groups::registerWidget' => [],
+			],
+		],
+		'register' => [
+			'menu:entity' => [
+				'\ColdTrick\TheWireTools\Menus\Entity::registerFeature' => [],
+				'\ColdTrick\TheWireTools\Menus\Entity::registerImprove' => ['priority' => 501],
+			],
+			'menu:owner_block' => [
+				'\ColdTrick\TheWireTools\Menus\OwnerBlock::registerGroup' => [],
+			],
+			'menu:social' => [
+				'\ColdTrick\TheWireTools\Menus\Social::registerReshare' => [],
+			],
+		],
+		'supported_types' => [
+			'entity_tools' => [
+				'\ColdTrick\TheWireTools\Plugins\EntityTools::registerTheWire' => [],
+			],
+		],
+		'tool_options' => [
+			'group' => [
+				'\ColdTrick\TheWireTools\Plugins\Groups::registerGroupTool' => [],
+			],
+		],
+	],
+	'notifications' => [
+		'object' => [
+			'thewire' => [
+				'create' => CreateTheWireEventHandler::class,
+			],
+		],
+	],
+	'routes' => [
+		'collection:object:thewire:group' => [
+			'path' => '/thewire/group/{guid}',
+			'resource' => 'thewire/group',
+			'middleware' => [
+				GroupPageOwnerGatekeeper::class,
+			],
+		],
+	],
 	'view_extensions' => [
-		'css/elgg' => [
-			'css/thewire_tools.css' => [],
+		'elgg.css' => [
+			'forms/thewire/add.css' => [],
+			'thewire_tools/thread.css' => [],
+		],
+		'forms/thewire/add.css' => [
+			'thewire_tools/extends/forms/thewire/add.css' => [],
 		],
 		'page/layouts/elements/filter' => [
 			'thewire_tools/group_activity' => ['priority' => 400],
@@ -63,11 +106,13 @@ return [
 		'thewire_tools/reshare_list' => ['ajax' => true],
 		'thewire_tools/thread' => ['ajax' => true],
 	],
-	'notifications' => [
-		'object' => [
-			'thewire' => [
-				'create' => CreateTheWireEventHandler::class,
-			],
+	'widgets' => [
+		'index_thewire' => [
+			'context' => ['index'],
+			'multiple' => true,
+		],
+		'thewire_post' => [
+			'context' => ['index', 'dashboard'],
 		],
 	],
 ];

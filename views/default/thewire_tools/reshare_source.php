@@ -35,6 +35,7 @@ if (!empty($url)) {
 } else {
 	$content .= elgg_view('output/text', ['value' => $text]);
 }
+
 $content = elgg_format_element('div', ['class' => 'elgg-subtext'], $content);
 
 echo elgg_view_image_block($icon, $content, ['class' => 'mbn']);
