@@ -116,7 +116,7 @@ class Social {
 		// by default allow searchable entities
 		$reshare_allowed = $entity->hasCapability('searchable');
 		
-		// trigger hook to allow others to change
+		// trigger event to allow others to change
 		$params = [
 			'entity' => $entity,
 			'user' => elgg_get_logged_in_user_entity(),
