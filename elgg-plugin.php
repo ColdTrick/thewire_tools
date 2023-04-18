@@ -1,6 +1,7 @@
 <?php
 
 use ColdTrick\TheWireTools\Notifications\CreateTheWireEventHandler;
+use Elgg\Blog\GroupToolContainerLogicCheck;
 use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
@@ -24,6 +25,11 @@ return [
 		'thewire_tools/toggle_feature' => [],
 	],
 	'events' => [
+		'container_logic_check' => [
+			'object' => [
+				\ColdTrick\TheWireTools\GroupToolContainerLogicCheck::class => [],
+			],
+		],
 		'entity:url' => [
 			'object' => [
 				'\ColdTrick\TheWireTools\Widgets::widgetTitleURL' => [],
