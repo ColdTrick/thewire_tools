@@ -18,6 +18,8 @@ echo elgg_list_entities([
 	'metadata_name_value_pairs' => [
 		'name' => 'wire_thread',
 		'value' => $thread_guid,
+		'case_sensitive' => false,
+		'type' => ELGG_VALUE_INTEGER,
 	],
 ]);
 
