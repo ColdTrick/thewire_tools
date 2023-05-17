@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v8.0
- * On 2021-09-30 10:12
+ * This file was created by Translation Editor v11.1
+ * On 2023-05-17 15:20
  */
 
 return array (
@@ -24,7 +24,6 @@ return array (
   'thewire_tools:action:toggle_feature:featured' => 'Le poste a été mis en vedette avec succès',
   'widgets:thewire:filter' => 'Filtre des postes (optionnel)',
   'widgets:thewire:owner' => 'A qui s\'adresse le poste',
-  'thewire_tools:menu:mentions' => 'Mentions',
   'thewire_tools' => 'The Wire Tools',
   'thewire_tools:no_result' => 'Pas de message trouvé sur le fil',
   'thewire_tools:login_required' => 'Vous devez être connecté pour utiliser cette fonction',

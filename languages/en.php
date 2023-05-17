@@ -7,9 +7,6 @@ return array(
 	'thewire_tools:feature' => "Feature",
 	'thewire_tools:unfeature' => "Unfeature",
 	
-	// menu
-	'thewire_tools:menu:mentions' => "Mentions",
-
 	// settings
 	'thewire_tools:settings:enable_group' => "Enable TheWire for groups",
 	'thewire_tools:settings:extend_widgets' => "Extend TheWire widget with the option to post update directly from the widget",

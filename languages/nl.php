@@ -1,7 +1,7 @@
 <?php
 /**
- * This file was created by Translation Editor v10.1.1
- * On 2022-08-18 12:43
+ * This file was created by Translation Editor v11.1
+ * On 2023-05-17 15:20
  */
 
 return array (
@@ -38,7 +38,6 @@ Bekijk en reageer op het Wire bericht:
   'widgets:thewire:filter' => 'Filter Wire berichten (optioneel)',
   'thewire_tools' => 'The Wire uitbreidingen',
   'thewire_tools:no_result' => 'Geen Wire berichten gevonden',
-  'thewire_tools:menu:mentions' => 'Vermeldingen',
   'thewire_tools:settings:enable_group' => 'Schakel The Wire in voor groepen',
   'thewire_tools:settings:extend_widgets' => 'Breidt The Wire widget uit met de optie om direct een bericht te kunnen plaatsen',
   'thewire_tools:group:title' => 'Groeps wire berichten',
