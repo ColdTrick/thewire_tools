@@ -108,6 +108,7 @@ return [
 		],
 	],
 	'view_options' => [
+		'thewire_tools/reply_loader' => ['ajax' => true],
 		'thewire_tools/reshare' => ['ajax' => true],
 		'thewire_tools/reshare_list' => ['ajax' => true],
 		'thewire_tools/thread' => ['ajax' => true],

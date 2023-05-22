@@ -54,8 +54,11 @@ class Entity {
 				/* @var $menu_item \ElggMenuItem */
 				$menu_item = $return->get('reply');
 				
+				$menu_item->addDeps([
+					'thewire_tools/ReplyLoader',
+				]);
+				$menu_item->{'data-thewire-reply'} = $entity->guid;
 				$menu_item->setHref("#thewire-tools-reply-{$entity->guid}");
-				$menu_item->addLinkClass('elgg-toggle');
 			}
 		}
 		

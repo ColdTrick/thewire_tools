@@ -98,11 +98,12 @@ if (!empty($reshare)) {
 }
 
 if (elgg_is_logged_in() && !elgg_in_context('thewire_tools_thread')) {
-	$form_vars = [
+	// add a placeholder for the form
+	// this is done for performance as many editors will block the page from responding
+	$content .= elgg_format_element('div', [
 		'id' => "thewire-tools-reply-{$entity->guid}",
 		'class' => 'hidden',
-	];
-	$content .= elgg_view_form('thewire/add', $form_vars, ['post' => $entity]);
+	], '');
 }
 
 $params = [
