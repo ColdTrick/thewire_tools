@@ -4,7 +4,7 @@
 $item = elgg_extract('item', $vars);
 
 $object = $item->getObjectEntity();
-$excerpt = elgg_get_excerpt($object->description);
+$excerpt = elgg_get_excerpt((string) $object->description);
 $excerpt = thewire_filter($excerpt);
 if (substr($excerpt, -3) === '...') {
 	// add read more link

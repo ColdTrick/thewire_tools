@@ -10,7 +10,7 @@ if (!$entity instanceof \ElggObject) {
 
 $text = $entity->getDisplayName();
 if (elgg_is_empty($text)) {
-	$text = elgg_get_excerpt($entity->description, 140);
+	$text = elgg_get_excerpt((string) $entity->description, 140);
 }
 
 if (elgg_is_empty($text)) {

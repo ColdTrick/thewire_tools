@@ -25,14 +25,14 @@ if (!elgg_in_context('thewire_tools_thread') && !$full) {
 }
 
 // show text different in widgets
-$text = $entity->description;
+$text = (string) $entity->description;
 $more_link = '';
 $more_content = '';
 if (elgg_in_context('widgets')) {
 	$text = elgg_get_excerpt($text, 140);
 	
 	// show more link?
-	if (substr($text, -3) == '...') {
+	if (str_ends_with($text, '...')) {
 		$more_link = elgg_view('output/url', [
 			'text' => elgg_echo('more'),
 			'href' => $entity->getURL(),
@@ -44,7 +44,7 @@ if (elgg_in_context('widgets')) {
 	$text = elgg_get_excerpt($text);
 	
 	// show more link?
-	if (substr($text, -3) == '...') {
+	if (str_ends_with($text, '...')) {
 		$more_link = elgg_view('output/url', [
 			'text' => elgg_echo('more'),
 			'href' => false,
@@ -53,8 +53,6 @@ if (elgg_in_context('widgets')) {
 			'data-toggle-selector' => "#thewire-full-view-{$entity->guid}, #thewire-summary-view-{$entity->guid}",
 		]);
 		$more_content = $entity->description;
-	} else {
-		$text = $entity->description;
 	}
 }
 
