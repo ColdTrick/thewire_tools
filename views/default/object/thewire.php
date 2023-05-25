@@ -12,11 +12,6 @@ if (!$entity instanceof \ElggWire) {
 
 $full = (bool) elgg_extract('full_view', $vars, false);
 
-$thread_id = $entity->wire_thread;
-if (!$thread_id) {
-	$entity->wire_thread = $entity->guid;
-}
-
 $show_thread = false;
 if (!elgg_in_context('thewire_tools_thread') && !$full) {
 	if ($entity->countEntitiesFromRelationship('parent') || $entity->countEntitiesFromRelationship('parent', true)) {
