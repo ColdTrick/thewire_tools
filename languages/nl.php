@@ -40,7 +40,7 @@ Bekijk en reageer op het Wire bericht:
   'thewire_tools:no_result' => 'Geen Wire berichten gevonden',
   'thewire_tools:settings:enable_group' => 'Schakel The Wire in voor groepen',
   'thewire_tools:settings:extend_widgets' => 'Breidt The Wire widget uit met de optie om direct een bericht te kunnen plaatsen',
-  'thewire_tools:group:title' => 'Groeps wire berichten',
+  'collection:object:thewire:group' => 'Groeps wire berichten',
   'widgets:thewire_groups:name' => 'Groeps wire berichten',
   'widgets:thewire_groups:description' => 'Toon The Wire berichten in de groep',
   'widgets:index_thewire:name' => 'The Wire',

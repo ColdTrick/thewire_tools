@@ -18,7 +18,7 @@ $options = [
 	'metadata_name_value_pairs_operator' => 'OR',
 	'metadata_name_value_pairs' => [],
 	'no_results' => elgg_echo('thewire_tools:no_result'),
-	'widget_more' => elgg_view_url(elgg_generate_url('collection:object:thewire:group', ['guid' => $group->guid]), elgg_echo('thewire:moreposts')),
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('thewire:moreposts')),
 ];
 
 $filter = $widget->filter;

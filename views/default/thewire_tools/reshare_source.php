@@ -30,7 +30,6 @@ if (!empty($url)) {
 	$content .= elgg_view('output/url', [
 		'href' => $url,
 		'text' => $text,
-		'is_trusted' => true,
 	]);
 } else {
 	$content .= elgg_view('output/text', ['value' => $text]);

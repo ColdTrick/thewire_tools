@@ -31,7 +31,6 @@ if (elgg_in_context('widgets')) {
 		$more_link = elgg_view('output/url', [
 			'text' => elgg_echo('more'),
 			'href' => $entity->getURL(),
-			'is_trusted' => true,
 			'class' => 'mls',
 		]);
 	}
@@ -43,7 +42,6 @@ if (elgg_in_context('widgets')) {
 		$more_link = elgg_view('output/url', [
 			'text' => elgg_echo('more'),
 			'href' => false,
-			'is_trusted' => true,
 			'class' => ['mls', 'elgg-toggle'],
 			'data-toggle-selector' => "#thewire-full-view-{$entity->guid}, #thewire-summary-view-{$entity->guid}",
 		]);

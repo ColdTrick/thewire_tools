@@ -10,6 +10,7 @@ $options = [
 	'full_view' => false,
 	'pagination' => false,
 	'no_results' => elgg_echo('thewire_tools:no_result'),
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('thewire:moreposts'))
 ];
 
 $owner_entity = $widget->getOwnerEntity();
@@ -50,20 +51,6 @@ if (!empty($filter)) {
 			'case_sensitive' => false,
 		];
 	}
-}
-
-if ($owner_entity instanceof \ElggGroup) {
-	$more_url = elgg_generate_url('collection:object:thewire:group', [
-		'username' => $owner_entity->guid,
-	]);
-} elseif (empty($more_url) && $owner_entity instanceof \ElggUser) {
-	$more_url = elgg_generate_url('collection:object:thewire:owner', [
-		'username' => $owner_entity->username,
-	]);
-}
-
-if (!empty($more_url)) {
-	$options['widget_more'] = elgg_view_url($more_url, elgg_echo('thewire:moreposts'));
 }
 
 // show add form in widget

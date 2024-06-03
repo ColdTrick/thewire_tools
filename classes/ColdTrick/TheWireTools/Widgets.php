@@ -22,8 +22,12 @@ class Widgets {
 		
 		switch ($widget->handler) {
 			case 'thewire':
-				return elgg_generate_url('collection:object:thewire:owner', [
-					'username' => $widget->getOwnerEntity()->username,
+				$owner = $widget->getOwnerEntity();
+				if (!$owner instanceof \ElggGroup) {
+					return null;
+				}
+				return elgg_generate_url('collection:object:thewire:group', [
+					'guid' => $owner->guid,
 				]);
 			
 			case 'index_thewire':

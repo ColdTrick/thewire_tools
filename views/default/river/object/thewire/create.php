@@ -11,17 +11,11 @@ if (substr($excerpt, -3) === '...') {
 	$excerpt .= '&nbsp;' . elgg_view('output/url', [
 		'text' => strtolower(elgg_echo('more')),
 		'href' => $object->getURL(),
-		'is_trusted' => true,
 	]);
 }
 
 $subject = $item->getSubjectEntity();
-$subject_link = elgg_view('output/url', [
-	'href' => $subject->getURL(),
-	'text' => $subject->getDisplayName(),
-	'class' => 'elgg-river-subject',
-	'is_trusted' => true,
-]);
+$subject_link = elgg_view_entity_url($subject, ['class' => 'elgg-river-subject']);
 
 $object_link = elgg_view('output/url', [
 	'href' => elgg_generate_url('collection:object:thewire:thread', [

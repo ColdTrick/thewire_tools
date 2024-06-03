@@ -24,7 +24,7 @@ Briog an seo airson fhaichinn:
 
 Cuir freagairt ris:
 %s',
-  'thewire_tools:group:title' => 'Postaichean-ùeire ann am buidhnean',
+  'collection:object:thewire:group' => 'Postaichean-ùeire ann am buidhnean',
   'groups:tool:thewire' => 'Cuir an comas postaichean-ùeire ann am buidhnean',
   'thewire_tools:groups:error:not_enabled' => 'Chaidh an ùeir a chur à comas anns a\' bhuidhinn seo',
   'thewire_tools:add:container:site' => 'Postaich ris an làrach',

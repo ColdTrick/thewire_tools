@@ -22,7 +22,7 @@ $content .= elgg_view('thewire/listing/group', [
 ]);
 
 // Display page
-echo elgg_view_page(elgg_echo('thewire_tools:group:title'), [
+echo elgg_view_page(elgg_echo('collection:object:thewire:group'), [
 	'content' => $content,
 	'sidebar' => elgg_view('thewire/sidebar'),
 	'filter_id' => 'thewire/group',

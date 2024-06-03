@@ -29,7 +29,6 @@ foreach ($batch as $wire_post) {
 	$owner_link = elgg_view('output/url', [
 		'text' => $owner->getDisplayName(),
 		'href' => $owner->getURL(),
-		'is_trusted' => true,
 	]);
 	
 	$friendly_time = elgg_view_friendly_time($wire_post->time_created);

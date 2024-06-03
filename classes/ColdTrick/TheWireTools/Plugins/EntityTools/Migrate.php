@@ -10,9 +10,9 @@ use Elgg\Database\QueryBuilder;
 class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function canChangeContainer() {
+	public function canChangeContainer(): bool {
 		$page_owner_entity = elgg_get_page_owner_entity();
 		if ($page_owner_entity) {
 			// viewing a listing
@@ -31,10 +31,9 @@ class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
-	public function changeContainer($new_container_guid) {
-		
+	public function changeContainer($new_container_guid): void {
 		// do all the default stuff
 		parent::changeContainer($new_container_guid);
 		
@@ -51,7 +50,7 @@ class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	 *
 	 * @return void
 	 */
-	protected function moveThreadItems($new_container_guid) {
+	protected function moveThreadItems(int $new_container_guid): void {
 		// ignore access for this part
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($new_container_guid) {
 			$object = $this->getObject();

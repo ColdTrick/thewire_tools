@@ -22,16 +22,12 @@ class OwnerBlock {
 			return null;
 		}
 		
-		if (!$group->canEdit() && !$group->isMember()) {
-			return null;
-		}
-		
 		/* @var $return MenuItems */
 		$return = $event->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'thewire',
-			'text' => elgg_echo('thewire_tools:group:title'),
+			'text' => elgg_echo('collection:object:thewire:group'),
 			'href' => elgg_generate_url('collection:object:thewire:group', [
 				'guid' => $group->guid,
 			]),

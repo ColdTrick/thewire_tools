@@ -31,7 +31,7 @@ return [
 			],
 		],
 		'entity:url' => [
-			'object' => [
+			'object:widget' => [
 				'\ColdTrick\TheWireTools\Widgets::widgetTitleURL' => [],
 			],
 		],

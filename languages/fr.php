@@ -5,7 +5,7 @@
  */
 
 return array (
-  'thewire_tools:group:title' => 'Flux des partages du groupe',
+  'collection:object:thewire:group' => 'Flux des partages du groupe',
   'groups:tool:thewire' => 'Activer le flux de partages du groupe',
   'thewire_tools:groups:error:not_enabled' => 'Le flux de partages a été désactivé pour ce groupe',
   'thewire_tools:reshare' => 'Partager dans le flux',

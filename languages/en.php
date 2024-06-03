@@ -26,7 +26,7 @@ View and reply to the Wire post:
 %s",
 	
 	// group wire
-	'thewire_tools:group:title' => "Group wire posts",
+	'collection:object:thewire:group' => "Group wire posts",
 	'groups:tool:thewire' => "Enable group wire posts",
 	'groups:tool:thewire:description' => "Allow group members to write wire posts in this group.",
 	'thewire_tools:groups:error:not_enabled' => "The wire has been disabled for this group",

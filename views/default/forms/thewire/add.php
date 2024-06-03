@@ -5,6 +5,8 @@
  * @uses $vars['post']
  */
 
+elgg_require_css('forms/thewire/add');
+
 $post = elgg_extract('post', $vars);
 $char_limit = thewire_tools_get_wire_length();
 $reshare = elgg_extract('reshare', $vars); // for reshare functionality
@@ -30,7 +32,7 @@ if ($char_limit > 140) {
 }
 
 if ($char_limit && !elgg_is_active_plugin('ckeditor')) {
-	elgg_require_js('forms/thewire/add');
+	elgg_import_esm('forms/thewire/add');
 }
 
 $post_value = '';

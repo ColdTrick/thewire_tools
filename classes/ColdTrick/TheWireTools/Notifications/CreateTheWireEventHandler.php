@@ -17,7 +17,7 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 	protected $reshare_entity;
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSubject(\ElggUser $recipient, string $method): string {
 		$shared_entity = $this->getReshareEntity();
@@ -42,7 +42,7 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationSummary(\ElggUser $recipient, string $method): string {
 		$shared_entity = $this->getReshareEntity();
@@ -67,7 +67,7 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected function getNotificationBody(\ElggUser $recipient, string $method): string {
 		$shared_entity = $this->getReshareEntity();
@@ -113,7 +113,7 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritdoc}
 	 */
 	protected static function isConfigurableForGroup(\ElggGroup $group): bool {
 		return $group->isToolEnabled('thewire');
