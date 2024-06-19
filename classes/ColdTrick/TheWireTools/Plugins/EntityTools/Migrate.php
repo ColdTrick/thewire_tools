@@ -52,7 +52,7 @@ class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 	 */
 	protected function moveThreadItems(int $new_container_guid): void {
 		// ignore access for this part
-		elgg_call(ELGG_IGNORE_ACCESS, function() use ($new_container_guid) {
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DELETED_ENTITIES, function() use ($new_container_guid) {
 			$object = $this->getObject();
 			
 			$batch = elgg_get_entities([
