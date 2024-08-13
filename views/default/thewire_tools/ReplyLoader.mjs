@@ -1,5 +1,6 @@
 import 'jquery';
 import Ajax from 'elgg/Ajax';
+import popup from 'elgg/popup';
 
 $(document).on('click', '.elgg-menu-item-reply a[data-thewire-reply]:not(.elgg-toggle)', function(event) {
 	event.preventDefault();
@@ -15,6 +16,7 @@ $(document).on('click', '.elgg-menu-item-reply a[data-thewire-reply]:not(.elgg-t
 		success: function(data) {
 			$('#thewire-tools-reply-' + guid).replaceWith(data);
 			$menu_item.addClass('elgg-toggle');
+			popup.close();
 		}
 	});
 	
