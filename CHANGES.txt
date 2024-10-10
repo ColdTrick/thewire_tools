@@ -1,6 +1,10 @@
 Version history
 ===============
 
+14.0.1 (2024-10-10):
+
+- fixed: closes popup menus after toggleing the reply form
+
 14.0 (2024-06-28):
 
 - changed: updated for Elgg 6
