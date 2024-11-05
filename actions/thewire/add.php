@@ -25,7 +25,7 @@ if (empty($body)) {
 }
 
 if (elgg_get_plugin_setting('enable_group', 'thewire_tools') !== 'yes') {
-	$container_guid = null;
+	$container_guid = 0;
 } else {
 	$group = get_entity($container_guid);
 	if ($group instanceof \ElggGroup) {
