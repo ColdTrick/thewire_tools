@@ -1,12 +1,16 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof \ElggEntity) {
-	echo elgg_view_field([
-		'#type' => 'hidden',
-		'name' => 'container_guid',
-		'value' => $entity->container_guid,
-	]);
+if ($entity instanceof \ElggWire) {
+	if ($entity->getContainerEntity() instanceof \ElggGroup) {
+		// only set container if it's a group
+		echo elgg_view_field([
+			'#type' => 'hidden',
+			'name' => 'container_guid',
+			'value' => $entity->container_guid,
+		]);
+	}
+	
 	return;
 }
 

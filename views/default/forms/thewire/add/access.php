@@ -1,7 +1,7 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if ($entity instanceof \ElggEntity) {
+if ($entity instanceof \ElggWire) {
 	echo elgg_view_field([
 		'#type' => 'hidden',
 		'name' => 'access_id',
@@ -34,7 +34,7 @@ if ($container instanceof \ElggGroup) {
 		echo elgg_view_field([
 			'#type' => 'hidden',
 			'name' => 'access_id',
-			'value' => $container->getOwnedAccessCollection('group_acl')->id,
+			'value' => $container->getOwnedAccessCollection('group_acl')?->id,
 		]);
 		return;
 	}
