@@ -1,6 +1,11 @@
 Version history
 ===============
 
+14.0.2 (2024-11-21):
+
+- fixed: unable to reply to a personal wire post
+- fixed: use correct container to save wire post
+
 14.0.1 (2024-10-10):
 
 - fixed: closes popup menus after toggleing the reply form
