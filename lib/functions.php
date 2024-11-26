@@ -78,7 +78,7 @@ function thewire_tools_save_post(string $text, int $userid, int $access_id = nul
 	$limit = thewire_tools_get_wire_length();
 	if ($limit > 0) {
 		$text_for_size = elgg_strip_tags($text);
-		if (strlen($text_for_size) > $limit) {
+		if (elgg_strlen($text_for_size) > $limit) {
 			return false;
 		}
 	}
