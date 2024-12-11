@@ -8,7 +8,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '14.0.2',
+		'version' => '14.0.3',
 		'dependencies' => [
 			'thewire' => [
 				'position' => 'after',

@@ -1,6 +1,10 @@
 Version history
 ===============
 
+14.0.3 (2024-12-11):
+
+- fixed: use correct function for wire post length
+
 14.0.2 (2024-11-21):
 
 - fixed: unable to reply to a personal wire post
