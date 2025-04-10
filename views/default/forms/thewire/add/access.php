@@ -48,10 +48,8 @@ if (!elgg_get_config('walled_garden')) {
 $access_options[ACCESS_LOGGED_IN] = elgg_echo('thewire_tools:add:access', [elgg_echo('access:label:logged_in')]);
 $access_options[-100] = elgg_echo('thewire_tools:add:access:group');
 
-$access_params = [
+echo elgg_view_field([
 	'#type' => 'access',
 	'name' => 'access_id',
 	'options_values' => $access_options,
-];
-
-echo elgg_view_field($access_params);
+]);

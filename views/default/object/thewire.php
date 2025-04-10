@@ -51,18 +51,20 @@ if (elgg_in_context('widgets')) {
 
 elgg_push_context('input');
 $content = elgg_view('output/longtext', [
-	'value' => elgg_sanitize_input(thewire_filter($text)) . $more_link,
+	'value' => elgg_sanitize_input($text) . $more_link,
 	'id' => "thewire-summary-view-{$entity->guid}",
 	'data-toggle-slide' => 0,
 	'sanitize' => false, // already done and will cause issues with the more link
+	'parse_thewire_hashtags' => true,
 ]);
 
 if (!empty($more_content)) {
 	$content .= elgg_view('output/longtext', [
-		'value' => elgg_sanitize_input(thewire_filter($more_content)),
+		'value' => elgg_sanitize_input($more_content),
 		'id' => "thewire-full-view-{$entity->guid}",
 		'class' => 'hidden',
 		'sanitize' => false, // already done
+		'parse_thewire_hashtags' => true,
 	]);
 }
 
@@ -99,8 +101,8 @@ if (elgg_is_logged_in() && !elgg_in_context('thewire_tools_thread')) {
 
 $params = [
 	'title' => false,
-	'access' => false,
 	'tags' => false,
+	'access' => false,
 	'icon_entity' => $entity->getOwnerEntity(),
 ];
 

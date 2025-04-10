@@ -1,10 +1,7 @@
 <?php
 
 use ColdTrick\TheWireTools\Notifications\CreateTheWireEventHandler;
-use Elgg\Blog\GroupToolContainerLogicCheck;
 use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
-
-require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
@@ -21,7 +18,13 @@ return [
 		'extend_activity' => 'no',
 	],
 	'actions' => [
-		'thewire/add' => [],
+		'thewire/add' => [
+			'controller' => \ColdTrick\TheWireTools\Controllers\EditAction::class,
+			'options' => [
+				'entity_type' => 'object',
+				'entity_subtype' => 'thewire',
+			],
+		],
 		'thewire_tools/toggle_feature' => [],
 	],
 	'events' => [

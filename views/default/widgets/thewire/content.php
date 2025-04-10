@@ -1,12 +1,19 @@
 <?php
+/**
+ * User wire post widget display view
+ */
 
-/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
+if (!$widget instanceof \ElggWidget) {
+	return;
+}
+
+$num_display = (int) $widget->num_display ?: 4;
 
 $options = [
 	'type' => 'object',
 	'subtype' => 'thewire',
-	'limit' => (int) $widget->num_display ?: 4,
+	'limit' => $num_display,
 	'full_view' => false,
 	'pagination' => false,
 	'no_results' => elgg_echo('thewire_tools:no_result'),
@@ -14,7 +21,6 @@ $options = [
 ];
 
 $owner_entity = $widget->getOwnerEntity();
-$more_url = '';
 switch ($widget->owner) {
 	case 'friends':
 		// get users friends
@@ -22,13 +28,9 @@ switch ($widget->owner) {
 		$options['relationship_guid'] = $owner_entity->guid;
 		$options['relationship_join_on'] = 'container_guid';
 		
-		$more_url = elgg_generate_url('collection:object:thewire:friends', [
-			'username' => $owner_entity->username,
-		]);
 		break;
 	case 'all':
 		// show all posts
-		$more_url = elgg_generate_url('collection:object:thewire:all');
 		break;
 	default:
 		if ($owner_entity instanceof \ElggUser) {

@@ -1,12 +1,13 @@
 <?php
 
-/* @var $item ElggRiverItem */
 $item = elgg_extract('item', $vars);
+if (!$item instanceof \ElggRiverItem) {
+	return;
+}
 
 $object = $item->getObjectEntity();
 $excerpt = elgg_get_excerpt((string) $object->description);
-$excerpt = thewire_filter($excerpt);
-if (substr($excerpt, -3) === '...') {
+if (str_ends_with($excerpt, '...')) {
 	// add read more link
 	$excerpt .= '&nbsp;' . elgg_view('output/url', [
 		'text' => strtolower(elgg_echo('more')),
@@ -49,7 +50,10 @@ if (!empty($reshares)) {
 
 echo elgg_view('river/elements/layout', [
 	'item' => $item,
-	'message' => elgg_view('output/longtext', ['value' => $excerpt]),
+	'message' => elgg_view('output/longtext', [
+		'value' => $excerpt,
+		'parse_thewire_hashtags' => true,
+	]),
 	'summary' => $summary,
 	'attachments' => $attachments,
 ]);

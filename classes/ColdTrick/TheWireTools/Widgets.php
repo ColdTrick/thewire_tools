@@ -23,12 +23,25 @@ class Widgets {
 		switch ($widget->handler) {
 			case 'thewire':
 				$owner = $widget->getOwnerEntity();
-				if (!$owner instanceof \ElggGroup) {
-					return null;
+				
+				switch ($widget->owner) {
+					case 'friends':
+						return elgg_generate_url('collection:object:thewire:friends', [
+							'username' => $owner->username,
+						]);
+						
+					case 'all':
+						return elgg_generate_url('collection:object:thewire:all');
+						
+					default:
+						if ($owner instanceof \ElggGroup) {
+							return elgg_generate_url('collection:object:thewire:group', [
+								'guid' => $owner->guid,
+							]);
+						}
+						break;
 				}
-				return elgg_generate_url('collection:object:thewire:group', [
-					'guid' => $owner->guid,
-				]);
+				break;
 			
 			case 'index_thewire':
 			case 'thewire_post':
