@@ -1,6 +1,10 @@
 Version history
 ===============
 
+15.0 (2025-04-16):
+
+- changed: updated for ELgg 6.2
+
 14.0.3 (2024-12-11):
 
 - fixed: use correct function for wire post length
