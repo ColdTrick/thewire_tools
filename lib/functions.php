@@ -26,17 +26,17 @@ function thewire_tools_get_wire_length(): int {
 /**
  * Save a wire post, overrules the default function because we need to support groups
  *
- * @param string $text           the text of the post
- * @param int    $userid         the owner of the post
- * @param int    $access_id      the access level of the post
- * @param int    $parent_guid    is this a reply on another post
- * @param string $method         which method was used
- * @param int    $reshare_guid   is the a (re)share of some content item
- * @param int    $container_guid container of the wire post
+ * @param string   $text           the text of the post
+ * @param int      $userid         the owner of the post
+ * @param int|null $access_id      the access level of the post
+ * @param int      $parent_guid    is this a reply on another post
+ * @param string   $method         which method was used
+ * @param int      $reshare_guid   is the a (re)share of some content item
+ * @param int      $container_guid container of the wire post
  *
  * @return bool|int the GUID of the new wire post or false
  */
-function thewire_tools_save_post(string $text, int $userid, int $access_id = null, int $parent_guid = 0, string $method = 'site', int $reshare_guid = 0, int $container_guid = 0) {
+function thewire_tools_save_post(string $text, int $userid, ?int $access_id = null, int $parent_guid = 0, string $method = 'site', int $reshare_guid = 0, int $container_guid = 0) {
 	// set correct container
 	if ($container_guid < 1) {
 		$container_guid = $userid;
