@@ -7,7 +7,6 @@ echo elgg_view('object/widget/edit/num_display', [
 	'entity' => $widget,
 	'label' => elgg_echo('thewire:num'),
 	'default' => 4,
-	'min' => 1,
 ]);
 
 echo elgg_view_field([
