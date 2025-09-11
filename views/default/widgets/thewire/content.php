@@ -16,8 +16,8 @@ $options = [
 	'limit' => $num_display,
 	'full_view' => false,
 	'pagination' => false,
-	'no_results' => elgg_echo('thewire_tools:no_result'),
-	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('thewire:moreposts'))
+	'no_results' => true,
+	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('thewire:moreposts')),
 ];
 
 $owner_entity = $widget->getOwnerEntity();
