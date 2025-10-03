@@ -26,9 +26,9 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 		}
 		
 		if (elgg_language_key_exists("item:{$shared_entity->getType()}:{$shared_entity->getSubtype()}")) {
-			$type = elgg_echo("item:{$shared_entity->getType()}:{$shared_entity->getSubtype()}", [], $recipient->getLanguage());
+			$type = elgg_echo("item:{$shared_entity->getType()}:{$shared_entity->getSubtype()}");
 		} else {
-			$type = elgg_echo('unknown', [], $recipient->getLanguage());
+			$type = elgg_echo('unknown');
 		}
 		
 		$title = $shared_entity->getDisplayName() ?: $this->event->getObject()->description;
@@ -38,7 +38,7 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 			$this->event->getActor()->getDisplayName(),
 			$type,
 			$title,
-		], $recipient->getLanguage());
+		]);
 	}
 	
 	/**
@@ -51,9 +51,9 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 		}
 		
 		if (elgg_language_key_exists("item:{$shared_entity->getType()}:{$shared_entity->getSubtype()}")) {
-			$type = elgg_echo("item:{$shared_entity->getType()}:{$shared_entity->getSubtype()}", [], $recipient->getLanguage());
+			$type = elgg_echo("item:{$shared_entity->getType()}:{$shared_entity->getSubtype()}");
 		} else {
-			$type = elgg_echo('unknown', [], $recipient->getLanguage());
+			$type = elgg_echo('unknown');
 		}
 		
 		$title = $shared_entity->getDisplayName() ?: $this->event->getObject()->description;
@@ -63,7 +63,7 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 			$this->event->getActor()->getDisplayName(),
 			$type,
 			$title,
-		], $recipient->getLanguage());
+		]);
 	}
 	
 	/**
@@ -83,7 +83,7 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 			$entity->description,
 			$shared_entity->getURL(),
 			$entity->getURL(),
-		], $recipient->getLanguage());
+		]);
 	}
 	
 	/**
