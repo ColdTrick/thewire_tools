@@ -5,7 +5,7 @@ use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
 
 return [
 	'plugin' => [
-		'version' => '15.0',
+		'version' => '16.0',
 		'dependencies' => [
 			'thewire' => [
 				'position' => 'after',
