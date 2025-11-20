@@ -55,7 +55,7 @@ $content = elgg_view('output/longtext', [
 	'id' => "thewire-summary-view-{$entity->guid}",
 	'data-toggle-slide' => 0,
 	'sanitize' => false, // already done and will cause issues with the more link
-	'parse_thewire_hashtags' => true,
+	'parse_thewire_hashtags' => empty($more_link), // false if there is a more link (which contains a hash)
 ]);
 
 if (!empty($more_content)) {
