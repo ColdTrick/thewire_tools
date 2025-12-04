@@ -1,6 +1,10 @@
 Version history
 ===============
 
+16.0.1 (2025-12-04):
+
+- fixed: prevent issue with hashtags when having a more link
+
 16.0 (2025-11-13):
 
 - changed: updated for Elgg 6.3
