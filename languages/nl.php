@@ -1,10 +1,18 @@
 <?php
 /**
- * This file was created by Translation Editor v11.1
- * On 2023-05-17 15:20
+ * This file was created by Translation Editor v14.0.4
+ * On 2025-12-11 15:31
  */
 
 return array (
+  'thewire_tools:group_settings:title' => 'TheWire instellingen',
+  'thewire_tools:group_settings:enable_reshare' => 'Het delen van content op TheWire van deze groep is toegestaan',
+  'thewire_tools:group_settings:enable_reshare:help' => 'Groepsleden mogen content delen op TheWire van deze groep',
+  'thewire_tools:groups:error:not_allowed' => 'Het delen van content op TheWire van deze groep is utigeschakeld',
+  'thewire_tools:groups:error:group_content' => 'Het delen van het het item \'%s\' in de groep \'%s\' is niet toegestaan aangezien het al content van de groep is',
+  'thewire_tools:share:group:disabled' => 'delen is niet mogelijk',
+  'thewire_tools:share:group:not_allowed' => 'delen is niet toegestaan',
+  'thewire_tools:share:group:group_content' => 'delen is niet toegestaan',
   'groups:tool:thewire:description' => 'Laat groepsleden wire-berichten schrijven in deze groep.',
   'thewire_tools:notify:reshare:subject' => '%s deelde %s: %s',
   'thewire_tools:notify:reshare:summary' => '%s deelde %s: %s',
