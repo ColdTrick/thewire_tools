@@ -71,11 +71,13 @@ $fields = [
 	[
 		'#html' => elgg_view('forms/thewire/add/container', [
 			'entity' => $post,
+			'reshare' => $reshare,
 		]),
 	],
 	[
 		'#html' => elgg_view('forms/thewire/add/access', [
 			'entity' => $post,
+			'reshare' => $reshare,
 		]),
 	],
 ];

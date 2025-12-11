@@ -100,6 +100,9 @@ return [
 		'forms/thewire/add.css' => [
 			'thewire_tools/extends/forms/thewire/add.css' => [],
 		],
+		'groups/edit/settings' => [
+			'thewire_tools/groups/settings' => [],
+		],
 		'page/layouts/elements/filter' => [
 			'thewire_tools/group_activity' => ['priority' => 400],
 		],

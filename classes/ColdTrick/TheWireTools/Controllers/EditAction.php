@@ -22,12 +22,22 @@ class EditAction extends \Elgg\TheWire\Controllers\EditAction {
 			$this->request->setParam('container_guid', null);
 		} else {
 			$container_guid = (int) $this->request->getParam('container_guid');
+			$reshare_guid = (int) $this->request->getParam('reshare_guid');
 			
 			$group = get_entity($container_guid);
 			if ($group instanceof \ElggGroup) {
 				if (!$group->isToolEnabled('thewire')) {
 					// not allowed to post in this group
 					throw new ValidationException(elgg_echo('thewire_tools:groups:error:not_enabled'));
+				}
+				
+				$reshare = get_entity($reshare_guid);
+				if ($reshare instanceof \ElggEntity) {
+					if ($reshare->container_guid === $group->guid) {
+						throw new ValidationException(elgg_echo('thewire_tools:groups:error:group_content', [$reshare->getDisplayName(), $group->getDisplayName()]));
+					} elseif (!(bool) $group->getPluginSetting('thewire_tools', 'enable_reshare', true)) {
+						throw new ValidationException(elgg_echo('thewire_tools:groups:error:not_allowed'));
+					}
 				}
 			}
 		}

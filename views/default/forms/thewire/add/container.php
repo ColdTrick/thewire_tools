@@ -1,4 +1,10 @@
 <?php
+/**
+ * Container selector for writing a wire post
+ *
+ * @uses $vars['entity']  an existing wire post
+ * @uses $vars['reshare'] a shared entity
+ */
 
 $entity = elgg_extract('entity', $vars);
 if ($entity instanceof \ElggWire) {
@@ -29,33 +35,47 @@ if ($page_owner_entity instanceof \ElggGroup) {
 	return;
 }
 
-$user_guid = elgg_get_logged_in_user_guid();
-if (!$user_guid) {
+$user = elgg_get_logged_in_user_entity();
+if (!$user instanceof \ElggUser) {
 	return;
 }
 
+$reshare = elgg_extract('reshare', $vars);
+
 $options_values = [
-	$user_guid => elgg_echo('thewire_tools:add:container:site'),
+	$user->guid => elgg_echo('thewire_tools:add:container:site'),
 ];
 
-$groups = elgg_get_entities([
-	'type' => 'group',
+$groups = $user->getGroups([
 	'limit' => false,
 	'batch' => true,
-	'relationship' => 'member',
-	'relationship_guid' => $user_guid,
 	'sort_by' => [
 		'property' => 'name',
 		'direction' => 'ASC',
 	],
 ]);
-/* @var $group ElggGroup */
+
+/** @var \ElggGroup $group */
 foreach ($groups as $group) {
+	$option = [
+		'text' => $group->getDisplayName(),
+		'value' => $group->guid,
+	];
+	
 	if (!$group->isToolEnabled('thewire')) {
-		continue;
+		$option['disabled'] = true;
+		$option['text'] .= ' - ' . elgg_echo('thewire_tools:share:group:disabled');
+	} elseif ($reshare instanceof \ElggEntity) {
+		if ($reshare->container_guid === $group->guid) {
+			$option['disabled'] = true;
+			$option['text'] .= ' - ' . elgg_echo('thewire_tools:share:group:group_content');
+		} elseif (!(bool) $group->getPluginSetting('thewire_tools', 'enable_reshare', true)) {
+			$option['disabled'] = true;
+			$option['text'] .= ' - ' . elgg_echo('thewire_tools:share:group:not_allowed');
+		}
 	}
 	
-	$options_values[$group->guid] = $group->getDisplayName();
+	$options_values[$group->guid] = $option;
 }
 
 if (count($options_values) < 2) {

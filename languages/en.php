@@ -12,6 +12,11 @@ return array(
 	'thewire_tools:settings:extend_widgets' => "Extend TheWire widget with the option to post update directly from the widget",
 	'thewire_tools:settings:extend_activity' => "Extend the activity page with the wire form",
 
+	// group settings
+	'thewire_tools:group_settings:title' => "TheWire settings",
+	'thewire_tools:group_settings:enable_reshare' => "Allow content to be shared on TheWire in this group",
+	'thewire_tools:group_settings:enable_reshare:help' => "Group members are allowed to share content in TheWire in this group",
+	
 	// reshare
 	'thewire_tools:notify:reshare:subject' => "%s shared %s: %s",
 	'thewire_tools:notify:reshare:summary' => "%s shared %s: %s",
@@ -30,11 +35,16 @@ View and reply to the Wire post:
 	'groups:tool:thewire' => "Enable group wire posts",
 	'groups:tool:thewire:description' => "Allow group members to write wire posts in this group.",
 	'thewire_tools:groups:error:not_enabled' => "The wire has been disabled for this group",
+	'thewire_tools:groups:error:not_allowed' => "Sharing on The wire has been disabled for this group",
+	'thewire_tools:groups:error:group_content' => "Sharing the item '%s' in the group '%s' is not allowed as it already is group content",
 	
 	'thewire_tools:add:container:site' => "Post on site",
 	'thewire_tools:add:access' => "Visible for: %s",
 	'thewire_tools:add:access:group' => "Only share in selected group",
 	
+	'thewire_tools:share:group:disabled' => "sharing not possible",
+	'thewire_tools:share:group:not_allowed' => "sharing not allowed",
+	'thewire_tools:share:group:group_content' => "sharing not allowed",
 	
 	// reshare
 	'thewire_tools:reshare' => "Share on The Wire",
