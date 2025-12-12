@@ -42,9 +42,9 @@ View and reply to the Wire post:
 	'thewire_tools:add:access' => "Visible for: %s",
 	'thewire_tools:add:access:group' => "Only share in selected group",
 	
-	'thewire_tools:share:group:disabled' => "sharing not possible",
-	'thewire_tools:share:group:not_allowed' => "sharing not allowed",
-	'thewire_tools:share:group:group_content' => "sharing not allowed",
+	'thewire_tools:share:group:disabled' => "- sharing not possible",
+	'thewire_tools:share:group:not_allowed' => "- sharing not allowed",
+	'thewire_tools:share:group:group_content' => "- sharing not allowed",
 	
 	// reshare
 	'thewire_tools:reshare' => "Share on The Wire",

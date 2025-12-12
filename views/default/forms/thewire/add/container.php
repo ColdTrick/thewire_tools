@@ -64,14 +64,14 @@ foreach ($groups as $group) {
 	
 	if (!$group->isToolEnabled('thewire')) {
 		$option['disabled'] = true;
-		$option['text'] .= ' - ' . elgg_echo('thewire_tools:share:group:disabled');
+		$option['text'] .= ' ' . elgg_echo('thewire_tools:share:group:disabled');
 	} elseif ($reshare instanceof \ElggEntity) {
 		if ($reshare->container_guid === $group->guid) {
 			$option['disabled'] = true;
-			$option['text'] .= ' - ' . elgg_echo('thewire_tools:share:group:group_content');
+			$option['text'] .= ' ' . elgg_echo('thewire_tools:share:group:group_content');
 		} elseif (!(bool) $group->getPluginSetting('thewire_tools', 'enable_reshare', true)) {
 			$option['disabled'] = true;
-			$option['text'] .= ' - ' . elgg_echo('thewire_tools:share:group:not_allowed');
+			$option['text'] .= ' ' . elgg_echo('thewire_tools:share:group:not_allowed');
 		}
 	}
 	
