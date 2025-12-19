@@ -1,6 +1,10 @@
 Version history
 ===============
 
+16.1 (2025-12-19):
+
+- added: group setting to disable sharing content in the group
+
 16.0.1 (2025-12-04):
 
 - fixed: prevent issue with hashtags when having a more link
