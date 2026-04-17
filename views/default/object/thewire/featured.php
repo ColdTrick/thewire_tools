@@ -10,7 +10,11 @@ if (!$entity instanceof \ElggWire) {
 	return;
 }
 
-$content = thewire_filter($entity->description);
+$content = elgg_format_html((string) $entity->description, [
+	'sanitize' => false,
+	'autop' => false,
+	'parse_thewire_hashtags' => true,
+]);
 $content .= elgg_view('output/url', [
 	'text' => elgg_echo('more'),
 	'href' => elgg_generate_url('collection:object:thewire:thread', [

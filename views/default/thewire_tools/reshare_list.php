@@ -21,7 +21,7 @@ $batch = elgg_get_entities([
 ]);
 
 $list_items = [];
-/* @var $wire_post \ElggWire */
+/** @var \ElggWire $wire_post  */
 foreach ($batch as $wire_post) {
 	$owner = $wire_post->getOwnerEntity();
 	$icon = elgg_view_entity_icon($owner, 'small');

@@ -2,7 +2,6 @@
 
 return array(
 	'thewire_tools' => "The Wire Tools",
-	'thewire_tools:no_result' => "No wire posts were found",
 	'thewire_tools:login_required' => "You need to be logged in to use this feature",
 	'thewire_tools:feature' => "Feature",
 	'thewire_tools:unfeature' => "Unfeature",

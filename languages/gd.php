@@ -6,7 +6,6 @@
 
 return array (
   'thewire_tools' => 'The Wire Tools',
-  'thewire_tools:no_result' => 'Cha deach post-ùeire a lorg',
   'thewire_tools:login_required' => 'Feumaidh tu logadh a-steach gus am feart seo a chleachdadh',
   'thewire_tools:feature' => 'Brosnaich',
   'thewire_tools:unfeature' => 'Na brosnaich tuilleadh',

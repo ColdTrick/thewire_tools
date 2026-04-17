@@ -71,7 +71,7 @@ class Migrate extends \ColdTrick\EntityTools\Migrate\TheWire {
 				]
 			]);
 			
-			/* @var $post \ElggWire */
+			/** @var \ElggWire $post */
 			foreach ($batch as $post) {
 				$migrate = new Migrate($post);
 				$migrate->changeContainer($new_container_guid);

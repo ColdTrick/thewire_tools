@@ -2,7 +2,7 @@
 	display: none;
 	margin-left: 5px;
 	padding-left: 5px;
-	border-left: 3px solid $(border-color-mild);
+	border-left: 3px solid var(--elgg-border-color-mild);
 
 	.elgg-list > li:last-child {
 		border: none;

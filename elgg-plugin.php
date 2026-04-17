@@ -2,6 +2,7 @@
 
 use ColdTrick\TheWireTools\Notifications\CreateTheWireEventHandler;
 use Elgg\Router\Middleware\GroupPageOwnerGatekeeper;
+use Elgg\TheWire\Controllers\ContentListing;
 
 return [
 	'plugin' => [
@@ -26,6 +27,22 @@ return [
 			],
 		],
 		'thewire_tools/toggle_feature' => [],
+	],
+	'routes' => [
+		'collection:object:thewire:group' => [
+			'path' => '/thewire/group/{guid}',
+			'controller' => ContentListing::class,
+			'middleware' => [
+				GroupPageOwnerGatekeeper::class,
+			],
+			'required_plugins' => [
+				'groups',
+			],
+			'options' => [
+				'sidebar_view' => 'thewire/sidebar',
+				'group_tool' => 'thewire',
+			],
+		],
 	],
 	'events' => [
 		'container_logic_check' => [
@@ -75,26 +92,24 @@ return [
 				'\ColdTrick\TheWireTools\Plugins\Groups::registerGroupTool' => [],
 			],
 		],
+		'view_vars' => [
+			'thewire/list_form' => [
+				'\ColdTrick\TheWireTools\Views::listAddForm' => [],
+			],
+		],
 	],
 	'notifications' => [
 		'object' => [
 			'thewire' => [
-				'create' => CreateTheWireEventHandler::class,
-			],
-		],
-	],
-	'routes' => [
-		'collection:object:thewire:group' => [
-			'path' => '/thewire/group/{guid}',
-			'resource' => 'thewire/group',
-			'middleware' => [
-				GroupPageOwnerGatekeeper::class,
+				'create' => [
+					\Elgg\TheWire\Notifications\CreateTheWireEventHandler::class => ['unregister' => true],
+					CreateTheWireEventHandler::class => [],
+				],
 			],
 		],
 	],
 	'view_extensions' => [
 		'elgg.css' => [
-			'forms/thewire/add.css' => [],
 			'thewire_tools/thread.css' => [],
 		],
 		'forms/thewire/add.css' => [

@@ -1,6 +1,6 @@
 <?php
 
-/* @var $widget \ElggWidget */
+/** @var \ElggWidget $widget */
 $widget = elgg_extract('entity', $vars);
 
 // get widget settings
@@ -18,7 +18,7 @@ $options = [
 	'pagination' => false,
 	'metadata_name_value_pairs_operator' => 'OR',
 	'metadata_name_value_pairs' => [],
-	'no_results' => elgg_echo('thewire_tools:no_result'),
+	'no_results' => true,
 	'widget_more' => elgg_view_url(elgg_generate_url('collection:object:thewire:all'), elgg_echo('thewire:moreposts')),
 ];
 

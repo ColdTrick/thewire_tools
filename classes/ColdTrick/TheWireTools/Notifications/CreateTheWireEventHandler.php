@@ -75,7 +75,7 @@ class CreateTheWireEventHandler extends CoreTheWireEventHandler {
 			return parent::getNotificationBody($recipient, $method);
 		}
 		
-		/* @var $entity \ElggWire */
+		/** @var \ElggWire $entity */
 		$entity = $this->event->getObject();
 		
 		return elgg_echo('thewire_tools:notify:reshare:body', [

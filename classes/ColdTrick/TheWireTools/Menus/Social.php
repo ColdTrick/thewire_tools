@@ -52,7 +52,9 @@ class Social {
 			'icon' => 'share-alt-square',
 			'text' => elgg_echo('thewire_tools:reshare'),
 			'title' => elgg_echo('thewire_tools:reshare'),
-			'href' => elgg_http_add_url_query_elements('ajax/view/thewire_tools/reshare', [
+			'href' => elgg_generate_url('ajax', [
+				'type' => 'view',
+				'segments' => 'thewire_tools/reshare',
 				'reshare_guid' => $reshare_guid,
 			]),
 			'link_class' => 'elgg-lightbox',
@@ -75,9 +77,11 @@ class Social {
 			if ($count) {
 				// show counter
 				$menu_options['badge'] = $count;
-				$menu_options['data-badge-link'] = elgg_normalize_url(elgg_http_add_url_query_elements('ajax/view/thewire_tools/reshare_list', [
+				$menu_options['data-badge-link'] = elgg_generate_url('ajax', [
+					'type' => 'view',
+					'segments' => 'thewire_tools/reshare_list',
 					'entity_guid' => $reshare_guid,
-				]));
+				]);
 				$menu_options['deps'][] = 'thewire_tools/ReshareBadge';
 			}
 		}

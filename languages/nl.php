@@ -45,7 +45,6 @@ Bekijk en reageer op het Wire bericht:
   'widgets:thewire:owner' => 'Van wie moeten de Wire berichten worden getoond',
   'widgets:thewire:filter' => 'Filter Wire berichten (optioneel)',
   'thewire_tools' => 'The Wire uitbreidingen',
-  'thewire_tools:no_result' => 'Geen Wire berichten gevonden',
   'thewire_tools:settings:enable_group' => 'Schakel The Wire in voor groepen',
   'thewire_tools:settings:extend_widgets' => 'Breidt The Wire widget uit met de optie om direct een bericht te kunnen plaatsen',
   'collection:object:thewire:group' => 'Groeps wire berichten',

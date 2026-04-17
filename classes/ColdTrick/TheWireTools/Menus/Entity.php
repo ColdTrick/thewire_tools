@@ -22,7 +22,7 @@ class Entity {
 			return null;
 		}
 		
-		/* @var $return MenuItems */
+		/** @var MenuItems $return */
 		$return = $event->getValue();
 		$current_route = elgg_get_current_route();
 		
@@ -38,7 +38,7 @@ class Entity {
 			} elseif (!($entity->countEntitiesFromRelationship('parent') || $entity->countEntitiesFromRelationship('parent', true))) {
 				$return->remove('thread');
 			} else {
-				/* @var $menu_item \ElggMenuItem */
+				/** @var \ElggMenuItem $menu_item */
 				$menu_item = $return->get('thread');
 				
 				$menu_item->rel = $entity->guid;
@@ -51,7 +51,7 @@ class Entity {
 			if (elgg_in_context('thewire_tools_thread')) {
 				$return->remove('reply');
 			} else {
-				/* @var $menu_item \ElggMenuItem */
+				/** @var \ElggMenuItem $menu_item */
 				$menu_item = $return->get('reply');
 				
 				$menu_item->addDeps([
@@ -89,7 +89,7 @@ class Entity {
 		
 		$toggle_action = elgg_generate_action_url('thewire_tools/toggle_feature', ['guid' => $entity->guid]);
 		
-		/* @var $result MenuItems */
+		/** @var MenuItems $result */
 		$return = $event->getValue();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'thewire-tools-feature',

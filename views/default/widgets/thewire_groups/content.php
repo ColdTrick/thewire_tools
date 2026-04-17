@@ -1,9 +1,9 @@
 <?php
 
-/* @var $widget \ElggWidget */
+/** @var \ElggWidget $widget */
 $widget = elgg_extract('entity', $vars);
 
-/* @var $group \ELggGroup */
+/** @var \ElggGroup $group */
 $group = $widget->getOwnerEntity();
 if ($group->isMember()) {
 	echo elgg_view_form('thewire/add');
@@ -17,7 +17,7 @@ $options = [
 	'pagination' => false,
 	'metadata_name_value_pairs_operator' => 'OR',
 	'metadata_name_value_pairs' => [],
-	'no_results' => elgg_echo('thewire_tools:no_result'),
+	'no_results' => true,
 	'widget_more' => elgg_view_url($widget->getURL(), elgg_echo('thewire:moreposts')),
 ];
 

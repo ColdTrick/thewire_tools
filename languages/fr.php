@@ -25,7 +25,6 @@ return array (
   'widgets:thewire:filter' => 'Filtre des postes (optionnel)',
   'widgets:thewire:owner' => 'A qui s\'adresse le poste',
   'thewire_tools' => 'The Wire Tools',
-  'thewire_tools:no_result' => 'Pas de message trouvé sur le fil',
   'thewire_tools:login_required' => 'Vous devez être connecté pour utiliser cette fonction',
   'thewire_tools:unfeature' => 'Non disponible',
   'thewire_tools:feature' => 'Mettre en avant',
