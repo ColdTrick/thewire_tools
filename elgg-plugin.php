@@ -6,7 +6,7 @@ use Elgg\TheWire\Controllers\ContentListing;
 
 return [
 	'plugin' => [
-		'version' => '16.1',
+		'version' => '17.0',
 		'dependencies' => [
 			'thewire' => [
 				'position' => 'after',

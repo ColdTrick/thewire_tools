@@ -1,6 +1,10 @@
 Version history
 ===============
 
+17.0 (2026-05-29):
+
+- changed: updated for Elgg 7.0
+
 16.1 (2025-12-19):
 
 - added: group setting to disable sharing content in the group
