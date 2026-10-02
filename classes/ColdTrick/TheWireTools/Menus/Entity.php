@@ -99,6 +99,7 @@ class Entity {
 			'item_class' => $entity->featured ? 'hidden' : '',
 			'data-toggle' => 'thewire-tools-unfeature',
 			'priority' => 200,
+			'parent_name' => $container instanceof \ElggGroup ? null : 'admin',
 		]);
 		
 		$return[] = \ElggMenuItem::factory([
@@ -109,6 +110,7 @@ class Entity {
 			'item_class' => $entity->featured ? '' : 'hidden',
 			'data-toggle' => 'thewire-tools-feature',
 			'priority' => 201,
+			'parent_name' => $container instanceof \ElggGroup ? null : 'admin',
 		]);
 		
 		return $return;
