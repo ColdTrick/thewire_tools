@@ -100,7 +100,7 @@ class Social {
 	 *
 	 * @return bool
 	 */
-	protected static function canReshareEntity(\ElggEntity $entity) {
+	protected static function canReshareEntity(\ElggEntity $entity): bool {
 		// only allow objects and groups
 		if (!$entity instanceof \ElggObject && !$entity instanceof \ElggGroup) {
 			return false;
